@@ -20,6 +20,16 @@
     {
       "id": "inprogress",
       "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
       "items": [
         {
           "id": 1770326603935,
@@ -31,16 +41,6 @@
           "updatedAt": "2026-02-05T21:23:59.188Z"
         }
       ]
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": []
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback Needed",
-      "items": []
     },
     {
       "id": "done",
