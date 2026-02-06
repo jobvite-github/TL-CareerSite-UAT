@@ -1,5 +1,5 @@
 {
-  "passwordHash": "2a97516c354b68848cdbd8f54a226a0a55b21ed138e207ad6c5cbb9c00aa5aea",
+  "passwordHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "version": "1.0",
   "columns": [
     {
@@ -20,16 +20,6 @@
     {
       "id": "inprogress",
       "title": "In Progress",
-      "items": []
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": []
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback Needed",
       "items": [
         {
           "id": 1770326603935,
@@ -41,6 +31,16 @@
           "updatedAt": "2026-02-05T21:23:59.188Z"
         }
       ]
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
     },
     {
       "id": "done",
