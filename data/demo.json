@@ -44,16 +44,6 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback Needed",
-      "items": []
-    },
-    {
-      "id": "done",
-      "title": "Done",
       "items": [
         {
           "id": 1770408059091,
@@ -65,6 +55,16 @@
           "updatedAt": "2026-02-06T20:00:59.091Z"
         }
       ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
     }
   ]
 }
