@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { Column, Task, ColumnId } from '$lib/types';
   import TaskCard from './TaskCard.svelte';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome'
-  import { faLock } from '@fortawesome/free-solid-svg-icons'
 
   let {
     column,
@@ -48,7 +46,7 @@
   <h2>
     {column.title}
     {#if isDropDisabled || isDragDisabled}
-      <span class="admin-only" title="Cannot {isDropDisabled ? `${isDragDisabled ? 'drag or ' : ''}drop to` : 'drag from'} this column"><FontAwesomeIcon icon={faLock} /></span>
+      <span class="admin-only" title="Cannot {isDropDisabled ? `${isDragDisabled ? 'drag or ' : ''}drop to` : 'drag from'} this column">🔒</span>
     {/if}
     <span class="count">({column.items.length})</span>
   </h2>
