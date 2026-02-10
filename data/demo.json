@@ -23,6 +23,16 @@
           "section": "Somewhere",
           "createdAt": "2026-02-06T20:05:43.395Z",
           "updatedAt": "2026-02-06T20:05:43.395Z"
+        },
+        {
+          "id": 1770408059091,
+          "description": "A UAT item ready for re-testing. Customers shouldn't be able to move anything TO re-test, but should be able to move things away from re-test once they have tested.",
+          "type": "Change Request",
+          "feedback": "Some feedback could go here...",
+          "section": "All pages",
+          "createdAt": "2026-02-06T20:00:59.091Z",
+          "updatedAt": "2026-02-06T20:00:59.091Z",
+          "locked": false
         }
       ]
     },
@@ -44,17 +54,7 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": [
-        {
-          "id": 1770408059091,
-          "description": "A UAT item ready for re-testing. Customers shouldn't be able to move anything TO re-test, but should be able to move things away from re-test once they have tested.",
-          "type": "Change Request",
-          "feedback": "Some feedback could go here...",
-          "section": "All pages",
-          "createdAt": "2026-02-06T20:00:59.091Z",
-          "updatedAt": "2026-02-06T20:00:59.091Z"
-        }
-      ]
+      "items": []
     },
     {
       "id": "feedback",
