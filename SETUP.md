@@ -45,6 +45,7 @@ VITE_GITHUB_OWNER=your-github-username
 VITE_GITHUB_REPO=uat-app
 VITE_GITHUB_TOKEN=github_pat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 VITE_GITHUB_BRANCH=main
+VITE_ADMIN_PASSWORD=your-secure-admin-password
 ```
 
 **Important Notes:**

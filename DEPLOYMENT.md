@@ -30,6 +30,7 @@ Your environment variables need to be stored as GitHub repository secrets so the
 | `VITE_GITHUB_REPO` | This repository name (same repo) |
 | `VITE_GITHUB_TOKEN` | Your GitHub personal access token |
 | `VITE_GITHUB_BRANCH` | `main` (or your branch name) |
+| `VITE_ADMIN_PASSWORD` | Your admin panel password |
 
 ### 3. Enable GitHub Pages
 
