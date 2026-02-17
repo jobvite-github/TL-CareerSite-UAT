@@ -3,9 +3,11 @@
 
   let {
     show = false,
+    disableAddTask = false,
     onClose
   }: {
     show: boolean;
+    disableAddTask: boolean;
     onClose: () => void;
   } = $props();
 
@@ -34,38 +36,51 @@
   >
     <div class="modal" {@attach trapFocus}>
       <div class="modal-header">
-        <h2>Status Guide</h2>
+        <h2>Help</h2>
         <button class="close-btn" aria-label="Close help" onclick={onClose}>×</button>
       </div>
+      {#if disableAddTask}
+         <div class="modal-header">
+          <h2>UAT Fixing Stage</h2>
+        </div>
+        <div class="modal-body">
+          <div class="modal-section">
+            <p>UAT item creation disabled - The UAT process is now in the Fixing stage where created items are being worked on. No new items can be added at this time.</p>
+          </div>
+        </div>
+      {/if}
+      <div class="modal-header">
+        <h2>Status Guide</h2>
+      </div>
       <div class="modal-body">
-        <div class="status-section">
+        <div class="modal-section">
           <h3>To Do</h3>
           <p>By default, all UAT items should be set to "To Do"</p>
           <p>You'll also need to set any items that has failed during re-test back to "To Do"</p>
         </div>
 
-        <div class="status-section">
+        <div class="modal-section">
           <h3>In Progress</h3>
           <p>This means that we are working on the specific UAT item</p>
         </div>
 
-        <div class="status-section">
+        <div class="modal-section">
           <h3>Needs Feedback</h3>
           <p>Requires your attention, please check under the "FEEDBACK" column as we will input any questions on there</p>
           <p>Please change the status to "To Do" after you have provided your feedback</p>
         </div>
 
-        <div class="status-section">
+        <div class="modal-section">
           <h3>Re-Test</h3>
           <p>Item has been updated and is ready to be tested again</p>
         </div>
 
-        <div class="status-section">
+        <div class="modal-section">
           <h3>Approved</h3>
           <p>Item is confirmed to be fixed / resolved</p>
         </div>
 
-        <div class="status-section">
+        <div class="modal-section">
           <h3>Cancelled</h3>
           <p>Item is cancelled</p>
         </div>
@@ -102,6 +117,7 @@
     display: flex;
     flex-direction: column;
     border: 1px solid var(--bg-3);
+    overflow: auto;
   }
 
   .modal-header {
@@ -139,11 +155,10 @@
 
   .modal-body {
     padding: 1.5rem;
-    overflow-y: auto;
     flex: 1;
   }
 
-  .status-section {
+  .modal-section {
     margin-bottom: 1.5rem;
     padding: 1rem;
     background: var(--bg-2);
@@ -151,28 +166,28 @@
     border-left: 4px solid var(--primary);
   }
 
-  .status-section:last-child {
+  .modal-section:last-child {
     margin-bottom: 0;
   }
 
-  .status-section h3 {
+  .modal-section h3 {
     margin: 0 0 0.75rem 0;
     color: var(--primary);
     font-size: 1.1rem;
     font-weight: 700;
   }
 
-  .status-section p {
+  .modal-section p {
     margin: 0.5rem 0;
     color: var(--fg-1);
     line-height: 1.5;
   }
 
-  .status-section p:first-of-type {
+  .modal-section p:first-of-type {
     margin-top: 0;
   }
 
-  .status-section p:last-child {
+  .modal-section p:last-child {
     margin-bottom: 0;
   }
 
@@ -209,7 +224,7 @@
       padding: 1rem;
     }
 
-    .status-section {
+    .modal-section {
       padding: 0.75rem;
     }
   }

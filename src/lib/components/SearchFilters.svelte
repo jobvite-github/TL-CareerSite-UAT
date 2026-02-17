@@ -7,12 +7,14 @@
     searchQuery = $bindable<string>(''),
     filterType = $bindable<TaskType | 'All'>('All'),
     disableAddTask = false,
+    isAdmin = false,
     onAddTask,
     onHelp
   }: {
     searchQuery: string;
     filterType: TaskType | 'All';
     disableAddTask?: boolean;
+    isAdmin?: boolean;
     onAddTask: () => void;
     onHelp: () => void;
   } = $props();
@@ -43,15 +45,17 @@
       size="small"
       onClick={onHelp}
     />
-    <ButtonComponent 
-      element="button"
-      text="+ Add Task"
-      title={disableAddTask ? 'UAT item creation disabled - The UAT process is now in the Fixing stage where created items are being worked on. No new items can be added at this time.' : 'Add a new task'}
-      type="primary"
-      size="small"
-      disabled={disableAddTask}
-      onClick={onAddTask}
-    />
+    {#if !disableAddTask || isAdmin}
+       <ButtonComponent 
+         element="button"
+         text="+ Add Task"
+         title='Add a new task'
+         type="primary"
+         size="small"
+         disabled={disableAddTask}
+         onClick={onAddTask}
+       />
+    {/if}
   </div>
 </div>
 

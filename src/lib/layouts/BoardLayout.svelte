@@ -806,6 +806,7 @@
 
   <HelpModal
     show={showHelpModal}
+    {disableAddTask}
     onClose={closeHelpModal}
   />
 {/if}

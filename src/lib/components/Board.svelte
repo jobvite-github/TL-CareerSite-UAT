@@ -74,6 +74,9 @@
   
   let isUatExpired = $derived(daysRemaining !== null && daysRemaining <= 0);
   let isUatEndingSoon = $derived(daysRemaining !== null && daysRemaining <= 3 && daysRemaining > 0);
+  
+  // Effective disable state: true if admin toggled it OR if UAT has expired
+  let effectiveDisableAddTask = $derived(disableAddTask || isUatExpired);
 
   function getFilteredColumns(): Column[] {
     const filtered = columns.map(column => ({
@@ -241,7 +244,7 @@
     {/if}
   </div>
 
-  <SearchFilters bind:searchQuery bind:filterType {onAddTask} {onHelp} {disableAddTask} />
+  <SearchFilters bind:searchQuery bind:filterType {isAdmin} {onAddTask} {onHelp} disableAddTask={effectiveDisableAddTask} />
 
   <div class="top-columns">
     {#if feedbackColumn && (isAdmin || feedbackColumn.items.length > 0)}
