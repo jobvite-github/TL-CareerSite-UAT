@@ -19,13 +19,7 @@
           "updatedAt": "2026-02-17T19:40:52.202Z",
           "locked": false,
           "images": []
-        }
-      ]
-    },
-    {
-      "id": "inprogress",
-      "title": "In Progress",
-      "items": [
+        },
         {
           "id": 1771357077604,
           "description": "This actually gonna be what shows on the card in the column.",
@@ -40,6 +34,11 @@
           ]
         }
       ]
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
     },
     {
       "id": "retest",
