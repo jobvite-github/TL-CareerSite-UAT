@@ -1,0 +1,40 @@
+{
+  "displayName": "Dean Transportation",
+  "uatEndDate": "2026-02-24",
+  "devSiteUrl": "https://deantransportationcareers-dev.ttcportals.com/",
+  "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
+  "version": "1.0",
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
