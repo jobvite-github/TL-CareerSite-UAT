@@ -47,10 +47,10 @@
         },
         {
           "id": 1770931847405,
-          "description": "Add \"merge before saving\" feature.",
-          "type": "Change Request",
+          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
+          "type": "Feature",
           "device": "All",
-          "feedback": "Adding items at the same time works great. Updating items does not work. Deleting items that aren't updated at the same time might work.",
+          "feedback": "",
           "section": "",
           "createdAt": "2026-02-12T21:30:47.404Z",
           "updatedAt": "2026-02-12T21:30:47.404Z",
