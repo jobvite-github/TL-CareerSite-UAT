@@ -25,21 +25,6 @@
     {
       "id": "inprogress",
       "title": "In Progress",
-      "items": []
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": []
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback Needed",
-      "items": []
-    },
-    {
-      "id": "done",
-      "title": "Done",
       "items": [
         {
           "id": 1771357077604,
@@ -55,6 +40,21 @@
           ]
         }
       ]
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
     },
     {
       "id": "cancelled",
