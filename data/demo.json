@@ -63,5 +63,5 @@
       "items": []
     }
   ],
-  "disableAddTask": false
+  "disableAddTask": true
 }
