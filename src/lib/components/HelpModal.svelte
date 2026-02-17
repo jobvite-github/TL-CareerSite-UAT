@@ -60,13 +60,8 @@
         </div>
 
         <div class="modal-section">
-          <h3>In Progress</h3>
-          <p>This means that we are working on the specific UAT item</p>
-        </div>
-
-        <div class="modal-section">
-          <h3>Needs Feedback</h3>
-          <p>Requires your attention, please check under the "FEEDBACK" column as we will input any questions on there</p>
+          <h3>Feedback Needed</h3>
+          <p>Requires your attention, please check under the "Feedback Needed" column as we will input any questions on there</p>
           <p>Please change the status to "To Do" after you have provided your feedback</p>
         </div>
 
@@ -76,8 +71,13 @@
         </div>
 
         <div class="modal-section">
-          <h3>Approved</h3>
+          <h3>Done</h3>
           <p>Item is confirmed to be fixed / resolved</p>
+        </div>
+
+        <div class="modal-section">
+          <h3>In Progress</h3>
+          <p>This means that we are working on the specific UAT item</p>
         </div>
 
         <div class="modal-section">

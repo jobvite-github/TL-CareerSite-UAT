@@ -16,6 +16,7 @@
     draggedItem = $bindable<Task | null>(null),
     dragOverColumn = $bindable<ColumnId | null>(null),
     disableAddTask = $bindable(false),
+    effectiveDisableAddTask = $bindable(false),
     onAddTask,
     onHelp,
     onItemDragStart,
@@ -38,6 +39,7 @@
     draggedItem: Task | null;
     dragOverColumn: ColumnId | null;
     disableAddTask: boolean;
+    effectiveDisableAddTask: boolean;
     onAddTask: () => void;
     onHelp: () => void;
     onItemDragStart: (e: DragEvent, item: Task, columnId: ColumnId) => void;
@@ -76,7 +78,10 @@
   let isUatEndingSoon = $derived(daysRemaining !== null && daysRemaining <= 3 && daysRemaining > 0);
   
   // Effective disable state: true if admin toggled it OR if UAT has expired
-  let effectiveDisableAddTask = $derived(disableAddTask || isUatExpired);
+  // Update the bindable prop
+  $effect(() => {
+    effectiveDisableAddTask = disableAddTask || isUatExpired;
+  });
 
   function getFilteredColumns(): Column[] {
     const filtered = columns.map(column => ({

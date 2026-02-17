@@ -31,9 +31,8 @@
   // Separate drag and drop restrictions for non-admins
   // In Progress: can't drag from OR drop to
   // Re-Test: can drag from, but can't drop to
-  // Done: can't drag from, but can drop to
-  const isDragDisabled = $derived(!isAdmin && (column.id === 'inprogress'));
-  const isDropDisabled = $derived(!isAdmin && (column.id === 'inprogress' || column.id === 'retest' || column.id === 'feedback'));
+  const isDragDisabled = $derived(!isAdmin && (column.id === 'inprogress' || column.id === 'cancelled'));
+  const isDropDisabled = $derived(!isAdmin && (column.id === 'inprogress' || column.id === 'cancelled' || column.id === 'retest' || column.id === 'feedback'));
 </script>
 
 <div 

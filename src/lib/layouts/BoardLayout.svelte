@@ -222,6 +222,9 @@
 
   // Track original data for unsaved changes
   let originalModalData = $state<ModalData | null>(null);
+  
+  // Effective disable state bound from Board component
+  let effectiveDisableAddTask = $state(false);
 
   // Verify admin password
   function handleAdminPasswordSubmit() {
@@ -526,7 +529,7 @@
     selectedColumnId = columnId;
     originalColumnId = columnId;
     // Set view-only mode if customer tries to view In Progress task
-    isModalViewOnly = !isAdmin && columnId === 'inprogress' || columnId === 'done';
+    isModalViewOnly = !isAdmin && columnId === 'inprogress' || columnId === 'cancelled';
     modalData = {
       description: item.description,
       type: item.type,
@@ -762,6 +765,7 @@
     bind:draggedItem
     bind:dragOverColumn
     bind:disableAddTask
+    bind:effectiveDisableAddTask
     onAddTask={openNewItemModal}
     onHelp={openHelpModal}
     onItemDragStart={handleDragStart}
@@ -806,7 +810,7 @@
 
   <HelpModal
     show={showHelpModal}
-    {disableAddTask}
+    disableAddTask={effectiveDisableAddTask}
     onClose={closeHelpModal}
   />
 {/if}
