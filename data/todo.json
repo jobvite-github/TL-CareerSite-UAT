@@ -47,7 +47,7 @@
         },
         {
           "id": 1771358205526,
-          "description": "Integration, PM, and CWS \"Owner\" contact fields. Add \"Notify Team\" button to send group email to all contact fields' value.",
+          "description": "Integration, PM, and CWS \"Owner\" contact fields to account information. Add \"Notify Team\" button to send group email to all contact fields' value.",
           "type": "Feature",
           "device": "All",
           "feedback": "",
