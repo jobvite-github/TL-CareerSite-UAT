@@ -204,13 +204,7 @@
           "locked": true,
           "images": [],
           "device": "All"
-        }
-      ]
-    },
-    {
-      "id": "cancelled",
-      "title": "Cancelled",
-      "items": [
+        },
         {
           "id": 1770830750701,
           "description": "Multiple UAT instances for single accounts. If a customer has multi-lingual, internal/external, subsidiaries, etc., it could be nice to not have to create a new account each time and have all UATs in one account.",
@@ -224,6 +218,11 @@
           "device": "All"
         }
       ]
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
     }
   ],
   "disableAddTask": false
