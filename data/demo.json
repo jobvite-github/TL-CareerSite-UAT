@@ -18,7 +18,8 @@
           "createdAt": "2026-02-17T19:40:52.202Z",
           "updatedAt": "2026-02-17T19:40:52.202Z",
           "locked": false,
-          "images": []
+          "images": [],
+          "type": "Issue"
         },
         {
           "id": 1771357077604,
