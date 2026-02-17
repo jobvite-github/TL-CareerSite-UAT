@@ -79,20 +79,7 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": [
-        {
-          "id": 1770830472908,
-          "description": "Set max-height/max characters for card display in columns. End with ellipsis or fade out or something so the cards don't get huge and take up too much space. There is a description limit of 500 characters, so they can't take up a whole page, but darn this is one long description that I don't want to display fully on a task's card. This is so long I only want it to fully show when you've opened the task modal.",
-          "type": "Change Request",
-          "feedback": "",
-          "section": "TaskCard",
-          "createdAt": "2026-02-11T17:21:12.908Z",
-          "updatedAt": "2026-02-11T17:21:12.908Z",
-          "locked": true,
-          "images": [],
-          "device": "All"
-        }
-      ]
+      "items": []
     },
     {
       "id": "feedback",
@@ -181,6 +168,18 @@
           "updatedAt": "2026-02-12T21:29:40.039Z",
           "locked": true,
           "images": []
+        },
+        {
+          "id": 1770830472908,
+          "description": "Set max-height/max characters for card display in columns. End with ellipsis or fade out or something so the cards don't get huge and take up too much space. There is a description limit of 500 characters, so they can't take up a whole page, but darn this is one long description that I don't want to display fully on a task's card. This is so long I only want it to fully show when you've opened the task modal.",
+          "type": "Change Request",
+          "feedback": "",
+          "section": "TaskCard",
+          "createdAt": "2026-02-11T17:21:12.908Z",
+          "updatedAt": "2026-02-11T17:21:12.908Z",
+          "locked": true,
+          "images": [],
+          "device": "All"
         }
       ]
     },
