@@ -22,18 +22,6 @@
           "images": []
         },
         {
-          "id": 1770931029296,
-          "description": "Low - Add notifications for admins",
-          "type": "Feature",
-          "device": "All",
-          "feedback": "",
-          "section": "",
-          "createdAt": "2026-02-12T21:17:09.296Z",
-          "updatedAt": "2026-02-12T21:17:09.296Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1770931976846,
           "description": "Set up data in its own private repo for more security",
           "type": "Feature",
