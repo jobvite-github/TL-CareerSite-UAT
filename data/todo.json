@@ -11,7 +11,7 @@
       "items": [
         {
           "id": 1770930661810,
-          "description": "Need to add timestamp for when comments are made.",
+          "description": "Set up feedback changes as \"comments\". When feedback is made, save feedback in array with \"content\", \"date\", \"isAdmin\" and \"owner\" (when isAdmin is true) data",
           "type": "Feature",
           "device": "All",
           "feedback": "",
