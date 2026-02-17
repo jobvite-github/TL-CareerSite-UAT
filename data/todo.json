@@ -191,5 +191,5 @@
       ]
     }
   ],
-  "disableAddTask": false
+  "disableAddTask": true
 }
