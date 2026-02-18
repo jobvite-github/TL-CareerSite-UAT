@@ -10,17 +10,6 @@
       "title": "To Do",
       "items": [
         {
-          "id": 1771429064023,
-          "description": "new task",
-          "device": "All",
-          "feedback": "",
-          "section": "",
-          "createdAt": "2026-02-18T15:37:44.022Z",
-          "updatedAt": "2026-02-18T15:37:44.022Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1771428469486,
           "description": "The menu item 'our positions' should point back to the career site job list.",
           "device": "All",
