@@ -8,19 +8,7 @@
     {
       "id": "todo",
       "title": "To Do",
-      "items": [
-        {
-          "id": 1771428469486,
-          "description": "The menu item 'our positions' should point back to the career site job list.",
-          "device": "All",
-          "feedback": "",
-          "section": "Header / Our Positions",
-          "createdAt": "2026-02-18T15:27:49.486Z",
-          "updatedAt": "2026-02-18T15:27:49.486Z",
-          "locked": false,
-          "images": []
-        }
-      ]
+      "items": []
     },
     {
       "id": "inprogress",
@@ -30,7 +18,19 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
+      "items": [
+        {
+          "id": 1771428469486,
+          "description": "The menu item 'our positions' should point back to the career site job list.",
+          "device": "All",
+          "feedback": "",
+          "section": "Header / Our Positions",
+          "createdAt": "2026-02-18T15:27:49.486Z",
+          "updatedAt": "2026-02-18T15:27:49.486Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "feedback",
