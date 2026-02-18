@@ -19,18 +19,7 @@
           "updatedAt": "2026-02-18T15:37:44.022Z",
           "locked": false,
           "images": []
-        }
-      ]
-    },
-    {
-      "id": "inprogress",
-      "title": "In Progress",
-      "items": []
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": [
+        },
         {
           "id": 1771428469486,
           "description": "The menu item 'our positions' should point back to the career site job list.",
@@ -43,6 +32,16 @@
           "images": []
         }
       ]
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
     },
     {
       "id": "feedback",
