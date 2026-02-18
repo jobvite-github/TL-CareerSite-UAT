@@ -10,18 +10,6 @@
       "title": "To Do",
       "items": [
         {
-          "id": 1771429561145,
-          "description": "new task",
-          "type": "Change Request",
-          "device": "All",
-          "feedback": "",
-          "section": "",
-          "createdAt": "2026-02-18T15:46:01.145Z",
-          "updatedAt": "2026-02-18T15:46:01.145Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1771429636369,
           "description": "Some change to apply workflow",
           "type": "Change Request",
@@ -48,7 +36,20 @@
     {
       "id": "feedback",
       "title": "Feedback Needed",
-      "items": []
+      "items": [
+        {
+          "id": 1771429561145,
+          "description": "new task",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": "",
+          "section": "",
+          "createdAt": "2026-02-18T15:46:01.145Z",
+          "updatedAt": "2026-02-18T15:46:01.145Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "done",
