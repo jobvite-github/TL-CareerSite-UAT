@@ -40,18 +40,6 @@
       "title": "In Progress",
       "items": [
         {
-          "id": 1770931847405,
-          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
-          "type": "Feature",
-          "device": "All",
-          "feedback": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
-          "section": "",
-          "createdAt": "2026-02-12T21:30:47.404Z",
-          "updatedAt": "2026-02-12T21:30:47.404Z",
-          "locked": true,
-          "images": []
-        },
-        {
           "id": 1771360954669,
           "description": "Add \"Owner\" dropdown to task modal when isAdmin is true. Should have values for Integrations, PM, CWS Dev, Customer. Values should be populated with account info data",
           "type": "Change Request",
@@ -104,7 +92,20 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
+      "items": [
+        {
+          "id": 1770931847405,
+          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
+          "section": "",
+          "createdAt": "2026-02-12T21:30:47.404Z",
+          "updatedAt": "2026-02-12T21:30:47.404Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "feedback",
