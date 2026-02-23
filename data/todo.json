@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.01111111",
+  "version": "1.011111111",
   "columns": [
     {
       "id": "todo",
@@ -40,20 +40,7 @@
     {
       "id": "inprogress",
       "title": "In Progress",
-      "items": [
-        {
-          "id": 1771358205526,
-          "description": "Integration, PM, and CWS \"Owner\" contact fields to account information. Add \"Notify Team\" button to send group email to all contact fields' value.",
-          "type": "Feature",
-          "device": "All",
-          "feedback": "",
-          "section": "",
-          "createdAt": "2026-02-17T19:56:45.526Z",
-          "updatedAt": "2026-02-17T19:56:45.526Z",
-          "locked": true,
-          "images": []
-        }
-      ]
+      "items": []
     },
     {
       "id": "retest",
@@ -224,6 +211,25 @@
           "locked": true,
           "images": [],
           "owner": "CWS Dev"
+        },
+        {
+          "id": 1771358205526,
+          "description": "Integration, PM, and CWS \"Owner\" contact fields to account information. Add \"Notify Team\" button to send group email to all contact fields' value.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [
+            {
+              "text": "This is consolidated to just one field for every email address (separated by \",\") associated with this project. Customer email contact should be limited to just 1 person, but is not enforced.",
+              "author": "cws-dev",
+              "createdAt": "2026-02-23T22:07:38.005Z"
+            }
+          ],
+          "section": "",
+          "createdAt": "2026-02-17T19:56:45.526Z",
+          "updatedAt": "2026-02-17T19:56:45.526Z",
+          "locked": true,
+          "images": [],
+          "owner": "PM"
         }
       ]
     },
