@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.01",
+  "version": "1.011",
   "columns": [
     {
       "id": "todo",
@@ -166,12 +166,19 @@
           "description": "Add customer name, UAT deadline and dev link info.",
           "type": "Feature",
           "device": "All",
-          "feedback": "Add a way to edit this in the admin UI",
+          "feedback": [
+            {
+              "text": "Add a way to edit this in the admin UI",
+              "author": "cws-dev",
+              "createdAt": "2026-02-23T22:02:36.950Z"
+            }
+          ],
           "section": "Top section",
           "createdAt": "2026-02-12T19:48:22.634Z",
           "updatedAt": "2026-02-12T19:48:22.634Z",
           "locked": true,
-          "images": []
+          "images": [],
+          "owner": "Customer"
         },
         {
           "id": 1770931780040,
