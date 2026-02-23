@@ -34,18 +34,6 @@
           "images": []
         },
         {
-          "id": 1770931847405,
-          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
-          "type": "Feature",
-          "device": "All",
-          "feedback": "",
-          "section": "",
-          "createdAt": "2026-02-12T21:30:47.404Z",
-          "updatedAt": "2026-02-12T21:30:47.404Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1771358205526,
           "description": "Integration, PM, and CWS \"Owner\" contact fields to account information. Add \"Notify Team\" button to send group email to all contact fields' value.",
           "type": "Feature",
@@ -98,7 +86,20 @@
     {
       "id": "inprogress",
       "title": "In Progress",
-      "items": []
+      "items": [
+        {
+          "id": 1770931847405,
+          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
+          "section": "",
+          "createdAt": "2026-02-12T21:30:47.404Z",
+          "updatedAt": "2026-02-12T21:30:47.404Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "retest",
