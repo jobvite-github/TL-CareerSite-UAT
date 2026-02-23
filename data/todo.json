@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.0111",
+  "version": "1.01111",
   "columns": [
     {
       "id": "todo",
@@ -41,19 +41,6 @@
       "id": "inprogress",
       "title": "In Progress",
       "items": [
-        {
-          "id": 1771360954669,
-          "description": "Add \"Owner\" dropdown to task modal when isAdmin is true. Should have values for Integrations, PM, CWS Dev, Customer. Values should be populated with account info data",
-          "type": "Feature",
-          "device": "All",
-          "feedback": [],
-          "section": "TaskModal",
-          "createdAt": "2026-02-17T20:42:34.669Z",
-          "updatedAt": "2026-02-17T20:42:34.669Z",
-          "locked": true,
-          "images": [],
-          "owner": "CWS Dev"
-        },
         {
           "id": 1771604594318,
           "description": "Add section for sharepoint UAT folder",
@@ -111,6 +98,19 @@
           "section": "",
           "createdAt": "2026-02-12T21:30:47.404Z",
           "updatedAt": "2026-02-12T21:30:47.404Z",
+          "locked": true,
+          "images": [],
+          "owner": "CWS Dev"
+        },
+        {
+          "id": 1771360954669,
+          "description": "Add \"Owner\" dropdown to task modal when isAdmin is true. Should have values for Integrations, PM, CWS Dev, Customer. Values should be populated with account info data",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [],
+          "section": "TaskModal",
+          "createdAt": "2026-02-17T20:42:34.669Z",
+          "updatedAt": "2026-02-17T20:42:34.669Z",
           "locked": true,
           "images": [],
           "owner": "CWS Dev"
