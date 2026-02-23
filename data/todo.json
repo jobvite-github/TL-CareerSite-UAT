@@ -2,8 +2,10 @@
   "displayName": "Things to add or fix before going live",
   "uatEndDate": "2027-02-18",
   "devSiteUrl": "somelink-dev.ttcportals.com",
+  "uatFolderUrl": "",
+  "contactEmails": "",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.0",
+  "version": "1.01",
   "columns": [
     {
       "id": "todo",
@@ -98,12 +100,19 @@
           "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
           "type": "Feature",
           "device": "All",
-          "feedback": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
+          "feedback": [
+            {
+              "text": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
+              "author": "cws-dev",
+              "createdAt": "2026-02-23T22:02:14.191Z"
+            }
+          ],
           "section": "",
           "createdAt": "2026-02-12T21:30:47.404Z",
           "updatedAt": "2026-02-12T21:30:47.404Z",
           "locked": true,
-          "images": []
+          "images": [],
+          "owner": "CWS Dev"
         }
       ]
     },
