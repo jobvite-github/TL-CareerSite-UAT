@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.01111111111",
+  "version": "1.011111111111",
   "columns": [
     {
       "id": "todo",
@@ -95,9 +95,10 @@
               "createdAt": "2026-02-23T22:08:59.130Z"
             },
             {
-              "text": "This is a new feedback item.",
+              "text": "This is a new feedback item.\n\nI just edited it. You can hover over (edited) to see when this happened.",
               "author": "customer",
-              "createdAt": "2026-02-23T22:09:23.028Z"
+              "createdAt": "2026-02-23T22:09:23.028Z",
+              "editedAt": "2026-02-23T22:10:10.504Z"
             }
           ],
           "section": "TaskModal",
