@@ -56,18 +56,6 @@
           "updatedAt": "2026-02-17T20:34:17.220Z",
           "locked": false,
           "images": []
-        },
-        {
-          "id": 1771604594318,
-          "description": "Add section for sharepoint UAT folder",
-          "type": "Change Request",
-          "device": "All",
-          "feedback": "",
-          "section": "Account info",
-          "createdAt": "2026-02-20T16:23:14.317Z",
-          "updatedAt": "2026-02-20T16:23:14.317Z",
-          "locked": false,
-          "images": []
         }
       ]
     },
@@ -96,6 +84,18 @@
           "section": "TaskModal",
           "createdAt": "2026-02-17T20:42:34.669Z",
           "updatedAt": "2026-02-17T20:42:34.669Z",
+          "locked": true,
+          "images": []
+        },
+        {
+          "id": 1771604594318,
+          "description": "Add section for sharepoint UAT folder",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": "",
+          "section": "Account info",
+          "createdAt": "2026-02-20T16:23:14.317Z",
+          "updatedAt": "2026-02-20T16:23:14.317Z",
           "locked": true,
           "images": []
         }
