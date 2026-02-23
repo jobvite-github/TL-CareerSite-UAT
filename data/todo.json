@@ -22,18 +22,6 @@
           "images": []
         },
         {
-          "id": 1771358205526,
-          "description": "Integration, PM, and CWS \"Owner\" contact fields to account information. Add \"Notify Team\" button to send group email to all contact fields' value.",
-          "type": "Feature",
-          "device": "All",
-          "feedback": "",
-          "section": "",
-          "createdAt": "2026-02-17T19:56:45.526Z",
-          "updatedAt": "2026-02-17T19:56:45.526Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1771360457220,
           "description": "Add \"Priority\" field to tasks",
           "type": "Feature",
@@ -96,6 +84,18 @@
           "section": "cards",
           "createdAt": "2026-02-12T21:11:01.810Z",
           "updatedAt": "2026-02-12T21:11:01.810Z",
+          "locked": true,
+          "images": []
+        },
+        {
+          "id": 1771358205526,
+          "description": "Integration, PM, and CWS \"Owner\" contact fields to account information. Add \"Notify Team\" button to send group email to all contact fields' value.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": "",
+          "section": "",
+          "createdAt": "2026-02-17T19:56:45.526Z",
+          "updatedAt": "2026-02-17T19:56:45.526Z",
           "locked": true,
           "images": []
         }
