@@ -10,18 +10,6 @@
       "title": "To Do",
       "items": [
         {
-          "id": 1770930661810,
-          "description": "Set up feedback changes as \"comments\". When feedback is made, save feedback in array with \"content\", \"date\", \"isAdmin\" and \"owner\" (when isAdmin is true) data",
-          "type": "Feature",
-          "device": "All",
-          "feedback": "",
-          "section": "cards",
-          "createdAt": "2026-02-12T21:11:01.810Z",
-          "updatedAt": "2026-02-12T21:11:01.810Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1770931976846,
           "description": "Set up data in its own private repo for more security",
           "type": "Feature",
@@ -96,6 +84,18 @@
           "section": "Account info",
           "createdAt": "2026-02-20T16:23:14.317Z",
           "updatedAt": "2026-02-20T16:23:14.317Z",
+          "locked": true,
+          "images": []
+        },
+        {
+          "id": 1770930661810,
+          "description": "Set up feedback changes as \"comments\". When feedback is made, save feedback in array with \"content\", \"date\", \"isAdmin\" and \"owner\" (when isAdmin is true) data",
+          "type": "Feature",
+          "device": "All",
+          "feedback": "",
+          "section": "cards",
+          "createdAt": "2026-02-12T21:11:01.810Z",
+          "updatedAt": "2026-02-12T21:11:01.810Z",
           "locked": true,
           "images": []
         }
