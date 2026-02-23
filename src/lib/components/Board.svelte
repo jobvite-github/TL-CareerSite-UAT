@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Column, Task, TaskType, ColumnId } from '$lib/types';
+  import type { Column, Task, TaskType, OwnerType, ColumnId } from '$lib/types';
   import SearchFilters from './SearchFilters.svelte';
   import ColumnComponent from './Column.svelte';
   import ButtonComponent from './Button.svelte';
@@ -8,15 +8,17 @@
     displayName,
     uatEndDate,
     devSiteUrl,
+    uatFolderUrl,
+    contactEmails,
     customerId,
     columns,
     isAdmin,
     searchQuery = $bindable<string>(''),
     filterType = $bindable<TaskType | 'All'>('All'),
+    filterOwner = $bindable<OwnerType | 'All'>('All'),
     draggedItem = $bindable<Task | null>(null),
     dragOverColumn = $bindable<ColumnId | null>(null),
     disableAddTask = $bindable(false),
-    effectiveDisableAddTask = $bindable(false),
     onAddTask,
     onHelp,
     onItemDragStart,
@@ -31,15 +33,17 @@
     displayName: string;
     uatEndDate: string;
     devSiteUrl: string;
+    uatFolderUrl: string;
+    contactEmails: string;
     customerId: string;
     columns: Column[];
     isAdmin: boolean;
     searchQuery: string;
     filterType: TaskType | 'All';
+    filterOwner: OwnerType | 'All';
     draggedItem: Task | null;
     dragOverColumn: ColumnId | null;
     disableAddTask: boolean;
-    effectiveDisableAddTask: boolean;
     onAddTask: () => void;
     onHelp: () => void;
     onItemDragStart: (e: DragEvent, item: Task, columnId: ColumnId) => void;
@@ -48,7 +52,7 @@
     onDrop: (e: DragEvent, columnId: ColumnId) => void;
     onDragOver: (e: DragEvent, columnId: ColumnId) => void;
     onDragLeave: () => void;
-    onUpdateAccountInfo?: (displayName: string, uatEndDate: string, devSiteUrl: string, password: string) => void;
+    onUpdateAccountInfo?: (displayName: string, uatEndDate: string, devSiteUrl: string, uatFolderUrl: string, contactEmails: string, password: string) => void;
     onSave?: () => void;
   } = $props();
 
@@ -58,6 +62,8 @@
   let editDisplayName = $state('');
   let editUatEndDate = $state('');
   let editDevSiteUrl = $state('');
+  let editUatFolderUrl = $state('');
+  let editContactEmails = $state('');
   let editPassword = $state('');
   
   let daysRemaining = $derived.by(() => {
@@ -78,10 +84,7 @@
   let isUatEndingSoon = $derived(daysRemaining !== null && daysRemaining <= 3 && daysRemaining > 0);
   
   // Effective disable state: true if admin toggled it OR if UAT has expired
-  // Update the bindable prop
-  $effect(() => {
-    effectiveDisableAddTask = disableAddTask || isUatExpired;
-  });
+  let effectiveDisableAddTask = $derived(disableAddTask || isUatExpired);
 
   function getFilteredColumns(): Column[] {
     const filtered = columns.map(column => ({
@@ -89,7 +92,8 @@
       items: column.items.filter(item => {
         const matchesSearch = item.description.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesType = filterType === 'All' || item.type === filterType;
-        return matchesSearch && matchesType;
+        const matchesOwner = filterOwner === 'All' || item.owner === filterOwner;
+        return matchesSearch && matchesType && matchesOwner;
       })
     }));
     
@@ -129,6 +133,8 @@
     // Extract just the YYYY-MM-DD part
     editUatEndDate = uatEndDate ? uatEndDate.split('T')[0] : '';
     editDevSiteUrl = devSiteUrl;
+    editUatFolderUrl = uatFolderUrl;
+    editContactEmails = contactEmails;
     editPassword = ''; // Always start empty for security
     isEditingAccountInfo = true;
   }
@@ -141,7 +147,7 @@
   function saveAccountInfo() {
     if (onUpdateAccountInfo) {
       // Store as YYYY-MM-DD format (no time component to avoid timezone issues)
-      onUpdateAccountInfo(editDisplayName, editUatEndDate, editDevSiteUrl, editPassword);
+      onUpdateAccountInfo(editDisplayName, editUatEndDate, editDevSiteUrl, editUatFolderUrl, editContactEmails, editPassword);
     }
     isEditingAccountInfo = false;
     editPassword = ''; // Clear password for security
@@ -182,6 +188,26 @@
         </div>
         
         <div class="form-group">
+          <label for="edit-uat-folder-url">UAT Folder URL</label>
+          <input
+            id="edit-uat-folder-url"
+            type="text"
+            bind:value={editUatFolderUrl}
+            placeholder="https://drive.google.com/..."
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-contact-emails">Contact Emails</label>
+          <input
+            id="edit-contact-emails"
+            type="text"
+            bind:value={editContactEmails}
+            placeholder="email1@example.com, email2@example.com"
+          />
+        </div>
+        
+        <div class="form-group">
           <label for="edit-password">New Password (leave blank to keep current)</label>
           <input
             id="edit-password"
@@ -211,20 +237,34 @@
       <div class="header-container">
         <h1>{displayName || customerId}</h1>
         {#if uatEndDate}
-          <span class="uat-end-date" class:warning={isUatEndingSoon} class:error={isUatExpired}>
-            {#if isUatExpired}
-              UAT review is over. Fixing in progress.
-            {:else}
-              UAT Review Deadline: {(() => {
-                const dateStr = uatEndDate.split('T')[0];
-                const [year, month, day] = dateStr.split('-').map(Number);
-                return new Date(year, month - 1, day).toLocaleDateString();
-              })()}
-              {#if daysRemaining !== null && daysRemaining >= 0}
-                ({daysRemaining} day{daysRemaining !== 1 ? 's' : ''} remaining)
+          <div class="uat-info-section">
+            <span class="uat-end-date" class:warning={isUatEndingSoon} class:error={isUatExpired}>
+              {#if isUatExpired}
+                UAT review is over. Fixing in progress.
+              {:else}
+                UAT Review Deadline: {(() => {
+                  const dateStr = uatEndDate.split('T')[0];
+                  const [year, month, day] = dateStr.split('-').map(Number);
+                  return new Date(year, month - 1, day).toLocaleDateString();
+                })()}
+                {#if daysRemaining !== null && daysRemaining >= 0}
+                  ({daysRemaining} day{daysRemaining !== 1 ? 's' : ''} remaining)
+                {/if}
               {/if}
+            </span>
+            {#if uatFolderUrl}
+              <ButtonComponent 
+                element="a"
+                text="UAT Folder"
+                title="Upload images and other assets to this folder."
+                href={uatFolderUrl.startsWith('http') ? uatFolderUrl : `https://${uatFolderUrl}`}
+                type="primary"
+                size="small"
+                target="_blank"
+                rel="nofollow noopener"
+              />
             {/if}
-          </span>
+          </div>
         {/if}
       </div>
       {#if isAdmin}
@@ -249,7 +289,7 @@
     {/if}
   </div>
 
-  <SearchFilters bind:searchQuery bind:filterType {isAdmin} {onAddTask} {onHelp} disableAddTask={effectiveDisableAddTask} />
+  <SearchFilters bind:searchQuery bind:filterType bind:filterOwner {isAdmin} {onAddTask} {onHelp} disableAddTask={effectiveDisableAddTask} />
 
   <div class="top-columns">
     {#if feedbackColumn && (isAdmin || feedbackColumn.items.length > 0)}
@@ -368,6 +408,12 @@
     justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
+  }
+
+  .uat-info-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .uat-end-date {

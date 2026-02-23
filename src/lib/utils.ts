@@ -1,7 +1,5 @@
-import type { Column, ColumnId, BoardData, Task } from './types';
+import type { Column, ColumnId, BoardData, Task, TaskChange, ConflictData } from './types';
 import { Octokit } from 'octokit';
-
-export const STORAGE_VERSION = '1.0';
 
 // Focus trap action for modals
 export function trapFocus(node: HTMLElement) {
@@ -107,7 +105,7 @@ export async function loadDataFromGitHub(
   config: GitHubConfig,
   customerId: string,
   password: string
-): Promise<{ success: boolean; data?: Column[]; error?: string; isNew?: boolean; sha?: string; passwordHash?: string; disableAddTask?: boolean; displayName?: string; uatEndDate?: string; devSiteUrl?: string }> {
+): Promise<{ success: boolean; data?: Column[]; error?: string; isNew?: boolean; sha?: string; passwordHash?: string; disableAddTask?: boolean; displayName?: string; uatEndDate?: string; devSiteUrl?: string; uatFolderUrl?: string; contactEmails?: string; version?: number }> {
   try {
     const { data: fileData } = await octokit.rest.repos.getContent({
       owner: config.owner,
@@ -147,7 +145,7 @@ export async function loadDataFromGitHub(
     }
 
     // Validate data format
-    if (content.version === STORAGE_VERSION && content.columns) {
+    if (content.columns) {
       // Merge loaded data with default columns structure
       const defaultColumns = getDefaultColumns();
       const mergedColumns = defaultColumns.map(defaultCol => {
@@ -167,7 +165,10 @@ export async function loadDataFromGitHub(
         disableAddTask: content.disableAddTask || false,
         displayName: content.displayName,
         uatEndDate: content.uatEndDate,
-        devSiteUrl: content.devSiteUrl
+        devSiteUrl: content.devSiteUrl,
+        uatFolderUrl: content.uatFolderUrl,
+        contactEmails: content.contactEmails,
+        version: content.version || 0
       };
     } else {
       throw new Error('Invalid data format');
@@ -194,19 +195,21 @@ export async function saveDataToGitHub(
   customerId: string,
   data: BoardData,
   message: string = 'Update board data',
-  fileSha?: string | null,
-  retryCount: number = 0
-): Promise<{ success: boolean; sha?: string; error?: string }> {
-  const MAX_RETRIES = 3;
-  const RETRY_DELAY_MS = 500; // Start with 500ms
-  
+  fileSha?: string | null
+): Promise<{ success: boolean; sha?: string; error?: string; conflict?: boolean }> {
   try {
+    // Increment version before saving
+    const dataWithVersion = {
+      ...data,
+      version: (data.version || 0) + 1
+    };
+    
     const params: any = {
       owner: config.owner,
       repo: config.repo,
       path: `data/${customerId.toLowerCase()}.json`,
       message,
-      content: btoa(JSON.stringify(data, null, 2)),
+      content: btoa(JSON.stringify(dataWithVersion, null, 2)),
       branch: config.branch
     };
 
@@ -220,45 +223,19 @@ export async function saveDataToGitHub(
       sha: result.content?.sha
     };
   } catch (error: any) {
-    // Handle 409 Conflict errors with retry logic
-    if (error.status === 409 && retryCount < MAX_RETRIES) {
-      console.log(`Save conflict detected, retrying (${retryCount + 1}/${MAX_RETRIES})...`);
-      
-      // Wait with exponential backoff before retrying
-      const delay = RETRY_DELAY_MS * Math.pow(2, retryCount);
-      await new Promise(resolve => setTimeout(resolve, delay));
-      
-      // Fetch latest SHA for retry
-      try {
-        const { data: fileData } = await octokit.rest.repos.getContent({
-          owner: config.owner,
-          repo: config.repo,
-          path: `data/${customerId.toLowerCase()}.json`,
-          ref: config.branch
-        });
-        
-        if (!Array.isArray(fileData) && 'sha' in fileData) {
-          // Retry with latest SHA
-          return saveDataToGitHub(octokit, config, customerId, data, message, fileData.sha, retryCount + 1);
-        }
-      } catch (fetchError) {
-        console.error('Failed to fetch latest SHA for retry:', fetchError);
-      }
-      
-      // If fetch failed, retry without SHA
-      return saveDataToGitHub(octokit, config, customerId, data, message, null, retryCount + 1);
+    // 409 Conflict means someone else modified the file - return conflict flag
+    if (error.status === 409) {
+      return { 
+        success: false,
+        conflict: true,
+        error: 'Someone else has modified this data. Please review the changes.'
+      };
     }
     
-    // Only log as error if it's not a 409 or we've exhausted retries
-    if (error.status !== 409 || retryCount >= MAX_RETRIES) {
-      console.error('Failed to save data:', error);
-    }
-    
+    console.error('Failed to save data:', error);
     return { 
       success: false, 
-      error: error.status === 409 
-        ? 'Save conflict - please refresh and try again' 
-        : 'Failed to save data to GitHub' 
+      error: 'Failed to save data to GitHub' 
     };
   }
 }
@@ -267,7 +244,7 @@ export async function loadDataFromGitHubAdmin(
   octokit: Octokit,
   config: GitHubConfig,
   customerId: string
-): Promise<{ success: boolean; data?: Column[]; error?: string; sha?: string; passwordHash?: string; disableAddTask?: boolean; displayName?: string; uatEndDate?: string; devSiteUrl?: string }> {
+): Promise<{ success: boolean; data?: Column[]; error?: string; sha?: string; passwordHash?: string; disableAddTask?: boolean; displayName?: string; uatEndDate?: string; devSiteUrl?: string; uatFolderUrl?: string; contactEmails?: string; version?: number }> {
   try {
     const { data: fileData } = await octokit.rest.repos.getContent({
       owner: config.owner,
@@ -301,7 +278,7 @@ export async function loadDataFromGitHubAdmin(
     }
 
     // Validate data format
-    if (content.version === STORAGE_VERSION && content.columns) {
+    if (content.columns) {
       // Merge loaded data with default columns structure
       const defaultColumns = getDefaultColumns();
       const mergedColumns = defaultColumns.map(defaultCol => {
@@ -320,7 +297,10 @@ export async function loadDataFromGitHubAdmin(
         disableAddTask: content.disableAddTask || false,
         displayName: content.displayName,
         uatEndDate: content.uatEndDate,
-        devSiteUrl: content.devSiteUrl
+        devSiteUrl: content.devSiteUrl,
+        uatFolderUrl: content.uatFolderUrl,
+        contactEmails: content.contactEmails,
+        version: content.version || 0
       };
     } else {
       throw new Error('Invalid data format');
@@ -373,4 +353,198 @@ export async function deleteDataFromGitHub(
       error: 'Failed to delete customer data from GitHub' 
     };
   }
+}
+
+// Conflict detection functions
+export async function fetchCurrentBoardData(
+  octokit: Octokit,
+  config: GitHubConfig,
+  customerId: string
+): Promise<{ success: boolean; data?: BoardData; sha?: string; error?: string }> {
+  try {
+    // First, get the latest commit SHA for the branch
+    // This helps bypass GitHub's aggressive content caching
+    const { data: refData } = await octokit.rest.git.getRef({
+      owner: config.owner,
+      repo: config.repo,
+      ref: `heads/${config.branch}`
+    });
+    const latestCommitSha = refData.object.sha;
+    
+    // Use the commit SHA as the ref instead of branch name
+    const { data: fileData } = await octokit.rest.repos.getContent({
+      owner: config.owner,
+      repo: config.repo,
+      path: `data/${customerId.toLowerCase()}.json`,
+      ref: latestCommitSha  // Use commit SHA instead of branch name
+    });
+
+    if (Array.isArray(fileData) || !('content' in fileData)) {
+      throw new Error('Unexpected response format');
+    }
+
+    let content: BoardData;
+    
+    if (!fileData.content && fileData.sha) {
+      const { data: blobData } = await octokit.rest.git.getBlob({
+        owner: config.owner,
+        repo: config.repo,
+        file_sha: fileData.sha
+      });
+      
+      const decodedString = atob(blobData.content.replace(/\n/g, ''));
+      content = JSON.parse(decodedString);
+    } else {
+      const base64Content = fileData.content.replace(/\n/g, '');
+      const decodedString = atob(base64Content);
+      content = JSON.parse(decodedString);
+    }
+    
+    return { 
+      success: true, 
+      data: content,
+      sha: fileData.sha
+    };
+  } catch (error: any) {
+    console.error('Failed to fetch current data:', error);
+    return { 
+      success: false, 
+      error: 'Failed to fetch current data from GitHub' 
+    };
+  }
+}
+
+function findTaskInColumns(taskId: number, columns: Column[]): { task: Task; columnId: ColumnId } | null {
+  for (const column of columns) {
+    const task = column.items.find(t => t.id === taskId);
+    if (task) {
+      return { task, columnId: column.id as ColumnId };
+    }
+  }
+  return null;
+}
+
+function tasksAreEqual(task1: Task, task2: Task): boolean {
+  return (
+    task1.description === task2.description &&
+    task1.type === task2.type &&
+    task1.device === task2.device &&
+    JSON.stringify(task1.feedback || []) === JSON.stringify(task2.feedback || []) &&
+    task1.section === task2.section &&
+    task1.owner === task2.owner &&
+    task1.locked === task2.locked &&
+    JSON.stringify(task1.images || []) === JSON.stringify(task2.images || [])
+  );
+}
+
+export function detectConflicts(
+  originalColumns: Column[],
+  localColumns: Column[],
+  remoteData: BoardData,
+  originalVersion?: number,
+  force409Conflict: boolean = false
+): ConflictData {
+  // If this is triggered by a 409, always detect conflicts (don't trust version due to caching)
+  // If versions match and not a 409, no conflict
+  if (!force409Conflict && originalVersion !== undefined && remoteData.version === originalVersion) {
+    return {
+      hasConflict: false,
+      localChanges: [],
+      remoteChanges: []
+    };
+  }
+
+  const localChanges: TaskChange[] = [];
+  const remoteChanges: TaskChange[] = [];
+  
+  // Get all task IDs from all versions
+  const allTaskIds = new Set<number>();
+  [...originalColumns, ...localColumns, ...remoteData.columns].forEach(column => {
+    column.items.forEach(task => allTaskIds.add(task.id));
+  });
+
+  // Compare each task
+  allTaskIds.forEach(taskId => {
+    const originalLocation = findTaskInColumns(taskId, originalColumns);
+    const localLocation = findTaskInColumns(taskId, localColumns);
+    const remoteLocation = findTaskInColumns(taskId, remoteData.columns);
+
+    // Task was added locally
+    if (!originalLocation && localLocation) {
+      localChanges.push({
+        task: localLocation.task,
+        changeType: 'added',
+        toColumn: localLocation.columnId
+      });
+    }
+
+    // Task was added remotely
+    if (!originalLocation && remoteLocation) {
+      remoteChanges.push({
+        task: remoteLocation.task,
+        changeType: 'added',
+        toColumn: remoteLocation.columnId
+      });
+    }
+
+    // Task was deleted locally
+    if (originalLocation && !localLocation) {
+      localChanges.push({
+        task: originalLocation.task,
+        changeType: 'deleted',
+        fromColumn: originalLocation.columnId
+      });
+    }
+
+    // Task was deleted remotely
+    if (originalLocation && !remoteLocation) {
+      remoteChanges.push({
+        task: originalLocation.task,
+        changeType: 'deleted',
+        fromColumn: originalLocation.columnId
+      });
+    }
+
+    // Task exists in all versions - check for moves or modifications
+    if (originalLocation && localLocation && remoteLocation) {
+      // Check local changes
+      if (originalLocation.columnId !== localLocation.columnId) {
+        localChanges.push({
+          task: localLocation.task,
+          changeType: 'moved',
+          fromColumn: originalLocation.columnId,
+          toColumn: localLocation.columnId
+        });
+      } else if (!tasksAreEqual(originalLocation.task, localLocation.task)) {
+        localChanges.push({
+          task: localLocation.task,
+          changeType: 'modified',
+          toColumn: localLocation.columnId
+        });
+      }
+
+      // Check remote changes
+      if (originalLocation.columnId !== remoteLocation.columnId) {
+        remoteChanges.push({
+          task: remoteLocation.task,
+          changeType: 'moved',
+          fromColumn: originalLocation.columnId,
+          toColumn: remoteLocation.columnId
+        });
+      } else if (!tasksAreEqual(originalLocation.task, remoteLocation.task)) {
+        remoteChanges.push({
+          task: remoteLocation.task,
+          changeType: 'modified',
+          toColumn: remoteLocation.columnId
+        });
+      }
+    }
+  });
+
+  return {
+    hasConflict: force409Conflict || remoteChanges.length > 0,
+    localChanges,
+    remoteChanges,
+    remoteData
+  };
 }

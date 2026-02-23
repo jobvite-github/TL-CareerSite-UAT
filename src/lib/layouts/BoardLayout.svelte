@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Column, Task, ModalData, Toast, TaskType, ColumnId, BoardData } from '$lib/types';
+  import type { Column, Task, ModalData, Toast, TaskType, OwnerType, ColumnId, BoardData, ConflictData, FeedbackItem } from '$lib/types';
   import { Octokit } from 'octokit';
-  import { hashPassword, listAllDataFromGitHub, loadDataFromGitHub, loadDataFromGitHubAdmin, saveDataToGitHub, deleteDataFromGitHub, getDefaultColumns, STORAGE_VERSION } from '$lib/utils';
+  import { hashPassword, listAllDataFromGitHub, loadDataFromGitHub, loadDataFromGitHubAdmin, saveDataToGitHub, deleteDataFromGitHub, getDefaultColumns, fetchCurrentBoardData, detectConflicts } from '$lib/utils';
   import type { GitHubConfig } from '$lib/utils';
   import logo from '$lib/assets/employ_logo.svg';
   
@@ -14,6 +14,7 @@
   import TaskModal from '$lib/components/TaskModal.svelte';
   import ConfirmModal from '$lib/components/ConfirmModal.svelte';
   import HelpModal from '$lib/components/HelpModal.svelte';
+  import ConflictModal from '$lib/components/ConflictModal.svelte';
 
   // GitHub Configuration from environment variables
   const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER || 'your-github-username';
@@ -22,8 +23,13 @@
   const GITHUB_BRANCH = import.meta.env.VITE_GITHUB_BRANCH || 'data';
   const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'password-for-admin-login';
 
-  // Initialize Octokit
-  const octokit = new Octokit({ auth: GITHUB_TOKEN });
+  // Initialize Octokit with retry disabled for 409 errors
+  const octokit = new Octokit({ 
+    auth: GITHUB_TOKEN,
+    retry: {
+      enabled: false  // Disable automatic retries - we handle conflicts manually
+    }
+  });
   const githubConfig: GitHubConfig = {
     owner: GITHUB_OWNER,
     repo: GITHUB_REPO,
@@ -46,6 +52,21 @@
   let displayName = $state<string>('');
   let uatEndDate = $state<string>('');
   let devSiteUrl = $state<string>('');
+  let uatFolderUrl = $state<string>('');
+  let contactEmails = $state<string>('');
+  let version = $state<number>(0);
+  
+  // Conflict detection state
+  let originalColumns = $state<Column[]>([]);
+  let originalVersion = $state<number | undefined>(undefined);
+  let showConflictModal = $state(false);
+  let conflictData = $state<ConflictData>({
+    hasConflict: false,
+    localChanges: [],
+    remoteChanges: []
+  });
+  let remoteSha = $state<string | undefined>(undefined); // Store remote SHA for conflict resolution
+  let isLoadingRemoteData = $state(false); // Loading state for fetching remote data
   
   // Admin mode
   let isAdminMode = $state(false);
@@ -91,6 +112,11 @@
       columns = result.data;
       isAuthenticated = true;
       
+      // Store original state for conflict detection
+      originalColumns = JSON.parse(JSON.stringify(result.data));
+      originalVersion = result.version || 0;
+      version = result.version || 0;
+      
       if (result.sha) {
         fileSha = result.sha;
       }
@@ -103,6 +129,8 @@
       displayName = result.displayName || '';
       uatEndDate = result.uatEndDate || '';
       devSiteUrl = result.devSiteUrl || '';
+      uatFolderUrl = result.uatFolderUrl || '';
+      contactEmails = result.contactEmails || '';
     }
     
     isLoading = false;
@@ -199,7 +227,7 @@
   let modalData = $state<ModalData>({
     description: '',
     device: 'All',
-    feedback: '',
+    feedback: [],
     section: '',
     images: []
   });
@@ -207,6 +235,7 @@
   // Search and filter state
   let searchQuery = $state('');
   let filterType = $state<TaskType | 'All'>('All');
+  let filterOwner = $state<OwnerType | 'All'>('All');
 
   // Toast notifications
   let toasts = $state<Toast[]>([]);
@@ -222,9 +251,6 @@
 
   // Track original data for unsaved changes
   let originalModalData = $state<ModalData | null>(null);
-  
-  // Effective disable state bound from Board component
-  let effectiveDisableAddTask = $state(false);
 
   // Verify admin password
   function handleAdminPasswordSubmit() {
@@ -264,6 +290,11 @@
       isAdmin = true; // Admin login
       isAdminMode = false;
       
+      // Store original state for conflict detection
+      originalColumns = JSON.parse(JSON.stringify(result.data));
+      originalVersion = result.version || 0;
+      version = result.version || 0;
+      
       if (result.sha) {
         fileSha = result.sha;
       }
@@ -278,6 +309,8 @@
       displayName = result.displayName || '';
       uatEndDate = result.uatEndDate || '';
       devSiteUrl = result.devSiteUrl || '';
+      uatFolderUrl = result.uatFolderUrl || '';
+      contactEmails = result.contactEmails || '';
       
       // Don't save a customer-specific session when admin selects them
       // The admin session is sufficient, and we don't want to give admin
@@ -292,15 +325,17 @@
   }
   
   // Handle admin customer creation
-  async function handleAdminCreateCustomer(customerId: string, password: string, displayName: string, uatEndDate: string, devUrl: string) {
+  async function handleAdminCreateCustomer(customerId: string, password: string, displayName: string, uatEndDate: string, devUrl: string, uatFolderUrl: string, contactEmails: string) {
     isLoading = true;
     
     const boardData: BoardData = {
       displayName: displayName,
       uatEndDate: uatEndDate,
       devSiteUrl: devUrl,
+      uatFolderUrl: uatFolderUrl || undefined,
+      contactEmails: contactEmails || undefined,
       passwordHash: await hashPassword(password),
-      version: STORAGE_VERSION,
+      version: 0,
       columns: getDefaultColumns(),
       disableAddTask: false
     };
@@ -336,10 +371,12 @@
   }
   
   // Handle account info update
-  async function handleUpdateAccountInfo(newDisplayName: string, newUatEndDate: string, newDevSiteUrl: string, newPassword: string) {
+  async function handleUpdateAccountInfo(newDisplayName: string, newUatEndDate: string, newDevSiteUrl: string, newUatFolderUrl: string, newContactEmails: string, newPassword: string) {
     displayName = newDisplayName;
     uatEndDate = newUatEndDate;
     devSiteUrl = newDevSiteUrl;
+    uatFolderUrl = newUatFolderUrl;
+    contactEmails = newContactEmails;
     
     // Hash new password if provided, otherwise keep existing
     if (newPassword.trim()) {
@@ -366,6 +403,11 @@
       isAuthenticated = true;
       isAdmin = false; // Regular user login
       
+      // Store original state for conflict detection
+      originalColumns = JSON.parse(JSON.stringify(result.data));
+      originalVersion = result.version || 0;
+      version = result.version || 0;
+      
       // Store SHA for future updates
       if (result.sha) {
         fileSha = result.sha;
@@ -381,6 +423,7 @@
       displayName = result.displayName || '';
       uatEndDate = result.uatEndDate || '';
       devSiteUrl = result.devSiteUrl || '';
+      contactEmails = result.contactEmails || '';
       
       // Save session for this customer
       saveSession(id, false);
@@ -406,13 +449,20 @@
     isSaving = true;
     hasPendingSave = false;
     
+    await performSave();
+  }
+
+  // Actual save logic extracted for reuse
+  async function performSave() {
     try {
       const boardData: BoardData = {
         displayName,
         uatEndDate,
         devSiteUrl,
+        uatFolderUrl,
+        contactEmails,
         passwordHash: storedPasswordHash,
-        version: STORAGE_VERSION,
+        version,
         columns,
         disableAddTask
       };
@@ -424,10 +474,44 @@
         if (result.sha) {
           fileSha = result.sha;
         }
+        
+        // Update original state after successful save
+        originalColumns = JSON.parse(JSON.stringify(columns));
+        version = version + 1;
+        originalVersion = version;
+        
         showToast('Changes saved', 'success');
+      } else if (result.conflict) {
+        // 409 conflict detected - fetch current data and show conflict modal
+        const remoteDataResult = await fetchCurrentBoardData(octokit, githubConfig, id);
+        
+        if (remoteDataResult.success && remoteDataResult.data) {
+          // Store the remote SHA for reference
+          remoteSha = remoteDataResult.sha;
+          
+          const conflicts = detectConflicts(
+            originalColumns,
+            columns,
+            remoteDataResult.data,
+            originalVersion,
+            true  // Force conflict detection since we got a 409
+          );
+          
+          // Show conflict modal
+          conflictData = conflicts;
+          showConflictModal = true;
+          
+          // Clear pending saves - user must resolve conflict first
+          hasPendingSave = false;
+        } else {
+          showToast('Conflict detected but unable to fetch remote changes', 'error');
+        }
       } else {
         showToast(result.error || 'Failed to save changes', 'error');
       }
+    } catch (error) {
+      console.error('Save error:', error);
+      showToast('Failed to save changes', 'error');
     } finally {
       isSaving = false;
       
@@ -437,6 +521,109 @@
         setTimeout(() => handleSave(), 100);
       }
     }
+  }
+
+  // Conflict modal handlers
+  async function handleConflictUseRemote() {
+    if (conflictData.remoteData) {
+      isLoadingRemoteData = true;
+      
+      let freshData = conflictData.remoteData;
+      
+      // Only retry fetching if we couldn't see the remote changes (due to cache)
+      // If remoteChanges is populated, we already have fresh data
+      if (conflictData.remoteChanges.length === 0) {
+        // Re-fetch to ensure we have the freshest data (not cached)
+        let previousSha = remoteSha;
+        let attempts = 0;
+        const maxAttempts = 5;
+        
+        showToast('Fetching latest data from server...', 'info');
+        
+        // Retry with delays to give cache time to clear (up to 32s total: 2s+4s+8s+16s)
+        while (attempts < maxAttempts) {
+          // Wait before retrying (exponential backoff: 2s, 4s, 8s, 16s, 32s)
+          await new Promise(resolve => setTimeout(resolve, 2000 * Math.pow(2, attempts)));
+          
+          const retryResult = await fetchCurrentBoardData(octokit, githubConfig, customerId);
+          if (retryResult.success && retryResult.data && retryResult.sha) {
+            // Always use the latest fetched data
+            freshData = retryResult.data;
+            remoteSha = retryResult.sha;
+            
+            // If we got a different SHA than before, we have fresh data
+            if (retryResult.sha !== previousSha) {
+              break;
+            }
+            previousSha = retryResult.sha;
+          }
+          attempts++;
+        }
+      }
+      
+      // Update SHA to remote version
+      if (remoteSha) {
+        fileSha = remoteSha;
+      }
+      
+      // Merge loaded data with default columns structure
+      const defaultColumns = getDefaultColumns();
+      const mergedColumns = defaultColumns.map(defaultCol => {
+        const loadedCol = freshData.columns.find(col => col.id === defaultCol.id);
+        return {
+          ...defaultCol,
+          items: loadedCol?.items || []
+        };
+      });
+      
+      // Apply remote changes
+      columns = mergedColumns;
+      originalColumns = JSON.parse(JSON.stringify(mergedColumns));
+      originalVersion = freshData.version || 0;
+      version = freshData.version || 0;
+      
+      // Update other fields if present
+      if (freshData.displayName !== undefined) {
+        displayName = freshData.displayName;
+      }
+      if (freshData.uatEndDate !== undefined) {
+        uatEndDate = freshData.uatEndDate;
+      }
+      if (freshData.devSiteUrl !== undefined) {
+        devSiteUrl = freshData.devSiteUrl;
+      }
+      if (freshData.contactEmails !== undefined) {
+        contactEmails = freshData.contactEmails;
+      }
+      if (freshData.disableAddTask !== undefined) {
+        disableAddTask = freshData.disableAddTask;
+      }
+      
+      // Clear conflict data
+      conflictData = {
+        hasConflict: false,
+        localChanges: [],
+        remoteChanges: []
+      };
+      remoteSha = undefined;
+      
+      isLoadingRemoteData = false;
+      showToast('Loaded server version successfully', 'success');
+    }
+    
+    // Close modal after state updates
+    showConflictModal = false;
+  }
+
+  function handleConflictCancel() {
+    // Clear conflict data
+    conflictData = {
+      hasConflict: false,
+      localChanges: [],
+      remoteChanges: []
+    };
+    remoteSha = undefined;
+    showConflictModal = false;
   }
 
   // Toast functions
@@ -514,7 +701,7 @@
     modalData = {
       description: '',
       device: 'All',
-      feedback: '',
+      feedback: [],
       section: '',
       images: []
     };
@@ -530,12 +717,27 @@
     originalColumnId = columnId;
     // Set view-only mode if customer tries to view In Progress task
     isModalViewOnly = !isAdmin && columnId === 'inprogress' || columnId === 'cancelled';
+    // Migrate old string feedback to array format (for backwards compatibility)
+    let feedbackArray: FeedbackItem[];
+    if (Array.isArray(item.feedback)) {
+      // Migrate old 'admin' author values to 'pm' for backwards compatibility
+      feedbackArray = item.feedback.map(fb => ({
+        ...fb,
+        author: (fb.author === 'admin' as any) ? 'pm' as const : fb.author
+      }));
+    } else if (typeof item.feedback === 'string' && (item.feedback as string).trim()) {
+      // Legacy data migration from string to array
+      feedbackArray = [{ text: item.feedback as string, author: 'pm' as const, createdAt: item.updatedAt }];
+    } else {
+      feedbackArray = [];
+    }
     modalData = {
       description: item.description,
       type: item.type,
       device: item.device,
-      feedback: item.feedback || '',
+      feedback: feedbackArray,
       section: item.section || '',
+      owner: item.owner,
       images: item.images || []
     };
     originalModalData = { ...modalData };
@@ -593,6 +795,16 @@
       return;
     }
 
+    if (isAdmin && !modalData.type) {
+      validationError = 'Type is required for admin';
+      return;
+    }
+
+    if (isAdmin && !modalData.owner) {
+      validationError = 'Owner is required for admin';
+      return;
+    }
+
     validationError = '';
 
     if (isNewItem) {
@@ -602,8 +814,9 @@
         description: modalData.description.trim(),
         type: modalData.type,
         device: modalData.device,
-        feedback: modalData.feedback.trim(),
+        feedback: modalData.feedback,
         section: modalData.section.trim(),
+        owner: modalData.owner,
         createdAt: now,
         updatedAt: now,
         locked: selectedColumnId !== 'todo',
@@ -623,8 +836,9 @@
       selectedItem.description = modalData.description.trim();
       selectedItem.type = modalData.type;
       selectedItem.device = modalData.device;
-      selectedItem.feedback = modalData.feedback.trim();
+      selectedItem.feedback = modalData.feedback;
       selectedItem.section = modalData.section.trim();
+      selectedItem.owner = modalData.owner;
       selectedItem.images = modalData.images || [];
 
       if (originalColumnId !== selectedColumnId) {
@@ -671,8 +885,10 @@
               displayName,
               uatEndDate,
               devSiteUrl,
+              uatFolderUrl,
+              contactEmails,
               passwordHash: storedPasswordHash,
-              version: STORAGE_VERSION,
+              version,
               columns,
               disableAddTask
             };
@@ -709,6 +925,14 @@
   function closeHelpModal() {
     showHelpModal = false;
   }
+
+  function getNotifyTeamMailto(): string {
+    const subject = encodeURIComponent(`UAT Alert! - ${displayName} needs attention`);
+    const baseUrl = `${window.location.origin}${window.location.pathname}`;
+    const uatUrl = `${baseUrl}#${customerId}`;
+    const body = encodeURIComponent(`The UAT page for ${displayName} has sent an alert to the team.\n\nPlease check the UAT page as soon as possible:\n${uatUrl}\n\n`);
+    return `mailto:${contactEmails}?subject=${subject}&body=${body}`;
+  }
 </script>
 
 <nav class="navbar">
@@ -718,6 +942,13 @@
     </div>
   </div>
   <div class="nav-right">
+    {#if isAuthenticated && contactEmails}
+      <ButtonComponent
+        text="Notify Team"
+        href={getNotifyTeamMailto()}
+        type="hollow"
+      />
+    {/if}
     {#if isAuthenticated && devSiteUrl}
       <ButtonComponent
         text="Open Dev Site"
@@ -757,15 +988,17 @@
     displayName={displayName}
     uatEndDate={uatEndDate}
     devSiteUrl={devSiteUrl}
+    uatFolderUrl={uatFolderUrl}
+    contactEmails={contactEmails}
     customerId={customerId || usernameInput}
     {columns}
     {isAdmin}
     bind:searchQuery
     bind:filterType
+    bind:filterOwner
     bind:draggedItem
     bind:dragOverColumn
     bind:disableAddTask
-    bind:effectiveDisableAddTask
     onAddTask={openNewItemModal}
     onHelp={openHelpModal}
     onItemDragStart={handleDragStart}
@@ -787,6 +1020,7 @@
     bind:selectedColumnId
     {columns}
     {isAdmin}
+    {displayName}
     {validationError}
     onSave={saveModal}
     onDelete={confirmDelete}
@@ -810,8 +1044,16 @@
 
   <HelpModal
     show={showHelpModal}
-    disableAddTask={effectiveDisableAddTask}
+    {disableAddTask}
     onClose={closeHelpModal}
+  />
+
+  <ConflictModal
+    show={showConflictModal}
+    {conflictData}
+    loading={isLoadingRemoteData}
+    onUseRemote={handleConflictUseRemote}
+    onCancel={handleConflictCancel}
   />
 {/if}
 

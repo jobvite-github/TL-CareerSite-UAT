@@ -61,13 +61,18 @@
 		--success-bg: #d1f4e0;
 		--success-hover: #059669;
 		--warning: #f59e0b;
+		--warning-light: #ffe0b2;
 		--error: #ef4444;
+		--error-light: #ffcdd2;
+		--info: #3730a3;
+		--info-light: #bbdefb;
 		--link: #6366f1;
 		--border-radius: 8px;
 		--font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 		--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 		--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 		--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+		--primary-shadow-color: rgba(40, 19, 48, 0.2);
 		color-scheme: light;
 		background: var(--bg-1);
 		color: var(--fg-1);
@@ -89,6 +94,7 @@
 		--fg-1: #f8f9fc;
 		--fg-2: #b4bcd0;
 		--fg-3: #8792a8;
+		--primary-shadow-color: rgba(143, 61, 184, 0.1);
 	}
 
 	:global(body) {

@@ -1,11 +1,12 @@
 <script lang="ts">
-  import type { TaskType } from '$lib/types';
-  import { TASK_TYPES } from '$lib/types';
+  import type { TaskType, OwnerType } from '$lib/types';
+  import { TASK_TYPES, OWNER_TYPES } from '$lib/types';
   import ButtonComponent from './Button.svelte';
 
   let {
     searchQuery = $bindable<string>(''),
     filterType = $bindable<TaskType | 'All'>('All'),
+    filterOwner = $bindable<OwnerType | 'All'>('All'),
     disableAddTask = false,
     isAdmin = false,
     onAddTask,
@@ -13,6 +14,7 @@
   }: {
     searchQuery: string;
     filterType: TaskType | 'All';
+    filterOwner: OwnerType | 'All';
     disableAddTask?: boolean;
     isAdmin?: boolean;
     onAddTask: () => void;
@@ -32,6 +34,12 @@
       <option value="All">All Types</option>
       {#each TASK_TYPES as type}
         <option value={type}>{type}</option>
+      {/each}
+    </select>
+    <select class="filter-select" bind:value={filterOwner}>
+      <option value="All">All Owners</option>
+      {#each OWNER_TYPES as owner}
+        <option value={owner}>{owner}</option>
       {/each}
     </select>
   </div>

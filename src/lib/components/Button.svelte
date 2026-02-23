@@ -2,6 +2,7 @@
   let {
     element = 'a',
     text = 'Button',
+    loadingText,
     title,
     href = '#',
     type = 'primary',
@@ -9,10 +10,12 @@
     target = '',
     rel = '',
     disabled=false,
+    loading=false,
     onClick
   }: {
     element?: string;
     text?: string;
+    loadingText?: string;
     title?: string;
     href?: string;
     type?: string;
@@ -20,8 +23,11 @@
     target?: string;
     rel?: string;
     disabled?: boolean;
+    loading?: boolean;
     onClick?: () => void;
   } = $props();
+
+  const displayText = $derived(loading && loadingText ? loadingText : text);
 
   function handleClick(e: MouseEvent) {
     if (onClick) {
@@ -34,20 +40,28 @@
 <div class="employ-button">
   <svelte:element
     this={element}
-    {...(element === 'a' ? { href, target, rel } : { type: 'button', disabled })}
+    {...(element === 'a' ? { href, target, rel } : { type: 'button', disabled: disabled || loading })}
     onclickcapture={handleClick}
-    class="button button-{type} {size ? `button-${size}` : ''}"
+    class="button button-{type} {size ? `button-${size}` : ''} {loading ? 'button-loading' : ''}"
     role="button"
     title="{title || text}"
   >
-    {text}
+    {#if loading}
+      <span class="spinner"></span>
+    {/if}
+    <span class:loading-text={loading}>{displayText}</span>
   </svelte:element>
 </div>
 
 <style>
   .button {
-    border-radius: 11px;
+    border-radius: var(--border-radius);
     padding: 13px 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
     font-weight: 600;
     font-size: 1rem;
     transition: all .15s ease-in-out;
@@ -64,6 +78,28 @@
 
   .button-small {
     padding: 8px 32px;
+  }
+
+  .button-loading {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  .loading-text {
+    opacity: 0.7;
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 
   .button-primary,
@@ -112,7 +148,7 @@
 
     &:is(:hover,:focus,:active) {
       background-color: #fff;
-      color: var(--fg-1);
+      color: var(--primary);
     }
   }
 

@@ -17,7 +17,7 @@
     passwordError: string;
     onPasswordSubmit: () => void;
     onSelectCustomer: (customerId: string) => void;
-    onCreateCustomer: (customerId: string, password: string, displayName: string, uatEndDate: string, devUrl: string) => void;
+    onCreateCustomer: (customerId: string, password: string, displayName: string, uatEndDate: string, devUrl: string, uatFolderUrl: string, contactEmails: string) => void;
     onDeleteCustomer: (customerId: string) => void;
   } = $props();
   
@@ -27,6 +27,8 @@
   let newDisplayName = $state('');
   let newUatEndDate = $state('');
   let newDevUrl = $state('');
+  let newUatFolderUrl = $state('');
+  let newContactEmails = $state('');
   let createError = $state('');
   let deleteConfirmId = $state<string | null>(null);
   
@@ -43,6 +45,8 @@
       newDisplayName = '';
       newUatEndDate = '';
       newDevUrl = '';
+      newUatFolderUrl = '';
+      newContactEmails = '';
       createError = '';
     }
   }
@@ -96,7 +100,7 @@
       return;
     }
     
-    onCreateCustomer(newCustomerId.toLowerCase(), newCustomerPassword, newDisplayName, newUatEndDate, newDevUrl);
+    onCreateCustomer(newCustomerId.toLowerCase(), newCustomerPassword, newDisplayName, newUatEndDate, newDevUrl, newUatFolderUrl, newContactEmails);
     
     // Reset form
     newCustomerId = '';
@@ -104,6 +108,8 @@
     newDisplayName = '';
     newUatEndDate = '';
     newDevUrl = '';
+    newUatFolderUrl = '';
+    newContactEmails = '';
     createError = '';
     showCreateForm = false;
   }
@@ -232,6 +238,26 @@
                 bind:value={newDevUrl}
                 placeholder="customercareers-dev.ttcportals.com"
                 required
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="new-uat-folder-url">UAT Folder URL (Optional)</label>
+              <input
+                id="new-uat-folder-url"
+                type="text"
+                bind:value={newUatFolderUrl}
+                placeholder="https://drive.google.com/..." 
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="new-contact-emails">Contact Emails (Optional)</label>
+              <input
+                id="new-contact-emails"
+                type="text"
+                bind:value={newContactEmails}
+                placeholder="email1@example.com, email2@example.com" 
               />
             </div>
             

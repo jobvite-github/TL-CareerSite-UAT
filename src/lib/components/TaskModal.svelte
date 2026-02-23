@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { ModalData, TaskType, Column, ColumnId } from '$lib/types';
-  import { TASK_TYPES, DEVICE_TYPES } from '$lib/types';
+  import type { ModalData, TaskType, Column, ColumnId, FeedbackItem } from '$lib/types';
+  import { TASK_TYPES, DEVICE_TYPES, OWNER_TYPES } from '$lib/types';
   import { trapFocus } from '$lib/utils';
 
   import ButtonComponent from '$lib/components/Button.svelte';
@@ -14,6 +14,7 @@
     selectedColumnId = $bindable<ColumnId>(),
     columns,
     isAdmin = false,
+    displayName = '',
     validationError = '',
     onSave,
     onDelete,
@@ -27,11 +28,19 @@
     selectedColumnId: ColumnId;
     columns: Column[];
     isAdmin?: boolean;
+    displayName?: string;
     validationError?: string;
     onSave: () => void;
     onDelete: () => void;
     onCancel: () => void;
   } = $props();
+  
+  // Local state for new feedback input
+  let newFeedbackText = $state('');
+  let feedbackRole = $state<'pm' | 'cws-dev' | undefined>(undefined);
+  let editingFeedbackIndex = $state<number | null>(null);
+  let editingFeedbackText = $state('');
+  let editingFeedbackAuthor = $state<'pm' | 'cws-dev' | undefined>(undefined);
   
   // Filter columns for non-admin users (exclude inprogress, feedback, retest, and cancelled, but always include the current column)
   const availableColumns = $derived(
@@ -42,6 +51,120 @@
           (col.id !== 'inprogress' && col.id !== 'feedback' && col.id !== 'retest' && col.id !== 'cancelled')
         )
   );
+  
+  // Format date for display
+  function formatDate(isoString: string): string {
+    const date = new Date(isoString);
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  }
+  
+  // Format author label for display
+  function formatAuthor(author: 'customer' | 'pm' | 'cws-dev' | 'admin'): string {
+    if (author === 'pm') return 'PM';
+    if (author === 'cws-dev') return 'CWS Dev';
+    if (author === 'admin') return 'Admin';
+    return displayName || 'Customer';
+  }
+  
+  // Handle save with new feedback
+  function handleSaveClick() {
+    // First, save any feedback that's currently being edited
+    if (editingFeedbackIndex !== null) {
+      if (!editingFeedbackText.trim()) {
+        return; // Can't save empty feedback text
+      }
+      
+      const updatedFeedback = [...modalData.feedback];
+      const currentFeedback = updatedFeedback[editingFeedbackIndex];
+      
+      // For admins, require author selection; for customers, keep as 'customer'
+      const newAuthor = isAdmin ? editingFeedbackAuthor : currentFeedback.author;
+      
+      if (isAdmin && !editingFeedbackAuthor) {
+        return; // Admin must select an author when editing
+      }
+      
+      updatedFeedback[editingFeedbackIndex] = {
+        ...currentFeedback,
+        text: editingFeedbackText.trim(),
+        author: newAuthor!,
+        editedAt: new Date().toISOString()
+      };
+      modalData.feedback = updatedFeedback;
+      editingFeedbackIndex = null;
+      editingFeedbackText = '';
+      editingFeedbackAuthor = undefined;
+    }
+    
+    // Then, add any new feedback text
+    if (newFeedbackText.trim()) {
+      if (isAdmin && !feedbackRole) {
+        // Shouldn't happen with required radios, but add safety check
+        return;
+      }
+      const newFeedback: FeedbackItem = {
+        text: newFeedbackText.trim(),
+        author: isAdmin ? feedbackRole! : 'customer',
+        createdAt: new Date().toISOString()
+      };
+      modalData.feedback = [...modalData.feedback, newFeedback];
+      newFeedbackText = ''; // Clear the input
+      feedbackRole = undefined; // Reset selection
+    }
+    onSave();
+  }
+  
+  // Edit feedback
+  function startEditFeedback(index: number) {
+    editingFeedbackIndex = index;
+    editingFeedbackText = modalData.feedback[index].text;
+    const author = modalData.feedback[index].author;
+    // Map author to editable format
+    editingFeedbackAuthor = author === 'pm' ? 'pm' : author === 'cws-dev' ? 'cws-dev' : undefined;
+  }
+  
+  function saveEditFeedback() {
+    if (editingFeedbackIndex !== null && editingFeedbackText.trim()) {
+      const updatedFeedback = [...modalData.feedback];
+      const currentFeedback = updatedFeedback[editingFeedbackIndex];
+      
+      // For admins, require author selection; for customers, keep as 'customer'
+      const newAuthor = isAdmin ? editingFeedbackAuthor : currentFeedback.author;
+      
+      if (isAdmin && !editingFeedbackAuthor) {
+        return; // Admin must select an author
+      }
+      
+      updatedFeedback[editingFeedbackIndex] = {
+        ...currentFeedback,
+        text: editingFeedbackText.trim(),
+        author: newAuthor!,
+        editedAt: new Date().toISOString()
+      };
+      modalData.feedback = updatedFeedback;
+      editingFeedbackIndex = null;
+      editingFeedbackText = '';
+      editingFeedbackAuthor = undefined;
+    }
+  }
+  
+  function cancelEditFeedback() {
+    editingFeedbackIndex = null;
+    editingFeedbackText = '';
+    editingFeedbackAuthor = undefined;
+  }
+  
+  // Delete feedback
+  function deleteFeedback(index: number) {
+    modalData.feedback = modalData.feedback.filter((_, i) => i !== index);
+  }
 
   function handleOverlayClick(e: MouseEvent) {
     if (e.target === e.currentTarget) {
@@ -225,12 +348,24 @@
 
         <div class="form-group">
           <label for="device">Device</label>
-          <select id="device" bind:value={modalData.device} disabled={isViewOnly || isLocked}>
+          <select id="device" bind:value={modalData.device} disabled={isViewOnly || (isLocked && !isAdmin)}>
             {#each DEVICE_TYPES as device}
               <option value="{device}">{device}</option>
             {/each}
           </select>
         </div>
+
+        {#if isAdmin}
+          <div class="form-group">
+            <label for="owner">Owner *</label>
+            <select id="owner" bind:value={modalData.owner} required>
+              <option value="">-- Not Set --</option>
+              {#each OWNER_TYPES as owner}
+                <option value="{owner}">{owner}</option>
+              {/each}
+            </select>
+          </div>
+        {/if}
 
         <div class="form-group">
           <label for="description">Description *</label>
@@ -260,19 +395,113 @@
         </div>
 
         <div class="form-group">
-          <label for="feedback">Feedback / Notes</label>
-          <textarea 
-            id="feedback"
-            bind:value={modalData.feedback}
-            rows="3"
-            placeholder="Enter feedback or additional notes..."
-            disabled={isViewOnly}
-            readonly={isViewOnly}
-          ></textarea>
+          <div class="label">Feedback / Notes</div>
+          
+          {#if modalData.feedback.length > 0}
+            <div class="feedback-list">
+              {#each modalData.feedback as feedbackItem, index}
+                <div 
+                  class="feedback-item"
+                  class:feedback-align-left={(isAdmin && feedbackItem.author === 'customer') || (!isAdmin && feedbackItem.author !== 'customer')}
+                  class:feedback-align-right={(isAdmin && feedbackItem.author !== 'customer') || (!isAdmin && feedbackItem.author === 'customer')}
+                >
+                  {#if editingFeedbackIndex === index}
+                    <!-- Edit mode -->
+                    {#if isAdmin}
+                      <div class="feedback-role-selector">
+                        <label>
+                          <input type="radio" bind:group={editingFeedbackAuthor} value="cws-dev" required />
+                          <span>CWS Dev</span>
+                        </label>
+                        <label>
+                          <input type="radio" bind:group={editingFeedbackAuthor} value="pm" required />
+                          <span>PM</span>
+                        </label>
+                      </div>
+                    {/if}
+                    <textarea
+                      bind:value={editingFeedbackText}
+                      rows="3"
+                      class="feedback-edit-textarea"
+                    ></textarea>
+                    <div class="feedback-edit-actions">
+                      <button type="button" class="feedback-save-btn" onclick={saveEditFeedback}>Save</button>
+                      <button type="button" class="feedback-cancel-btn" onclick={cancelEditFeedback}>Cancel</button>
+                    </div>
+                  {:else}
+                    <!-- View mode -->
+                    <div class="feedback-header">
+                      <span 
+                        class="feedback-author" 
+                        class:pm={feedbackItem.author === 'pm'}
+                        class:cws-dev={feedbackItem.author === 'cws-dev'}
+                        class:customer={feedbackItem.author === 'customer'}
+                      >
+                        {formatAuthor(feedbackItem.author)}
+                      </span>
+                      <div class="feedback-header-right">
+                        <span class="feedback-date">
+                          {formatDate(feedbackItem.createdAt)}
+                          {#if feedbackItem.editedAt}
+                            <span class="edited-indicator" title={'Edited at ' + formatDate(feedbackItem.editedAt)}>(edited)</span>
+                          {/if}
+                        </span>
+                        {#if isAdmin && feedbackItem.author !== 'customer'}
+                          <button type="button" class="feedback-action-btn" onclick={() => startEditFeedback(index)} title="Edit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                          </button>
+                          <button type="button" class="feedback-action-btn delete" onclick={() => deleteFeedback(index)} title="Delete">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="3 6 5 6 21 6"/>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                              <line x1="10" y1="11" x2="10" y2="17"/>
+                              <line x1="14" y1="11" x2="14" y2="17"/>
+                            </svg>
+                          </button>
+                        {:else if !isAdmin && feedbackItem.author === 'customer'}
+                          <button type="button" class="feedback-action-btn" onclick={() => startEditFeedback(index)} title="Edit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                            </svg>
+                          </button>
+                        {/if}
+                      </div>
+                    </div>
+                    <div class="feedback-text">{feedbackItem.text}</div>
+                  {/if}
+                </div>
+              {/each}
+            </div>
+          {/if}
+          
+          {#if !isViewOnly}
+            {#if isAdmin}
+              <div class="feedback-role-selector">
+                <label>
+                  <input type="radio" bind:group={feedbackRole} value="cws-dev" required />
+                  <span>CWS Dev</span>
+                </label>
+                <label>
+                  <input type="radio" bind:group={feedbackRole} value="pm" required />
+                  <span>PM</span>
+                </label>
+              </div>
+            {/if}
+            <textarea 
+              id="feedback"
+              bind:value={newFeedbackText}
+              rows="3"
+              placeholder="Add new feedback or notes..."
+            ></textarea>
+          {/if}
         </div>
 
         <div class="form-group">
-          <div class="label">Images ({modalData.images.length}/{MAX_IMAGES})</div>
+          <div class="label">Screenshots ({modalData.images.length}/{MAX_IMAGES})</div>
           {#if modalData.images.length > 0}
             <div class="image-preview-container">
               {#each modalData.images as image, index}
@@ -318,7 +547,7 @@
                 size="small"
                 onClick={() => fileInput?.click()}
               />
-              <small>Max {MAX_IMAGE_SIZE / 1024 / 1024}MB per image, {MAX_IMAGES} images total</small>
+              <small>Max {MAX_IMAGE_SIZE / 1024 / 1024}MB per image, {MAX_IMAGES} images total. <em>Upload replacement images/assets to the UAT Folder.</em></small>
             {/if}
           {/if}
         </div>
@@ -354,7 +583,7 @@
               element="button"
               text="Save"
               type="primary"
-              onClick={onSave}
+              onClick={handleSaveClick}
             />
           {/if}
         </div>
@@ -394,7 +623,7 @@
     background: var(--bg-2);
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    max-width: 800px;
     width: 90%;
     max-height: 90vh;
     display: flex;
@@ -672,6 +901,203 @@
 
   .image-close-btn:hover {
     background: white;
+  }
+
+  .feedback-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: var(--bg-1);
+    border-radius: 4px;
+    box-shadow: inset 0 0 8px var(--primary-shadow-color);
+  }
+
+  .feedback-item {
+    background: var(--bg-2);
+    border: 1px solid var(--bg-3);
+    border-radius: 4px;
+    padding: 0.75rem;
+    width: 75%;
+  }
+  
+  .feedback-item.feedback-align-left {
+    margin-right: auto;
+    margin-left: 0;
+  }
+  
+  .feedback-item.feedback-align-right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--bg-3);
+  }
+  
+  .feedback-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .feedback-author {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  /* Customer - error colors */
+  .feedback-author.customer {
+    color: var(--error);
+  }
+
+  :global(.dark) .feedback-author.customer {
+    color: var(--error-light);
+  }
+  
+  /* PM - info colors */
+  .feedback-author.pm {
+    color: var(--info);
+  }
+
+  :global(.dark) .feedback-author.pm {
+    color: var(--info-light);
+  }
+
+  /* CWS Dev - primary colors */
+  .feedback-author.cws-dev {
+    color: var(--primary);
+  }
+
+  :global(.dark) .feedback-author.cws-dev {
+    color: var(--primary-light);
+  }
+
+  .feedback-date {
+    font-size: 0.75rem;
+    color: var(--fg-2);
+  }
+  
+  .edited-indicator {
+    font-style: italic;
+    margin-left: 0.3rem;
+    opacity: 0.7;
+  }
+  
+  .feedback-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .feedback-action-btn svg {
+    width: 1rem;
+    height: 1rem;
+    color: var(--fg-2);
+  }
+  
+  .feedback-action-btn:hover {
+    opacity: 1;
+  }
+  
+  .feedback-action-btn.delete:hover svg {
+    color: var(--error);
+  }
+  
+  :global(.dark) .feedback-action-btn.delete:hover svg {
+    color: var(--error-light);
+  }
+  
+  .feedback-role-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: var(--bg-1);
+    border-radius: 4px;
+  }
+  
+  .feedback-role-selector label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--fg-1);
+    white-space: nowrap;
+  }
+  
+  .feedback-role-selector input[type="radio"] {
+    cursor: pointer;
+  }
+  
+  .feedback-edit-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--bg-3);
+    border-radius: 4px;
+    background: var(--bg-1);
+    color: var(--fg-1);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    margin-bottom: 0.5rem;
+  }
+  
+  .feedback-edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+  
+  .feedback-save-btn,
+  .feedback-cancel-btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .feedback-save-btn {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .feedback-save-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .feedback-cancel-btn {
+    background: var(--bg-3);
+    color: var(--fg-1);
+  }
+  
+  .feedback-cancel-btn:hover {
+    opacity: 0.8;
+  }
+
+  .feedback-text {
+    color: var(--fg-1);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   @media (max-width: 768px) {

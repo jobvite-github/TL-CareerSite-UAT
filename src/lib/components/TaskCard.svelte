@@ -64,6 +64,27 @@
 >
   <div class="item-content">
       <p class="item-description">{item.description}</p>
+      {#if item.owner || (item.feedback && item.feedback.length > 0)}
+        <div class="item-owner-row">
+          {#if item.owner}
+            <div class="item-owner">
+              <span class="owner-label">Owner:</span>
+              <span 
+                class="owner-value" 
+                class:owner-cws-dev={item.owner === 'CWS Dev'}
+                class:owner-pm={item.owner === 'PM'}
+                class:owner-customer={item.owner === 'Customer'}
+              >{item.owner}</span>
+            </div>
+          {/if}
+          {#if item.feedback && item.feedback.length > 0}
+            <div class="item-feedback-badge">
+              <span class="feedback-icon">💬</span>
+              <span class="feedback-count">{item.feedback.length}</span>
+            </div>
+          {/if}
+        </div>
+      {/if}
       {#if item.images && item.images.length > 0}
         <div class="item-images">
           {#each item.images.slice(0, 3) as image, index}
@@ -197,6 +218,57 @@
     word-break: break-word;
   }
 
+  .item-owner-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item-owner {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--fg-2);
+  }
+
+  .owner-label {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .owner-value {
+    font-weight: 500;
+  }
+
+  /* CWS Dev - info colors */
+  .owner-value.owner-cws-dev {
+    color: var(--info);
+  }
+
+  :global(.dark) .owner-value.owner-cws-dev {
+    color: var(--info-light);
+  }
+
+  /* PM - warning colors */
+  .owner-value.owner-pm {
+    color: var(--warning);
+  }
+
+  :global(.dark) .owner-value.owner-pm {
+    color: var(--warning-light);
+  }
+
+  /* Customer - error colors */
+  .owner-value.owner-customer {
+    color: var(--error);
+  }
+
+  :global(.dark) .owner-value.owner-customer {
+    color: var(--error-light);
+  }
+
   .item-images {
     display: flex;
     gap: 0.5rem;
@@ -241,6 +313,23 @@
     font-weight: 700;
     color: var(--fg-2);
     border: 1px solid var(--bg-3);
+  }
+
+  .item-feedback-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--fg-2);
+  }
+
+  .feedback-icon {
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .feedback-count {
+    font-weight: 600;
   }
 
   /* Dark mode adjustments */

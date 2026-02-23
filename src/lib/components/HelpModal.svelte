@@ -50,37 +50,46 @@
         </div>
       {/if}
       <div class="modal-header">
-        <h2>Status Guide</h2>
+        <h2>Images & Assets</h2>
       </div>
       <div class="modal-body">
         <div class="modal-section">
+          <p>All images and assets needed for your feedback or requests should be uploaded to the <strong>UAT Folder</strong>.</p>
+          <p>You can access the UAT Folder by clicking the <strong>"UAT Folder"</strong> button next to the UAT Review Deadline.</p>
+        </div>
+      </div>
+      <div class="modal-header">
+        <h2>Status Guide</h2>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section info-variant">
           <h3>To Do</h3>
           <p>By default, all UAT items should be set to "To Do"</p>
           <p>You'll also need to set any items that has failed during re-test back to "To Do"</p>
         </div>
 
-        <div class="modal-section">
-          <h3>Feedback Needed</h3>
-          <p>Requires your attention, please check under the "Feedback Needed" column as we will input any questions on there</p>
+        <div class="modal-section alert-variant">
+          <h3>Needs Feedback</h3>
+          <p>Requires your attention, please check under the "FEEDBACK" column as we will input any questions on there</p>
           <p>Please change the status to "To Do" after you have provided your feedback</p>
         </div>
 
-        <div class="modal-section">
+        <div class="modal-section warning-variant">
           <h3>Re-Test</h3>
           <p>Item has been updated and is ready to be tested again</p>
         </div>
 
-        <div class="modal-section">
-          <h3>Done</h3>
+        <div class="modal-section success-variant">
+          <h3>Approved</h3>
           <p>Item is confirmed to be fixed / resolved</p>
         </div>
 
-        <div class="modal-section">
+        <div class="modal-section subtle-variant">
           <h3>In Progress</h3>
           <p>This means that we are working on the specific UAT item</p>
         </div>
 
-        <div class="modal-section">
+        <div class="modal-section subtle-variant">
           <h3>Cancelled</h3>
           <p>Item is cancelled</p>
         </div>
@@ -175,6 +184,94 @@
     color: var(--primary);
     font-size: 1.1rem;
     font-weight: 700;
+  }
+
+  /* Alert variant (Needs Feedback) */
+  .modal-section.alert-variant {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-left: 4px solid var(--error);
+  }
+
+  .modal-section.alert-variant h3 {
+    color: #991b1b;
+  }
+
+  /* Warning variant (Re-Test) */
+  .modal-section.warning-variant {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 4px solid var(--warning);
+  }
+
+  .modal-section.warning-variant h3 {
+    color: #92400e;
+  }
+
+  /* Info variant (To Do) */
+  .modal-section.info-variant {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-left: 4px solid var(--primary);
+  }
+
+  .modal-section.info-variant h3 {
+    color: #3730a3;
+  }
+
+  /* Success variant (Approved) */
+  .modal-section.success-variant {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-left: 4px solid var(--success);
+  }
+
+  .modal-section.success-variant h3 {
+    color: #065f46;
+  }
+
+  /* Subtle variant (In Progress, Cancelled) */
+  .modal-section.subtle-variant {
+    background: var(--bg-1);
+    border-left: 4px solid var(--bg-3);
+    opacity: 0.8;
+  }
+
+  .modal-section.subtle-variant h3 {
+    color: var(--fg-2);
+  }
+
+  /* Dark mode styles */
+  :global(.dark) .modal-section.alert-variant {
+    background: linear-gradient(135deg, rgba(255, 235, 238, 0.15) 0%, rgba(255, 205, 210, 0.15) 100%);
+    border-color: rgba(244, 67, 54, 0.6);
+  }
+
+  :global(.dark) .modal-section.alert-variant h3 {
+    color: #ffcdd2;
+  }
+
+  :global(.dark) .modal-section.warning-variant {
+    background: linear-gradient(135deg, rgba(255, 243, 224, 0.15) 0%, rgba(255, 224, 178, 0.15) 100%);
+    border-color: rgba(255, 152, 0, 0.6);
+  }
+
+  :global(.dark) .modal-section.warning-variant h3 {
+    color: #ffe0b2;
+  }
+
+  :global(.dark) .modal-section.info-variant {
+    background: linear-gradient(135deg, rgba(227, 242, 253, 0.15) 0%, rgba(187, 222, 251, 0.15) 100%);
+    border-color: rgba(33, 150, 243, 0.6);
+  }
+
+  :global(.dark) .modal-section.info-variant h3 {
+    color: #bbdefb;
+  }
+
+  :global(.dark) .modal-section.success-variant {
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.15) 0%, rgba(200, 230, 201, 0.15) 100%);
+    border-color: rgba(76, 175, 80, 0.6);
+  }
+
+  :global(.dark) .modal-section.success-variant h3 {
+    color: #c8e6c9;
   }
 
   .modal-section p {

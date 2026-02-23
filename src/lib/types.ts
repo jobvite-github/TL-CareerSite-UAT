@@ -1,18 +1,28 @@
 export const TASK_TYPES = ['Change Request', 'Issue', 'Feature'] as const;
 export const DEVICE_TYPES = ['All', 'Desktop', 'Mobile'] as const;
+export const OWNER_TYPES = ['PM', 'CWS Dev', 'Customer'] as const;
 
 export type DeviceType = typeof DEVICE_TYPES[number];
 export type TaskType = typeof TASK_TYPES[number];
+export type OwnerType = typeof OWNER_TYPES[number];
 
 export type ColumnId = 'todo' | 'inprogress' | 'retest' | 'feedback' | 'done' | 'cancelled';
+
+export interface FeedbackItem {
+	text: string;
+	author: 'customer' | 'pm' | 'cws-dev';
+	createdAt: string;
+	editedAt?: string;
+}
 
 export interface Task {
 	id: number;
 	description: string;
 	type?: TaskType;
 	device: DeviceType;
-	feedback: string;
+	feedback: FeedbackItem[];
 	section: string;
+	owner?: OwnerType;
 	createdAt: string;
 	updatedAt: string;
 	locked?: boolean;
@@ -29,8 +39,10 @@ export interface BoardData {
 	displayName?: string;
 	uatEndDate?: string;
 	devSiteUrl?: string;
+	uatFolderUrl?: string;
+	contactEmails?: string;
 	passwordHash: string;
-	version: string;
+	version: number;
 	columns: Column[];
 	disableAddTask: boolean;
 }
@@ -39,8 +51,9 @@ export interface ModalData {
 	description: string;
 	type?: TaskType;
 	device: DeviceType;
-	feedback: string;
+	feedback: FeedbackItem[];
 	section: string;
+	owner?: OwnerType;
 	images: string[];
 }
 
@@ -48,4 +61,18 @@ export interface Toast {
 	id: number;
 	message: string;
 	type: 'success' | 'error' | 'info';
+}
+
+export interface TaskChange {
+	task: Task;
+	changeType: 'added' | 'modified' | 'deleted' | 'moved';
+	fromColumn?: ColumnId;
+	toColumn?: ColumnId;
+}
+
+export interface ConflictData {
+	hasConflict: boolean;
+	localChanges: TaskChange[];
+	remoteChanges: TaskChange[];
+	remoteData?: BoardData;
 }
