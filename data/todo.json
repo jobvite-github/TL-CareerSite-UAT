@@ -58,18 +58,6 @@
           "images": []
         },
         {
-          "id": 1771360954669,
-          "description": "Add \"Owner\" dropdown to task modal when isAdmin is true. Should have values for Integrations, PM, CWS Dev, Customer. Values should be populated with account info data",
-          "type": "Change Request",
-          "device": "All",
-          "feedback": "",
-          "section": "TaskModal",
-          "createdAt": "2026-02-17T20:42:34.669Z",
-          "updatedAt": "2026-02-17T20:42:34.669Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1771604594318,
           "description": "Add section for sharepoint UAT folder",
           "type": "Change Request",
@@ -96,6 +84,18 @@
           "section": "",
           "createdAt": "2026-02-12T21:30:47.404Z",
           "updatedAt": "2026-02-12T21:30:47.404Z",
+          "locked": true,
+          "images": []
+        },
+        {
+          "id": 1771360954669,
+          "description": "Add \"Owner\" dropdown to task modal when isAdmin is true. Should have values for Integrations, PM, CWS Dev, Customer. Values should be populated with account info data",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": "",
+          "section": "TaskModal",
+          "createdAt": "2026-02-17T20:42:34.669Z",
+          "updatedAt": "2026-02-17T20:42:34.669Z",
           "locked": true,
           "images": []
         }
