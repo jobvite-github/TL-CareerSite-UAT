@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.011111",
+  "version": "1.0111111",
   "columns": [
     {
       "id": "todo",
@@ -208,14 +208,15 @@
         {
           "id": 1771604594318,
           "description": "Add section for sharepoint UAT folder",
-          "type": "Change Request",
+          "type": "Feature",
           "device": "All",
-          "feedback": "",
+          "feedback": [],
           "section": "Account info",
           "createdAt": "2026-02-20T16:23:14.317Z",
           "updatedAt": "2026-02-20T16:23:14.317Z",
           "locked": true,
-          "images": []
+          "images": [],
+          "owner": "CWS Dev"
         }
       ]
     },
