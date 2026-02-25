@@ -2,15 +2,27 @@
   "displayName": "Dean Transportation",
   "uatEndDate": "2026-02-27",
   "devSiteUrl": "https://deantransportationcareers-dev.ttcportals.com/",
-  "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/D/Dean%20Transportation/Implementation/Recruitment%20Marketing/Basic%20Career%20Site/UAT?csf=1&web=1&e=8OriWb",
+  "uatFolderUrl": "",
   "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
-  "version": "1.0111111111",
+  "version": "1.01111111111",
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
-      "items": []
+      "items": [
+        {
+          "id": 1772041529147,
+          "description": "Upon further review, please remove the Our Positions, FAQ, and Events at the top.",
+          "device": "All",
+          "feedback": [],
+          "section": "Career Page",
+          "createdAt": "2026-02-25T17:45:29.147Z",
+          "updatedAt": "2026-02-25T17:45:29.147Z",
+          "locked": false,
+          "images": []
+        }
+      ]
     },
     {
       "id": "inprogress",
