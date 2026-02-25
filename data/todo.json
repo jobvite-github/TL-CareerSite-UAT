@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "tl-cws-devs@employinc.com",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.011111111111111111",
+  "version": "1.0111111111111111111",
   "columns": [
     {
       "id": "todo",
@@ -37,7 +37,7 @@
         },
         {
           "id": 1772047491243,
-          "description": "Add warning message when UAT deadline is approaching.\n\nSomething along the lines of, \"If you do not finish adding tasks before this date and need to extend your UAT review, it could cause significant delays of up to 4 weeks past the last task entry.\"",
+          "description": "Add warning message when UAT deadline is approaching.\n\n\nSomething along the lines of, \"If you do not finish adding tasks before this date and need to extend your UAT review, it could cause significant delays of up to 4 weeks past the last task entry.\"",
           "type": "Change Request",
           "device": "All",
           "feedback": [],
