@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/D/Dean%20Transportation/Implementation/Recruitment%20Marketing/Basic%20Career%20Site/UAT?csf=1&web=1&e=8OriWb",
   "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
-  "version": "1.01111",
+  "version": "1.011111",
   "columns": [
     {
       "id": "todo",
@@ -20,7 +20,13 @@
           "id": 1771428469486,
           "description": "The menu item 'our positions' should point back to the career site job list.",
           "device": "All",
-          "feedback": [],
+          "feedback": [
+            {
+              "text": "The \"Search Jobs\" link already takes the user to the job list page. Do you want to remove the \"Search Jobs\" link? I don't recommend having two links go to the same place.",
+              "author": "cws-dev",
+              "createdAt": "2026-02-25T16:23:13.880Z"
+            }
+          ],
           "section": "Header / Our Positions",
           "createdAt": "2026-02-18T15:27:49.486Z",
           "updatedAt": "2026-02-18T15:27:49.486Z",
