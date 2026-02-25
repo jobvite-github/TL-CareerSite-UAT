@@ -5,11 +5,16 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/D/Dean%20Transportation/Implementation/Recruitment%20Marketing/Basic%20Career%20Site/UAT?csf=1&web=1&e=8OriWb",
   "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
-  "version": "1.0111",
+  "version": "1.01111",
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
       "items": [
         {
           "id": 1771428469486,
@@ -19,17 +24,12 @@
           "section": "Header / Our Positions",
           "createdAt": "2026-02-18T15:27:49.486Z",
           "updatedAt": "2026-02-18T15:27:49.486Z",
-          "locked": false,
+          "locked": true,
           "images": [],
           "owner": "CWS Dev",
           "type": "Change Request"
         }
       ]
-    },
-    {
-      "id": "inprogress",
-      "title": "In Progress",
-      "items": []
     },
     {
       "id": "retest",
