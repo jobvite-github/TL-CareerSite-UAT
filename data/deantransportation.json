@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/D/Dean%20Transportation/Implementation/Recruitment%20Marketing/Basic%20Career%20Site/UAT?csf=1&web=1&e=8OriWb",
   "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
-  "version": "1.0111111",
+  "version": "1.01111111",
   "columns": [
     {
       "id": "todo",
@@ -58,5 +58,5 @@
       "items": []
     }
   ],
-  "disableAddTask": false
+  "disableAddTask": true
 }
