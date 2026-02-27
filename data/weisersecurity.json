@@ -1,0 +1,42 @@
+{
+  "displayName": "Weiser Security Services",
+  "uatEndDate": "2026-03-17",
+  "devSiteUrl": "https://weisersecuritycareers-dev.ttcportals.com/",
+  "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/W/Weiser%20Security%20Services/Implementation/Career%20Sites/UAT?csf=1&web=1&e=bNVelv",
+  "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
+  "passwordHash": "a13667c69d8753b020b08596bf6582970ba91d72a750ac0c7d32640bb05318aa",
+  "version": 1,
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
