@@ -5,24 +5,12 @@
   "uatFolderUrl": "",
   "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
-  "version": "1.011111111111",
+  "version": "1.0111111111111",
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
-      "items": [
-        {
-          "id": 1772041529147,
-          "description": "Upon further review, please remove the Our Positions, FAQ, and Events at the top.",
-          "device": "All",
-          "feedback": [],
-          "section": "Career Page",
-          "createdAt": "2026-02-25T17:45:29.147Z",
-          "updatedAt": "2026-02-25T17:45:29.147Z",
-          "locked": false,
-          "images": []
-        }
-      ]
+      "items": []
     },
     {
       "id": "inprogress",
@@ -32,7 +20,21 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
+      "items": [
+        {
+          "id": 1772041529147,
+          "description": "Upon further review, please remove the Our Positions, FAQ, and Events at the top.",
+          "device": "All",
+          "feedback": [],
+          "section": "Career Page",
+          "createdAt": "2026-02-25T17:45:29.147Z",
+          "updatedAt": "2026-02-25T17:45:29.147Z",
+          "locked": true,
+          "images": [],
+          "owner": "CWS Dev",
+          "type": "Change Request"
+        }
+      ]
     },
     {
       "id": "feedback",
