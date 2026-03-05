@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "brett.byron@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "b9adbb9d0039b5d51f17c67abe0d54c08b63a191818b6307c5ed87cb35e3a48b",
-  "version": "1.01111111111111",
+  "version": "1.011111111111111",
   "columns": [
     {
       "id": "todo",
@@ -20,6 +20,16 @@
     {
       "id": "retest",
       "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
       "items": [
         {
           "id": 1772041529147,
@@ -35,16 +45,6 @@
           "type": "Change Request"
         }
       ]
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback Needed",
-      "items": []
-    },
-    {
-      "id": "done",
-      "title": "Done",
-      "items": []
     },
     {
       "id": "cancelled",
