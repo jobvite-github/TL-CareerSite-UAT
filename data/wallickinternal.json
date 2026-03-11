@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "tami.mayhew@employinc.com, brett.byron@employinc.com",
   "passwordHash": "bb8171f54af21f3a9702edf08f2c00e1f62460da01b2c27281564641faf9d33a",
-  "version": 2,
+  "version": 3,
   "columns": [
     {
       "id": "todo",
@@ -16,7 +16,7 @@
           "description": "The Talent Network link and section should be removed.  The client decided against an internal Talent Network (ie. Internal Mobility)",
           "device": "All",
           "feedback": [],
-          "section": "Header Navigation and Home Page",
+          "section": "Header Navigation, Home Page and Footer",
           "createdAt": "2026-03-11T20:47:18.784Z",
           "updatedAt": "2026-03-11T20:47:18.784Z",
           "locked": false,
