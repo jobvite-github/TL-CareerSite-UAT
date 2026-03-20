@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "rahul.pandey@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "560aa8d31993dab9ce690bd09170a7c2f4bf00af002fb92bed425ed8faa3b355",
-  "version": 3,
+  "version": 4,
   "columns": [
     {
       "id": "todo",
@@ -19,7 +19,7 @@
           "section": "Talent Network section above footer.",
           "createdAt": "2026-03-16T22:49:49.986Z",
           "updatedAt": "2026-03-16T22:49:49.986Z",
-          "locked": false,
+          "locked": true,
           "images": []
         }
       ]
