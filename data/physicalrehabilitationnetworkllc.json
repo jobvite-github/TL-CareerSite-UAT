@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "rahul.pandey@employinc.com, Tami.Mayhew@employinc.com",
   "passwordHash": "560aa8d31993dab9ce690bd09170a7c2f4bf00af002fb92bed425ed8faa3b355",
-  "version": 4,
+  "version": 5,
   "columns": [
     {
       "id": "todo",
@@ -50,5 +50,5 @@
       "items": []
     }
   ],
-  "disableAddTask": false
+  "disableAddTask": true
 }
