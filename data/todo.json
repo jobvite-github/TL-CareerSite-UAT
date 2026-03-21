@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "tl-cws-devs@employinc.com",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.011111111111111111111",
+  "version": "1.0111111111111111111111",
   "columns": [
     {
       "id": "todo",
@@ -72,25 +72,6 @@
       "id": "retest",
       "title": "Re-Test",
       "items": [
-        {
-          "id": 1770931847405,
-          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
-          "type": "Feature",
-          "device": "All",
-          "feedback": [
-            {
-              "text": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
-              "author": "cws-dev",
-              "createdAt": "2026-02-23T22:02:14.191Z"
-            }
-          ],
-          "section": "",
-          "createdAt": "2026-02-12T21:30:47.404Z",
-          "updatedAt": "2026-02-12T21:30:47.404Z",
-          "locked": true,
-          "images": [],
-          "owner": "CWS Dev"
-        },
         {
           "id": 1771360954669,
           "description": "Add \"Owner\" dropdown to task modal when isAdmin is true. Should have values for Integrations, PM, CWS Dev, Customer. Values should be populated with account info data",
@@ -267,6 +248,25 @@
           "locked": true,
           "images": [],
           "owner": "PM"
+        },
+        {
+          "id": 1770931847405,
+          "description": "Add \"merge before saving\" feature or limit users to 1 at a time with \"editing\" flag.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [
+            {
+              "text": "Instead of merging data or setting up a session limit, there will be a warning when users save data that is out of sync forcing them to reload with the latest data instead of overwriting what is in GitHub.",
+              "author": "cws-dev",
+              "createdAt": "2026-02-23T22:02:14.191Z"
+            }
+          ],
+          "section": "",
+          "createdAt": "2026-02-12T21:30:47.404Z",
+          "updatedAt": "2026-02-12T21:30:47.404Z",
+          "locked": true,
+          "images": [],
+          "owner": "CWS Dev"
         }
       ]
     },
