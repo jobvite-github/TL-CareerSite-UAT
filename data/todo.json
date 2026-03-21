@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "tl-cws-devs@employinc.com",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.01111111111111111111111",
+  "version": "1.011111111111111111111111",
   "columns": [
     {
       "id": "todo",
@@ -71,38 +71,7 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": [
-        {
-          "id": 1770930661810,
-          "description": "Set up feedback changes as \"comments\". When feedback is made, save feedback in array with \"content\", \"date\", \"isAdmin\" and \"owner\" (when isAdmin is true) data",
-          "type": "Feature",
-          "device": "All",
-          "feedback": [
-            {
-              "text": "Feedback here will have an author, created date and edited date associated with it. Editing messages is available for both customers and admins, but only admins can delete messages.",
-              "author": "cws-dev",
-              "createdAt": "2026-02-23T22:06:13.720Z"
-            },
-            {
-              "text": "This feedback item was left in the \"customer\" view. The author should be set to the display name of the account.",
-              "author": "customer",
-              "createdAt": "2026-02-23T22:08:59.130Z"
-            },
-            {
-              "text": "This is a new feedback item.\n\nI just edited it. You can hover over (edited) to see when this happened.",
-              "author": "customer",
-              "createdAt": "2026-02-23T22:09:23.028Z",
-              "editedAt": "2026-02-23T22:10:10.504Z"
-            }
-          ],
-          "section": "TaskModal",
-          "createdAt": "2026-02-12T21:11:01.810Z",
-          "updatedAt": "2026-02-12T21:11:01.810Z",
-          "locked": true,
-          "images": [],
-          "owner": "CWS Dev"
-        }
-      ]
+      "items": []
     },
     {
       "id": "feedback",
@@ -264,6 +233,36 @@
           "section": "TaskModal",
           "createdAt": "2026-02-17T20:42:34.669Z",
           "updatedAt": "2026-02-17T20:42:34.669Z",
+          "locked": true,
+          "images": [],
+          "owner": "CWS Dev"
+        },
+        {
+          "id": 1770930661810,
+          "description": "Set up feedback changes as \"comments\". When feedback is made, save feedback in array with \"content\", \"date\", \"isAdmin\" and \"owner\" (when isAdmin is true) data",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [
+            {
+              "text": "Feedback here will have an author, created date and edited date associated with it. Editing messages is available for both customers and admins, but only admins can delete messages.",
+              "author": "cws-dev",
+              "createdAt": "2026-02-23T22:06:13.720Z"
+            },
+            {
+              "text": "This feedback item was left in the \"customer\" view. The author should be set to the display name of the account.",
+              "author": "customer",
+              "createdAt": "2026-02-23T22:08:59.130Z"
+            },
+            {
+              "text": "This is a new feedback item.\n\nI just edited it. You can hover over (edited) to see when this happened.",
+              "author": "customer",
+              "createdAt": "2026-02-23T22:09:23.028Z",
+              "editedAt": "2026-02-23T22:10:10.504Z"
+            }
+          ],
+          "section": "TaskModal",
+          "createdAt": "2026-02-12T21:11:01.810Z",
+          "updatedAt": "2026-02-12T21:11:01.810Z",
           "locked": true,
           "images": [],
           "owner": "CWS Dev"
