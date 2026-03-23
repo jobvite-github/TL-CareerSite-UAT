@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/R/Realtor.com/Implementation/Career%20Sites/UAT?csf=1&web=1&e=YnfMMt",
   "contactEmails": "Paul.Fogh@employinc.com, brett.byron@employinc.com",
   "passwordHash": "9f48dc38e8c819d13953013de160a16afca558262895940321174018cf7d0128",
-  "version": 1,
+  "version": 2,
   "columns": [
     {
       "id": "todo",
@@ -25,7 +25,21 @@
     {
       "id": "feedback",
       "title": "Feedback Needed",
-      "items": []
+      "items": [
+        {
+          "id": 1774280217692,
+          "description": "You may want to replace the banner image for the Emerging Talent page (https://realtorcareers-dev.ttcportals.com/pages/emerging-talent), as it doesn't have proper accessibility coloring for the text, i.e., the background color with black or white text does not have enough contrast. \n\nI recommend an image closely resembling the banner images of the Who We Are or How We Hire pages.",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": [],
+          "section": "Emerging Talent page",
+          "owner": "Customer",
+          "createdAt": "2026-03-23T15:36:57.691Z",
+          "updatedAt": "2026-03-23T15:36:57.691Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "done",
