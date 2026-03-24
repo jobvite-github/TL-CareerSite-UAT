@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "tl-cws-devs@employinc.com",
   "passwordHash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-  "version": "1.011111111111111111111111",
+  "version": "1.0111111111111111111111111",
   "columns": [
     {
       "id": "todo",
@@ -47,7 +47,13 @@
           "updatedAt": "2026-02-25T19:24:51.243Z",
           "locked": false,
           "images": []
-        },
+        }
+      ]
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": [
         {
           "id": 1773675726200,
           "description": "Password input hide toggle",
@@ -58,15 +64,10 @@
           "owner": "CWS Dev",
           "createdAt": "2026-03-16T15:42:06.200Z",
           "updatedAt": "2026-03-16T15:42:06.200Z",
-          "locked": false,
+          "locked": true,
           "images": []
         }
       ]
-    },
-    {
-      "id": "inprogress",
-      "title": "In Progress",
-      "items": []
     },
     {
       "id": "retest",
