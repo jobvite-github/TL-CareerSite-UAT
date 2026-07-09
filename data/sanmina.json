@@ -1,0 +1,42 @@
+{
+  "displayName": "Sanmina",
+  "uatEndDate": "2026-07-21",
+  "devSiteUrl": "https://sanminacareers-dev.ttcportals.com/",
+  "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/S/Sanmina/Implementation/Recruitment%20Marketing/Career%20Site%20and%20Chatbot/Career%20Site/Basic%20Career%20Site/UAT?csf=1&web=1&e=NjJuUK",
+  "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
+  "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
+  "version": 1,
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
