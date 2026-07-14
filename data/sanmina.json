@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
   "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
-  "version": 2,
+  "version": 3,
   "columns": [
     {
       "id": "todo",
@@ -19,6 +19,17 @@
           "section": "job results page.",
           "createdAt": "2026-07-14T16:22:54.252Z",
           "updatedAt": "2026-07-14T16:22:54.252Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1784046279736,
+          "description": "Non-us jobs should display non-US workflow.",
+          "device": "All",
+          "feedback": [],
+          "section": "job results page.",
+          "createdAt": "2026-07-14T16:24:39.736Z",
+          "updatedAt": "2026-07-14T16:24:39.736Z",
           "locked": false,
           "images": []
         }
