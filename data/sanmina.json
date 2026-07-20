@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
   "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
-  "version": 6,
+  "version": 7,
   "columns": [
     {
       "id": "todo",
@@ -15,6 +15,11 @@
     {
       "id": "inprogress",
       "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
       "items": [
         {
           "id": 1784046174252,
@@ -28,11 +33,6 @@
           "images": []
         }
       ]
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": []
     },
     {
       "id": "feedback",
