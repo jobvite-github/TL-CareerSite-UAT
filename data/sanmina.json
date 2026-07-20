@@ -5,11 +5,16 @@
   "uatFolderUrl": "",
   "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
   "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
-  "version": 5,
+  "version": 6,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
       "items": [
         {
           "id": 1784046174252,
@@ -19,15 +24,10 @@
           "section": "job results page.",
           "createdAt": "2026-07-14T16:22:54.252Z",
           "updatedAt": "2026-07-14T16:22:54.252Z",
-          "locked": false,
+          "locked": true,
           "images": []
         }
       ]
-    },
-    {
-      "id": "inprogress",
-      "title": "In Progress",
-      "items": []
     },
     {
       "id": "retest",
