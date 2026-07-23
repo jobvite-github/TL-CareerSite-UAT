@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/S/Sanmina/Implementation/Recruitment%20Marketing/Career%20Site%20and%20Chatbot/Career%20Site/Basic%20Career%20Site/UAT?csf=1&web=1&e=mWXlZ9",
   "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
   "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
-  "version": 24,
+  "version": 25,
   "columns": [
     {
       "id": "todo",
@@ -66,7 +66,13 @@
           "id": 1784663757866,
           "description": "Reverse the font colors on the left column. \nheaders to red\nsub categories to black\n\nsimilar to how job title, location, date posted are red and jobs listed are in black.",
           "device": "All",
-          "feedback": [],
+          "feedback": [
+            {
+              "text": "I went ahead and applied this styling to the search history below the search facets shown in your screenshot for consistency. I think the change was helpful for the design, but please let me know if this is an unwanted change and I'll get that switched back quickly for you!",
+              "author": "cws-dev",
+              "createdAt": "2026-07-23T18:52:46.727Z"
+            }
+          ],
           "section": "",
           "createdAt": "2026-07-21T19:55:57.866Z",
           "updatedAt": "2026-07-21T19:55:57.866Z",
