@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
   "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
-  "version": 30,
+  "version": 31,
   "columns": [
     {
       "id": "todo",
@@ -65,7 +65,13 @@
           "id": 1784664127603,
           "description": "make this left column all radio buttons or check boxes.",
           "device": "All",
-          "feedback": [],
+          "feedback": [
+            {
+              "text": "Good to go",
+              "author": "customer",
+              "createdAt": "2026-07-29T21:58:28.229Z"
+            }
+          ],
           "section": "",
           "createdAt": "2026-07-21T20:02:07.603Z",
           "updatedAt": "2026-07-21T20:02:07.603Z",
