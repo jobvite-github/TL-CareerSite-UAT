@@ -5,11 +5,21 @@
   "uatFolderUrl": "",
   "contactEmails": "Tami.Mayhew@employinc.com, jacqueline.stewart@sanmina.com, rebecca.garcia@sanmina.com, swapna.tatke@sanmina.com, nicholas.ellis@sanmina.com, santhisiri.kanakamedala@sanmina.com, darren.press@sanmina.com",
   "passwordHash": "f25d6a88e95e7814006c5631e3818c4a6cfd75c80716a4365308ba1533a6a85d",
-  "version": 39,
+  "version": 40,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
       "items": [
         {
           "id": 1784663248876,
@@ -39,16 +49,6 @@
           "type": "Change Request"
         }
       ]
-    },
-    {
-      "id": "inprogress",
-      "title": "In Progress",
-      "items": []
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": []
     },
     {
       "id": "feedback",
