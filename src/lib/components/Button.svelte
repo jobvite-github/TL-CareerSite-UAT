@@ -135,11 +135,6 @@
       border-color: var(--primary);
     }
   }
-
-  .button-primary-hollow-light {
-    border-color: var(--primary-bg);
-    color: var(--primary-bg);
-  }
   
   .button-secondary {
     background-color: var(--secondary-bg);
@@ -290,4 +285,19 @@
       }
     }
   }
+
+  /* Button - Dark Mode Overrides */
+  :global(html.dark) {
+		.button-hollow-light {
+      background-color: transparent;
+      border-color: var(--fg-1);
+      color: var(--fg-1);
+
+      &:hover {
+        background-color: var(--fg-1);
+        border-color: var(--fg-1);
+        color: var(--primary);
+      }
+    }
+	}
 </style>

@@ -301,22 +301,6 @@
     justify-content: flex-end;
   }
 
-  .close-button {
-    padding: 0.75rem 1.5rem;
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .close-button:hover {
-    background: var(--primary-dark);
-  }
-
   @media (max-width: 768px) {
     .modal {
       max-width: 100%;

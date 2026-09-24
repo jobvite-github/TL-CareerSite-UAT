@@ -175,10 +175,10 @@
 		--fg-1: #e8eaf0;
 		--fg-2: #ffffff;
 		--fg-3: #f8f9fc;
-		--primary-bg: #8f3db8;
+		/* --primary-bg: #8f3db8;
 		--primary-fg: #F1D9FB;
 		--secondary-bg: #131F3B;
-		--secondary-fg: #BCF3FF;
+		--secondary-fg: #BCF3FF; */
 		--success-bg: #064e3b;
 		--success-fg: #bff8d9;
 		--info-bg: #332e7f;
