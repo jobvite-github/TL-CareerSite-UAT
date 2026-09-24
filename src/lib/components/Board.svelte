@@ -13,6 +13,7 @@
     customerId,
     columns,
     isAdmin,
+    isAdminAuthenticated = false,
     searchQuery = $bindable<string>(''),
     filterType = $bindable<TaskType | 'All'>('All'),
     filterOwner = $bindable<OwnerType | 'All'>('All'),
@@ -21,6 +22,7 @@
     disableAddTask = $bindable(false),
     onAddTask,
     onHelp,
+    onToggleAdminView,
     onItemDragStart,
     onItemClick,
     onToggleLock,
@@ -38,6 +40,7 @@
     customerId: string;
     columns: Column[];
     isAdmin: boolean;
+    isAdminAuthenticated?: boolean;
     searchQuery: string;
     filterType: TaskType | 'All';
     filterOwner: OwnerType | 'All';
@@ -46,6 +49,7 @@
     disableAddTask: boolean;
     onAddTask: () => void;
     onHelp: () => void;
+    onToggleAdminView?: () => void;
     onItemDragStart: (e: DragEvent, item: Task, columnId: ColumnId) => void;
     onItemClick: (item: Task, columnId: ColumnId) => void;
     onToggleLock: (itemId: number) => void;
@@ -65,6 +69,16 @@
   let editUatFolderUrl = $state('');
   let editContactEmails = $state('');
   let editPassword = $state('');
+  let editConfirmPassword = $state('');
+  let showPassword = $state(false);
+  let passwordMismatchError = $state(false);
+  let displayNameError = $state(false);
+  let uatEndDateError = $state(false);
+  let devSiteUrlError = $state(false);
+
+  function toggleShowPassword() {
+    showPassword = !showPassword;
+  }
   
   let daysRemaining = $derived.by(() => {
     if (!uatEndDate) return null;
@@ -120,10 +134,10 @@
   
   // Get variant for each column
   function getColumnVariant(columnId: ColumnId): 'default' | 'alert' | 'warning' | 'info' | 'success' | 'subtle' {
-    if (columnId === 'feedback') return 'alert';
-    if (columnId === 'retest') return 'warning';
+    if (columnId === 'feedback') return 'warning';
+    if (columnId === 'retest') return 'alert';
     if (columnId === 'todo') return 'info';
-    if (columnId === 'done') return 'success';
+    if (columnId === 'approved') return 'success';
     if (columnId === 'inprogress' || columnId === 'cancelled') return 'subtle';
     return 'default';
   }
@@ -136,21 +150,67 @@
     editUatFolderUrl = uatFolderUrl;
     editContactEmails = contactEmails;
     editPassword = ''; // Always start empty for security
+    editConfirmPassword = '';
+    passwordMismatchError = false;
+    displayNameError = false;
+    uatEndDateError = false;
+    devSiteUrlError = false;
     isEditingAccountInfo = true;
   }
   
   function cancelEditingAccountInfo() {
     isEditingAccountInfo = false;
     editPassword = ''; // Clear password for security
+    editConfirmPassword = '';
+    passwordMismatchError = false;
+    displayNameError = false;
+    uatEndDateError = false;
+    devSiteUrlError = false;
   }
   
   function saveAccountInfo() {
+    // Reset all errors
+    displayNameError = false;
+    uatEndDateError = false;
+    devSiteUrlError = false;
+    passwordMismatchError = false;
+    
+    // Validate required fields
+    let hasErrors = false;
+    
+    if (!editDisplayName.trim()) {
+      displayNameError = true;
+      hasErrors = true;
+    }
+    
+    if (!editUatEndDate) {
+      uatEndDateError = true;
+      hasErrors = true;
+    }
+    
+    if (!editDevSiteUrl.trim()) {
+      devSiteUrlError = true;
+      hasErrors = true;
+    }
+    
+    // Validate password confirmation if password is not empty
+    if (editPassword && editPassword !== editConfirmPassword) {
+      passwordMismatchError = true;
+      hasErrors = true;
+    }
+    
+    // Don't submit if there are errors
+    if (hasErrors) {
+      return;
+    }
+    
     if (onUpdateAccountInfo) {
       // Store as YYYY-MM-DD format (no time component to avoid timezone issues)
       onUpdateAccountInfo(editDisplayName, editUatEndDate, editDevSiteUrl, editUatFolderUrl, editContactEmails, editPassword);
     }
     isEditingAccountInfo = false;
     editPassword = ''; // Clear password for security
+    editConfirmPassword = '';
   }
 </script>
 
@@ -159,36 +219,54 @@
     {#if isEditingAccountInfo && isAdmin}
       <div class="edit-account-form">
         <div class="form-group">
-          <label for="edit-display-name">Display Name</label>
+          <label for="edit-display-name">Display Name *</label>
           <input
             id="edit-display-name"
             type="text"
             bind:value={editDisplayName}
-            placeholder="Customer Display Name"
+            placeholder="Account Display Name"
+            class:error={displayNameError}
+            oninput={() => displayNameError = false}
+            required
           />
+          {#if displayNameError}
+            <span class="error-message">Display name is required</span>
+          {/if}
         </div>
         
         <div class="form-group">
-          <label for="edit-uat-date">UAT Review Deadline</label>
+          <label for="edit-uat-date">UAT Review Deadline *</label>
           <input
             id="edit-uat-date"
             type="date"
             bind:value={editUatEndDate}
+            class:error={uatEndDateError}
+            oninput={() => uatEndDateError = false}
+            required
           />
+          {#if uatEndDateError}
+            <span class="error-message">UAT review deadline is required</span>
+          {/if}
         </div>
         
         <div class="form-group">
-          <label for="edit-dev-url">Dev URL</label>
+          <label for="edit-dev-url">Dev URL *</label>
           <input
             id="edit-dev-url"
             type="text"
             bind:value={editDevSiteUrl}
-            placeholder="customercareers-dev.ttcportals.com"
+            placeholder="https://linkto.reviewpage.com"
+            class:error={devSiteUrlError}
+            oninput={() => devSiteUrlError = false}
+            required
           />
+          {#if devSiteUrlError}
+            <span class="error-message">Dev URL is required</span>
+          {/if}
         </div>
         
         <div class="form-group">
-          <label for="edit-uat-folder-url">UAT Folder URL</label>
+          <label for="edit-uat-folder-url">UAT Folder URL (Optional. Used for uploading assets)</label>
           <input
             id="edit-uat-folder-url"
             type="text"
@@ -198,7 +276,7 @@
         </div>
         
         <div class="form-group">
-          <label for="edit-contact-emails">Contact Emails</label>
+          <label for="edit-contact-emails">Contact Emails (Optional. Used for email alerts)</label>
           <input
             id="edit-contact-emails"
             type="text"
@@ -209,27 +287,57 @@
         
         <div class="form-group">
           <label for="edit-password">New Password (leave blank to keep current)</label>
-          <input
-            id="edit-password"
-            type="password"
-            bind:value={editPassword}
-            placeholder="Enter new password"
-            autocomplete="new-password"
-          />
+          <div class="password-input">
+            <input
+              id="edit-password"
+              type={showPassword ? "text" : "password"}
+              bind:value={editPassword}
+              placeholder="Enter new password"
+              autocomplete="new-password"
+              oninput={() => passwordMismatchError = false}
+            />
+            <button aria-label="Toggle Password Visibility" class="password-toggle" type="button" onclick={toggleShowPassword}>
+              {#if showPassword}
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#666' d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/></svg>
+              {:else}
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#666' d='M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'/></svg>
+              {/if}
+            </button>
+          </div>
         </div>
         
+        {#if editPassword}
+          <div class="form-group">
+            <label for="edit-confirm-password">Confirm Password</label>
+            <div class="password-input">
+              <input
+                id="edit-confirm-password"
+                type={showPassword ? "text" : "password"}
+                bind:value={editConfirmPassword}
+                placeholder="Confirm new password"
+                autocomplete="new-password"
+                class:error={passwordMismatchError}
+                oninput={() => passwordMismatchError = false}
+              />
+            </div>
+            {#if passwordMismatchError}
+              <span class="error-message">Passwords do not match</span>
+            {/if}
+          </div>
+        {/if}
+        
         <div class="form-actions">
-          <ButtonComponent 
-            element="button"
-            text="Save"
-            type="save"
-            onClick={saveAccountInfo}
-          />
           <ButtonComponent 
             element="button"
             text="Cancel"
             type="cancel"
             onClick={cancelEditingAccountInfo}
+          />
+          <ButtonComponent 
+            element="button"
+            text="Save"
+            type="save"
+            onClick={saveAccountInfo}
           />
         </div>
       </div>
@@ -238,7 +346,8 @@
         <h1>{displayName || customerId}</h1>
         {#if uatEndDate}
           <div class="uat-info-section">
-            <span class="uat-end-date" class:warning={isUatEndingSoon} class:error={isUatExpired}>
+            <div class="uat-date-container">
+              <span class="uat-end-date" class:warning={isUatEndingSoon} class:error={isUatExpired}>
               {#if isUatExpired}
                 UAT review is over. Fixing in progress.
               {:else}
@@ -248,36 +357,52 @@
                   return new Date(year, month - 1, day).toLocaleDateString();
                 })()}
                 {#if daysRemaining !== null && daysRemaining >= 0}
-                  ({daysRemaining} day{daysRemaining !== 1 ? 's' : ''} remaining)
+                  <span class="subtle-text">(Fixes start in {daysRemaining} day{daysRemaining !== 1 ? 's' : ''})</span>
                 {/if}
               {/if}
             </span>
-            {#if uatFolderUrl}
-              <ButtonComponent 
-                element="a"
-                text="UAT Folder"
-                title="Upload images and other assets to this folder."
-                href={uatFolderUrl.startsWith('http') ? uatFolderUrl : `https://${uatFolderUrl}`}
-                type="primary"
-                size="small"
-                target="_blank"
-                rel="nofollow noopener"
-              />
+            {#if !isUatEndingSoon && !isUatExpired}
+              <p class="uat-deadline-warning subtle-text">Once this deadline passes, no tasks may be added</p>
             {/if}
+            {#if isUatExpired}
+              <p class="uat-deadline-warning subtle-text">UAT submission deadline has passed,<br /> no tasks may be added</p>
+            {/if}
+            </div>
           </div>
         {/if}
+        {#if uatFolderUrl}
+          <ButtonComponent 
+            element="a"
+            text="UAT Folder"
+            title="Upload images and other assets to this folder."
+            href={uatFolderUrl.startsWith('http') ? uatFolderUrl : `https://${uatFolderUrl}`}
+            type="secondary"
+            size="small"
+            target="_blank"
+            rel="nofollow noopener"
+          />
+        {/if}
       </div>
-      {#if isAdmin}
-        <div class="header-container">
+      <div class="button-group">
+        {#if isAdmin}
           <ButtonComponent 
             element="button"
             text="Edit Account Info"
-            type="primary"
+            type="secondary"
             size="small"
             onClick={startEditingAccountInfo}
           />
-        </div>
-      {/if}
+        {/if}
+        {#if isAdminAuthenticated}
+          <ButtonComponent
+            element="button"
+            text={isAdmin ? "View as Customer" : "View as Admin"}
+            onClick={onToggleAdminView}
+            type="secondary"
+            size="small"
+          />
+        {/if}
+      </div>
     {/if}
     {#if isAdmin}
       <div class="admin-controls">
@@ -297,6 +422,7 @@
         <ColumnComponent
           column={feedbackColumn}
           {isAdmin}
+          {displayName}
           variant={getColumnVariant(feedbackColumn.id)}
           isDragOver={dragOverColumn === feedbackColumn.id}
           draggedItemId={draggedItem?.id}
@@ -315,6 +441,7 @@
         <ColumnComponent
           column={retestColumn}
           {isAdmin}
+          {displayName}
           variant={getColumnVariant(retestColumn.id)}
           isDragOver={dragOverColumn === retestColumn.id}
           draggedItemId={draggedItem?.id}
@@ -334,6 +461,7 @@
       <ColumnComponent
         {column}
         {isAdmin}
+        {displayName}
         variant={getColumnVariant(column.id)}
         isDragOver={dragOverColumn === column.id}
         draggedItemId={draggedItem?.id}
@@ -352,6 +480,7 @@
       <ColumnComponent
         column={inProgressColumn}
         {isAdmin}
+        {displayName}
         variant="subtle"
         isDragOver={dragOverColumn === inProgressColumn.id}
         draggedItemId={draggedItem?.id}
@@ -368,6 +497,7 @@
       <ColumnComponent
         column={cancelledColumn}
         {isAdmin}
+        {displayName}
         variant="subtle"
         isDragOver={dragOverColumn === cancelledColumn.id}
         draggedItemId={draggedItem?.id}
@@ -383,23 +513,11 @@
 </div>
 
 <style>
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-
   .account-info {
     margin-bottom: 2rem;
     gap: 1em;
     display: flex;
     flex-direction: column;
-  }
-
-  .account-info h1 {
-    margin: 0;
-    color: var(--fg-1);
-    font-size: 2rem;
   }
 
   .header-container {
@@ -410,10 +528,41 @@
     flex-wrap: wrap;
   }
 
+  .header-container h1 {
+    margin: 0;
+    color: var(--fg-1);
+    font-size: 2rem;
+    flex: 1;
+  }
+
   .uat-info-section {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex: 0 0 auto;
+  }
+
+  .uat-date-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .subtle-text {
+    font-size: 0.8125rem;
+    opacity: 0.7;
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .uat-deadline-warning {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    text-wrap: wrap;
+    text-align: center;
+    margin: 0.375rem 0 0 0;
   }
 
   .uat-end-date {
@@ -428,15 +577,15 @@
   }
 
   .uat-end-date.warning {
-    background: #fef3c7;
-    color: #92400e;
+    background: var(--warning-bg);
+    color: var(--warning-fg);
     border-color: var(--warning);
     box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
   }
 
   .uat-end-date.error {
-    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-    color: #991b1b;
+    background: var(--error-bg);
+    color: var(--error-fg);
     border-color: var(--error);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
     font-weight: 700;
@@ -449,6 +598,38 @@
     margin-bottom: 1.5rem;
     border: 1px solid var(--bg-3);
     box-shadow: var(--shadow-md);
+  }
+
+  .password-input {
+    position: relative;
+  }
+
+  .password-input input {
+    padding-right: 3rem; /* Make space for the button */
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) !important;
+    padding: 0.25rem;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .password-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: block;
   }
 
   .form-group {
@@ -483,10 +664,36 @@
     box-shadow: 0 0 0 3px var(--primary-light);
   }
 
+  .form-group input.error {
+    border-color: var(--error);
+    background: var(--error-bg);
+  }
+
+  .form-group input.error:focus {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
+  .error-message {
+    display: block;
+    color: var(--error-fg);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+
   .form-actions {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
+    justify-content: flex-end;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.75rem;
   }
 
   .admin-controls {
@@ -564,12 +771,6 @@
     gap: 1.5rem;
   }
 
-  :global(html.dark) .uat-end-date.error {
-    background: linear-gradient(135deg, rgba(255, 235, 238, 0.15) 0%, rgba(255, 205, 210, 0.15) 100%);
-    border-color: rgba(244, 67, 54, 0.6);
-    color: #ffcdd2;
-  }
-
   @media (max-width: 768px) {
     .top-columns {
       flex-direction: column;
@@ -577,6 +778,27 @@
 
     .columns {
       grid-template-columns: 1fr;
+    }
+
+    .header-container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .uat-date-container {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    .uat-end-date {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .uat-deadline-warning {
+      white-space: normal;
+      max-width: 100%;
     }
   }
 </style>

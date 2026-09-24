@@ -37,7 +37,7 @@
   }
 </script>
 
-<div class="employ-button">
+<div>
   <svelte:element
     this={element}
     {...(element === 'a' ? { href, target, rel } : { type: 'button', disabled: disabled || loading })}
@@ -56,6 +56,8 @@
 <style>
   .button {
     border-radius: var(--border-radius);
+    border-width: 2px;
+    border-style: solid;
     padding: 13px 25px;
     display: inline-flex;
     align-items: center;
@@ -65,12 +67,16 @@
     font-weight: 600;
     font-size: 1rem;
     transition: all .15s ease-in-out;
-    border: 2px solid #fff;
     line-height: 24px;
     text-decoration: none;
     background-color: transparent;
+    cursor: pointer;
 
-    &:is(:hover,:focus,:active) {
+    span {
+      transition: color .15s ease-in-out;
+    }
+
+    &:hover {
       background-color: transparent;
       color: inherit;
     }
@@ -102,31 +108,83 @@
     to { transform: rotate(360deg); }
   }
 
-  .button-primary,
-  .button-save {
+  @media (max-width: 768px) {
+    div {
+      display: block;
+      width: 100%;
+    }
+
+    .button {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  .button-primary {
     background-color: var(--primary);
-    color: #fff;
     border-color: var(--primary);
+    color: var(--primary-fg);
+  }
+
+  .button-primary-hollow {
+    background-color: transparent;
+    border-color: var(--primary);
+    color: var(--primary);
+
+    &:hover {
+      border-color: var(--primary);
+    }
+  }
+
+  .button-primary-hollow-light {
+    border-color: var(--primary-bg);
+    color: var(--primary-bg);
   }
   
   .button-secondary {
-    background-color: #bcf3ff;
-    border-color: #bcf3ff;
-    color: #000;
+    background-color: var(--secondary-bg);
+    border-color: var(--secondary-bg);
+    color: var(--secondary-fg);
 
-    &:is(:hover,:focus,:active) {
+    &:hover {
       color: inherit;
     }
   }
-  
-  .button-tertiary,
+
+  .button-secondary-hollow {
+    background-color: transparent;
+    border-color: var(--secondary-bg);
+    color: var(--bg-1);
+
+    &:hover {
+      border-color: var(--secondary);
+    }
+  }
+
+  .button-secondary-hollow-dark {
+    border-color: var(--secondary);
+    color: var(--fg-1);
+  }
+
+  .button-save {
+    background-color: var(--secondary-bg);
+    border-color: var(--secondary-bg);
+    color: var(--secondary-fg);
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
   .button-cancel {
     background-color: var(--bg-3);
     border-color: var(--bg-3);
     color: var(--fg-1);
 
-    &:is(:hover,:focus,:active) {
-      border-color: var(--primary);
+    &:hover {
+      background-color: var(--secondary-bg);
+      border-color: var(--secondary-bg);
+      color: var(--secondary-fg);
     }
   }
   
@@ -135,31 +193,101 @@
     border-color: var(--error);
     color: #fff;
 
-    &:is(:hover,:focus,:active) {
+    &:hover {
       background-color: #fff;
       color: var(--error);
     }
   }
-  
+
   .button-hollow {
     background-color: transparent;
-    border-color: #fff;
-    color: #fff;
+    border-color: var(--fg-1);
+    color: var(--fg-1);
 
-    &:is(:hover,:focus,:active) {
-      background-color: #fff;
+    &:hover {
+      border-color: var(--primary);
+    }
+  }
+
+  .button-hollow-light {
+    background-color: transparent;
+    border-color: var(--bg-1);
+    color: var(--bg-1);
+
+    &:hover {
+      background-color: var(--bg-1);
+      border-color: var(--bg-1);
       color: var(--primary);
     }
   }
 
-  .button-hollow-primary {
-    background-color: transparent;
-    border-color: var(--primary);
-    color: var(--primary);
+  .button-gradient {
+    background: var(--primary) !important;
+    border-color: transparent !important;
+    color: var(--bg-1) !important;
 
-    &:is(:hover,:focus,:active) {
-      background-color: var(--primary);
-      color: #fff;
+    &::after {
+      content: '';
+      position: absolute;
+      padding: 2px;
+      margin: -2px;
+      inset: 0;
+      border-radius: var(--border-radius);
+      transition: opacity 0.5s ease;
+      opacity: 1;
+      background: var(--primary-gradient);
+    }
+
+    span {
+      z-index: 1;
+    }
+
+    &:hover {
+      &::after {
+        opacity: 0;
+      }
+    }
+  }
+
+  .button-hollow-gradient {
+    background: transparent;
+    border-color: transparent;
+    color: var(--fg-1);
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      padding: 2px;
+      margin: -2px;
+      inset: 0;
+      border-radius: var(--border-radius);
+    }
+
+    &::before {
+      background: var(--primary-gradient);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    &::after {
+      transition: opacity 0.5s ease;
+      opacity: 0;
+      background: var(--primary-gradient);
+    }
+
+    span {
+      z-index: 1;
+    }
+
+    &:hover {
+      &::after {
+        opacity: 1;
+      }
+
+      span {
+        color: var(--bg-1);
+      }
     }
   }
 </style>

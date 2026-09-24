@@ -137,7 +137,7 @@
           element="button"
           text="Use Server Version"
           loadingText="Fetching Server Version..."
-          type="primary"
+          type="secondary"
           loading={loading}
           onClick={onUseRemote}
         />

@@ -25,55 +25,136 @@
 </script>
 
 <svelte:head>
-	<title>Career Site UAT</title>
+	<title>ReviewAT</title>
 
 	<script>
 		{ const theme = localStorage.getItem('sv:theme'); document.documentElement.classList.add( !theme || theme === 'system' ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : theme ); }
 	</script>
 </svelte:head>
 
-<div class="layout">
-	<main class="content">{@render children()}</main>
+<main class="content">{@render children()}</main>
 	
-	<button
-		class="theme-toggle-fixed"
-		onclick={switchTheme}
-		aria-label="Toggle theme"
-	>
-		<span class="theme-toggle-icon"></span>
-	</button>
-</div>
+<button
+	class="theme-toggle-fixed"
+	onclick={switchTheme}
+	aria-label="Toggle theme"
+>
+	<span class="theme-toggle-icon"></span>
+</button>
 
 <style>
 	:global(html) {
-		margin: 0;
+		/* Colors */
+		--color--employ-dark-blue: #131F3B;
+    --color--employ-light-blue: #BCF3FF;
+    --color--employ-blue: #65A9DA;
+    --color--employ-purple: #B477D2;
+    --color--employ-deep-purple: #281330;
+    --color--employ-light-purple: #F1D9FB;
+    --color--employ-turquoise: #47A7A1;
+    --color--employ-light-turquoise: #C3FFD4;
+    --color--employ-dark-turquoise: #003535;
+    --color--employ-coral: #F27A53;
+    --color--employ-light-coral: #FFEBBB;
+    --color--employ-chocolate: #2D1919;
+    --color--employ-dark-purple: #8f3db8;
+
+		/* Color Variables */
 		--bg-1: #f8f9fc;
 		--bg-2: #ffffff;
 		--bg-3: #e8eaf0;
-		--navbar-bg: #8f3db8;
-		--fg-1: #1a1f36;
-		--fg-2: #5c6778;
-		--fg-3: #8792a8;
+		--fg-1: #1e1e1e;
+		--fg-2: #444444;
+		--fg-3: #aeafad;
 		--primary: #8f3db8;
-		--primary-hover: #281330;
-		--primary-light: #f1d9fb;
-		--success: #0d7a3f;
-		--success-bg: #d1f4e0;
-		--success-hover: #059669;
-		--warning: #f59e0b;
-		--warning-light: #ffe0b2;
-		--error: #ef4444;
-		--error-light: #ffcdd2;
+		--primary-fg: #281330;
+		--primary-bg: #F1D9FB;
+		--secondary: #65A9DA;
+		--secondary-fg: #131F3B;
+		--secondary-bg: #BCF3FF;
+		--success: #0d783f;
+		--success-fg: #064e3b;
+		--success-bg: #bff8d9;
 		--info: #3730a3;
-		--info-light: #bbdefb;
-		--link: #6366f1;
+		--info-fg: #332e7f;
+		--info-bg: #bbdefb;
+		--warning: #f59e0b;
+		--warning-fg: #92400e;
+		--warning-bg: #fef3c7;
+		--error: #ef4444;
+		--error-fg: #991b1b;
+		--error-bg: #ffcdd2;
+
+		/* WP Variables */
+		/* 
+		--wp--preset--color--employ-dark-blue: #131F3B;
+    --wp--preset--color--employ-light-blue: #BCF3FF;
+    --wp--preset--color--employ-blue: #65A9DA;
+    --wp--preset--color--employ-purple: #B477D2;
+    --wp--preset--color--employ-deep-purple: #281330;
+    --wp--preset--color--employ-light-purple: #F1D9FB;
+    --wp--preset--color--employ-turquoise: #47A7A1;
+    --wp--preset--color--employ-light-turquoise: #C3FFD4;
+    --wp--preset--color--employ-dark-turquoise: #003535;
+    --wp--preset--color--employ-coral: #F27A53;
+    --wp--preset--color--employ-light-coral: #FFEBBB;
+    --wp--preset--color--employ-chocolate: #2D1919;
+    --wp--preset--color--employ-dark-purple: #8f3db8;
+
+		--wp--preset--color--black: #000000;
+    --wp--preset--color--cyan-bluish-gray: #abb8c3;
+    --wp--preset--color--white: #ffffff;
+    --wp--preset--color--pale-pink: #f78da7;
+    --wp--preset--color--vivid-red: #cf2e2e;
+    --wp--preset--color--luminous-vivid-orange: #ff6900;
+    --wp--preset--color--luminous-vivid-amber: #fcb900;
+    --wp--preset--color--light-green-cyan: #7bdcb5;
+    --wp--preset--color--vivid-green-cyan: #00d084;
+    --wp--preset--color--pale-cyan-blue: #8ed1fc;
+    --wp--preset--color--vivid-cyan-blue: #0693e3;
+    --wp--preset--color--vivid-purple: #9b51e0;
+    --wp--preset--color--employ-light-blue-legacy: #edf3f5;
+    --wp--preset--color--employ-light-gray: #f3f7f8;
+    --wp--preset--color--employ-blue-legacy: #31479e;
+    --wp--preset--color--blue: #57c4e5;
+    --wp--preset--color--green: #28b691;
+    --wp--preset--color--purple: #d2caeb;
+    --wp--preset--color--yellow: #f0cf65;
+
+    --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg, rgb(6, 147, 227) 0%, rgb(155, 81, 224) 100%);
+    --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg, rgb(122, 220, 180) 0%, rgb(0, 208, 130) 100%);
+    --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg, rgb(252, 185, 0) 0%, rgb(255, 105, 0) 100%);
+    --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg, rgb(255, 105, 0) 0%, rgb(207, 46, 46) 100%);
+    --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg, rgb(238, 238, 238) 0%, rgb(169, 184, 195) 100%);
+    --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg, rgb(74, 234, 220) 0%, rgb(151, 120, 209) 20%, rgb(207, 42, 186) 40%, rgb(238, 44, 130) 60%, rgb(251, 105, 98) 80%, rgb(254, 248, 76) 100%);
+    --wp--preset--gradient--blush-light-purple: linear-gradient(135deg, rgb(255, 206, 236) 0%, rgb(152, 150, 240) 100%);
+    --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg, rgb(254, 205, 165) 0%, rgb(254, 45, 45) 50%, rgb(107, 0, 62) 100%);
+    --wp--preset--gradient--luminous-dusk: linear-gradient(135deg, rgb(255, 203, 112) 0%, rgb(199, 81, 192) 50%, rgb(65, 88, 208) 100%);
+    --wp--preset--gradient--pale-ocean: linear-gradient(135deg, rgb(255, 245, 203) 0%, rgb(182, 227, 212) 50%, rgb(51, 167, 181) 100%);
+    --wp--preset--gradient--electric-grass: linear-gradient(135deg, rgb(202, 248, 128) 0%, rgb(113, 206, 126) 100%);
+    --wp--preset--gradient--midnight: linear-gradient(135deg, rgb(2, 3, 129) 0%, rgb(40, 116, 252) 100%);
+    --wp--preset--gradient--white-light-gray-gradient: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(243, 247, 248, 1) 100%);
+    --wp--preset--gradient--light-dark-blue-gradient: linear-gradient(135deg, rgba(87, 196, 229, 1) 0%, rgba(49, 71, 158, 1) 100%); */
+
+		/* Gradients */
+		/* --primary-gradient: linear-gradient(135deg, var(--primary) 0%, var(--fg-3) 100%); */
+		--primary-gradient: linear-gradient(135deg, rgb(6, 147, 227) 0%, rgb(155, 81, 224) 100%);
+		--primary-gradient--transparent: linear-gradient(135deg, #3cb7ff00 0%, #6c90 100%);
+		--primary-gradient--active: linear-gradient(135deg, var(--primary) 80%, var(--secondary) 100%);;
+		--success-gradient: linear-gradient(135deg, hsl(148, 76%, 97%) 0%, hsl(148, 84%, 93%) 100%);
+		--info-gradient: linear-gradient(135deg, hsl(207, 89%, 96%) 0%, hsl(207, 89%, 86%) 100%);
+		--warning-gradient: linear-gradient(135deg, hsl(38, 92%, 95%) 0%, hsl(38, 92%, 85%) 100%);
+		--error-gradient: linear-gradient(135deg, hsl(0, 84%, 98%) 0%, hsl(0, 84%, 93%) 100%);
+
 		--border-radius: 8px;
 		--font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 		--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 		--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 		--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 		--primary-shadow-color: rgba(40, 19, 48, 0.2);
+		--global-transition: all 0.2s ease;
 		color-scheme: light;
+		margin: 0;
 		background: var(--bg-1);
 		color: var(--fg-1);
 		font-family: var(--font);
@@ -88,12 +169,24 @@
 
 	:global(html.dark) {
 		color-scheme: dark;
-		--bg-1: #0f1117;
-		--bg-2: #1a1f36;
-		--bg-3: #272d45;
-		--fg-1: #f8f9fc;
-		--fg-2: #b4bcd0;
-		--fg-3: #8792a8;
+		--bg-1: #1e1e1e;
+		--bg-2: #444444;
+		--bg-3: #aeafad;
+		--fg-1: #e8eaf0;
+		--fg-2: #ffffff;
+		--fg-3: #f8f9fc;
+		--primary-bg: #8f3db8;
+		--primary-fg: #F1D9FB;
+		--secondary-bg: #131F3B;
+		--secondary-fg: #BCF3FF;
+		--success-bg: #064e3b;
+		--success-fg: #bff8d9;
+		--info-bg: #332e7f;
+		--info-fg: #bbdefb;
+		--warning-bg: #92400e;
+		--warning-fg: #fef3c7;
+		--error-bg: #991b1b;
+		--error-fg: #ffcdd2;
 		--primary-shadow-color: rgba(143, 61, 184, 0.1);
 	}
 
@@ -101,8 +194,21 @@
 		margin: 0;
 	}
 
-	.content {
+	main {
 		color: var(--fg-1);
+		min-height: 100vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(.container) {
+		width: 100%;
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 2rem 2rem;
+		box-sizing: border-box;
+		flex: 1;
 	}
 
 	.theme-toggle-fixed {
@@ -120,7 +226,7 @@
 		border-radius: 50%;
 		color: var(--fg-1);
 		cursor: pointer;
-		transition: all 0.2s ease;
+		transition: var(--global-transition);
 		box-shadow: var(--shadow-lg);
 		z-index: 1000;
 		opacity: 0.7;

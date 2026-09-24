@@ -582,7 +582,7 @@
             <ButtonComponent 
               element="button"
               text="Save"
-              type="primary"
+              type="save"
               onClick={handleSaveClick}
             />
           {/if}

@@ -3,6 +3,9 @@
   import { Octokit } from 'octokit';
   import { hashPassword, listAllDataFromGitHub, loadDataFromGitHub, loadDataFromGitHubAdmin, saveDataToGitHub, deleteDataFromGitHub, getDefaultColumns, fetchCurrentBoardData, detectConflicts } from '$lib/utils';
   import type { GitHubConfig } from '$lib/utils';
+  import { goto } from '$app/navigation';
+  import { resolve } from '$app/paths';
+  import { browser } from '$app/environment';
   import logo from '$lib/assets/employ_logo.svg';
   
   // Components
@@ -15,10 +18,14 @@
   import ConfirmModal from '$lib/components/ConfirmModal.svelte';
   import HelpModal from '$lib/components/HelpModal.svelte';
   import ConflictModal from '$lib/components/ConflictModal.svelte';
+  import Landing from '$lib/components/Landing.svelte';
+
+  // Route props
+  let { isAdminRoute = false, customerRoute = '' }: { isAdminRoute?: boolean; customerRoute?: string } = $props();
 
   // GitHub Configuration from environment variables
   const GITHUB_OWNER = import.meta.env.VITE_GITHUB_OWNER || 'your-github-username';
-  const GITHUB_REPO = import.meta.env.VITE_GITHUB_REPO || 'uat-app';
+  const GITHUB_REPO = import.meta.env.VITE_GITHUB_REPO || '';
   const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN || 'your-github-token';
   const GITHUB_BRANCH = import.meta.env.VITE_GITHUB_BRANCH || 'data';
   const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'password-for-admin-login';
@@ -75,6 +82,10 @@
   let adminPasswordError = $state('');
   let adminCustomers = $state<Array<{ name: string; path: string }>>([]);
 
+  // View mode for unauthenticted users on root route
+  type ViewMode = 'landing' | 'customerLogin' | 'adminLogin';
+  let viewMode = $state<ViewMode>('landing');
+
   // Session storage helpers
   function getSessionKey(id: string): string {
     return `uat-session-${id}`;
@@ -86,6 +97,7 @@
       isAdmin: isAdminUser,
       timestamp: Date.now()
     };
+    clearAllCustomerSessions(); // Clear any previous sessions
     sessionStorage.setItem(getSessionKey(id), JSON.stringify(sessionData));
   }
 
@@ -101,6 +113,52 @@
 
   function clearSession(id: string) {
     sessionStorage.removeItem(getSessionKey(id));
+  }
+
+  function clearAllCustomerSessions() {
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      if (key && key.startsWith('uat-session-') && key !== 'uat-session-admin') {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => sessionStorage.removeItem(key));
+  }
+
+  // View mode navigation functions
+  function showCustomerLogin() {
+    viewMode = 'customerLogin';
+  }
+
+  function showAdminLogin() {
+    viewMode = 'adminLogin';
+    isAdminMode = true;
+  }
+
+  // Toggle admin capabilities on customer routes
+  function toggleAdminView() {
+    isAdmin = !isAdmin;
+  }
+
+  // Logout function
+  function logout() {
+    // Clear appropriate session
+    if (isAdminAuthenticated) {
+      clearSession('admin');
+    }
+    if (isAuthenticated && customerId) {
+      clearSession(customerId);
+    }
+    
+    // Reset state
+    isAuthenticated = false;
+    isAdminAuthenticated = false;
+    isAdminMode = false;
+    isAdmin = false;
+    
+    // Navigate to landing page
+    goto(resolve('/').toString());
   }
 
   // Load data with session restore
@@ -136,75 +194,80 @@
     isLoading = false;
   }
 
+
+
   // Track previous context to clear session on switch
   let previousContext = $state<string>('');
-  let currentHash = $state<string>('');
-  let currentPathname = $state<string>('');
 
-  // Listen for URL changes
+  // Initialize based on route props
   $effect(() => {
-    if (typeof window !== 'undefined') {
-      currentHash = window.location.hash.slice(1);
-      currentPathname = window.location.pathname;
-
-      const handleHashChange = () => {
-        currentHash = window.location.hash.slice(1);
-      };
-
-      window.addEventListener('hashchange', handleHashChange);
-      
-      return () => {
-        window.removeEventListener('hashchange', handleHashChange);
-      };
-    }
-  });
-
-  // Get customer ID from URL hash and detect admin mode
-  $effect(() => {
-    if (typeof window !== 'undefined') {
-      // Check pathname first for admin mode
-      const pathSegments = currentPathname.split('/').filter(Boolean);
-      const lastSegment = pathSegments[pathSegments.length - 1] || '';
-      const isAdminPath = lastSegment === 'admin' || lastSegment === 'admin.html';
-      
-      // Determine current context
-      const currentContext = (isAdminPath || currentHash === 'admin') ? 'admin' : currentHash;
-      
-      // Clear previous session if context changed
-      if (previousContext && previousContext !== currentContext) {
+    // Determine current context from route props
+    const currentContext = isAdminRoute ? 'admin' : (customerRoute || '');
+    
+    // Clear previous session if context changed
+    if (previousContext && previousContext !== currentContext) {
+      // Only clear if switching between different non-root contexts
+      if (currentContext !== '') {
         clearSession(previousContext);
-        // Reset authentication state when switching
-        isAuthenticated = false;
-        isAdminAuthenticated = false;
-        isAdminMode = false;
-        passwordInput = '';
-        adminPasswordInput = '';
-        passwordError = '';
-        adminPasswordError = '';
+      }
+      // Reset authentication state when switching
+      isAuthenticated = false;
+      isAdminAuthenticated = false;
+      isAdminMode = false;
+      passwordInput = '';
+      adminPasswordInput = '';
+      passwordError = '';
+      adminPasswordError = '';
+    }
+    
+    previousContext = currentContext;
+    
+    // Always check for admin session (works for all routes)
+    const adminSession = loadSession('admin');
+    if (adminSession && adminSession.customerId === 'admin') {
+      isAdminAuthenticated = true;
+      if (isAdminRoute) {
+        isAdminMode = true;
+        loadAdminCustomers();
+      }
+    }
+    
+    if (customerRoute) {
+      // On customer route
+      customerId = customerRoute;
+      usernameInput = customerRoute;
+      
+      if (isAdminAuthenticated) {
+        // Admin viewing customer board - no customer login needed
+        isAuthenticated = true;
+        isAdmin = true; // Default to admin view
+        loadCustomerWithSession(customerRoute);
+      } else {
+        // Check for specific customer session
+        const session = loadSession(customerRoute);
+        if (session && session.customerId === customerRoute) {
+          isAdmin = session.isAdmin;
+          loadCustomerWithSession(customerRoute);
+        }
+      }
+    } else if (!isAdminRoute) {
+      // On root route - scan for any customer session
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.startsWith('uat-session-') && key !== 'uat-session-admin') {
+          const sessionCustomerId = key.replace('uat-session-', '');
+          const session = loadSession(sessionCustomerId);
+          if (session && session.customerId === sessionCustomerId) {
+            customerId = sessionCustomerId;
+            usernameInput = sessionCustomerId;
+            isAdmin = session.isAdmin;
+            isAuthenticated = true;
+            break;
+          }
+        }
       }
       
-      previousContext = currentContext;
-      
-      if (isAdminPath || currentHash === 'admin') {
-        isAdminMode = true;
-        
-        // Check for existing admin session
-        const session = loadSession('admin');
-        if (session && session.customerId === 'admin') {
-          isAdminAuthenticated = true;
-          loadAdminCustomers();
-        }
-      } else if (currentHash) {
-        customerId = currentHash;
-        usernameInput = currentHash; // Auto-populate username
-        
-        // Check for existing customer session
-        const session = loadSession(currentHash);
-        if (session && session.customerId === currentHash) {
-          isAdmin = session.isAdmin;
-          loadCustomerWithSession(currentHash);
-        }
-      } else {
+      if (!isAuthenticated) {
         customerId = usernameInput;
       }
     }
@@ -259,6 +322,7 @@
       adminPasswordError = '';
       saveSession('admin', true); // Save admin session
       loadAdminCustomers();
+      goto(resolve('/admin'));
     } else {
       adminPasswordError = 'Incorrect admin password';
     }
@@ -277,51 +341,8 @@
   }
   
   // Handle admin customer selection
-  async function handleAdminSelectCustomer(selectedCustomerId: string) {
-    isLoading = true;
-    
-    const result = await loadDataFromGitHubAdmin(octokit, githubConfig, selectedCustomerId);
-    
-    if (result.success && result.data) {
-      columns = result.data;
-      customerId = selectedCustomerId;
-      usernameInput = selectedCustomerId;
-      isAuthenticated = true;
-      isAdmin = true; // Admin login
-      isAdminMode = false;
-      
-      // Store original state for conflict detection
-      originalColumns = JSON.parse(JSON.stringify(result.data));
-      originalVersion = result.version || 0;
-      version = result.version || 0;
-      
-      if (result.sha) {
-        fileSha = result.sha;
-      }
-      
-      // Store password hash to reuse on saves
-      if (result.passwordHash) {
-        storedPasswordHash = result.passwordHash;
-      }
-      
-      // Load disableAddTask setting
-      disableAddTask = result.disableAddTask || false;
-      displayName = result.displayName || '';
-      uatEndDate = result.uatEndDate || '';
-      devSiteUrl = result.devSiteUrl || '';
-      uatFolderUrl = result.uatFolderUrl || '';
-      contactEmails = result.contactEmails || '';
-      
-      // Don't save a customer-specific session when admin selects them
-      // The admin session is sufficient, and we don't want to give admin
-      // privileges to direct customer logins
-      
-      showToast(`Loaded ${selectedCustomerId}'s board`, 'success');
-    } else {
-      showToast('Failed to load customer data', 'error');
-    }
-    
-    isLoading = false;
+  function handleAdminSelectCustomer(selectedCustomerId: string) {
+    goto(resolve(`/${selectedCustomerId}`));
   }
   
   // Handle admin customer creation
@@ -394,7 +415,7 @@
     }
 
     isLoading = true;
-    const id = customerId || usernameInput.toLowerCase();
+    const id = usernameInput.toLowerCase();
     
     const result = await loadDataFromGitHub(octokit, githubConfig, id, passwordInput);
     
@@ -429,6 +450,9 @@
       saveSession(id, false);
       
       showToast('Data loaded successfully', 'success');
+      
+      // Navigate to customer route so session persists on reload
+      goto(resolve(`/${id}`));
     } else {
       passwordError = result.error || 'Login failed';
     }
@@ -467,7 +491,7 @@
         disableAddTask
       };
       
-      const id = customerId || usernameInput.toLowerCase();
+      const id = usernameInput.toLowerCase();
       const result = await saveDataToGitHub(octokit, githubConfig, id, boardData, 'Save changes', fileSha);
       
       if (result.success) {
@@ -545,7 +569,7 @@
           // Wait before retrying (exponential backoff: 2s, 4s, 8s, 16s, 32s)
           await new Promise(resolve => setTimeout(resolve, 2000 * Math.pow(2, attempts)));
           
-          const retryResult = await fetchCurrentBoardData(octokit, githubConfig, customerId);
+          const retryResult = await fetchCurrentBoardData(octokit, githubConfig, usernameInput.toLowerCase());
           if (retryResult.success && retryResult.data && retryResult.sha) {
             // Always use the latest fetched data
             freshData = retryResult.data;
@@ -893,7 +917,7 @@
               disableAddTask
             };
             
-            const id = customerId || usernameInput.toLowerCase();
+            const id = usernameInput.toLowerCase();
             const result = await saveDataToGitHub(octokit, githubConfig, id, boardData, 'Delete task', fileSha);
             
             if (result.success) {
@@ -928,8 +952,8 @@
 
   function getNotifyTeamMailto(): string {
     const subject = encodeURIComponent(`UAT Alert! - ${displayName} needs attention`);
-    const baseUrl = `${window.location.origin}${window.location.pathname}`;
-    const uatUrl = `${baseUrl}#${customerId}`;
+    const baseUrl = browser ? `${window.location.origin}${window.location.pathname}` : '';
+    const uatUrl = `${baseUrl}#${usernameInput}`;
     const body = encodeURIComponent(`The UAT page for ${displayName} has sent an alert to the team.\n\nPlease check the UAT page as soon as possible:\n${uatUrl}\n\n`);
     return `mailto:${contactEmails}?subject=${subject}&body=${body}`;
   }
@@ -937,25 +961,67 @@
 
 <nav class="navbar">
   <div class="nav-left">
-    <div class="employ-logo">
-      <img src={logo} alt="Talemetry" width="150" />
-    </div>
+    <a href={resolve('/')} class="nav-logo">
+      <div class="employ-logo">
+        <img src={logo} alt="Talemetry" width="150" />
+      </div>
+    </a>
   </div>
   <div class="nav-right">
-    {#if isAuthenticated && contactEmails}
+    {#if isAuthenticated}
+      {#if !customerRoute && !isAdminRoute}
+        <ButtonComponent
+          text="Dashboard"
+          href={resolve(`/${usernameInput}`)}
+          type="secondary"
+        />
+      {/if}
+      {#if contactEmails}
+        <ButtonComponent
+          text="Notify Team"
+          href={getNotifyTeamMailto()}
+          type="secondary"
+        />
+      {/if}
+      {#if devSiteUrl}
+        <ButtonComponent
+          text="Open Review Link"
+          href={devSiteUrl.startsWith('http') ? devSiteUrl : `https://${devSiteUrl}`}
+          type="secondary"
+          target="_blank"
+          rel="nofollow noopener"
+        />
+      {/if}
+    {/if}
+
+    {#if isAdminAuthenticated && !isAdminRoute}
       <ButtonComponent
-        text="Notify Team"
-        href={getNotifyTeamMailto()}
-        type="hollow"
+        text="Accounts"
+        href={resolve('/admin')}
+        type="secondary"
       />
     {/if}
-    {#if isAuthenticated && devSiteUrl}
+    {#if !isAuthenticated && !isAdminAuthenticated}
+      {#if !isAdminRoute && !customerRoute && (viewMode === 'customerLogin' || viewMode === 'landing')}
+        <ButtonComponent
+          element="button"
+          text="Developer Login"
+          onClick={showAdminLogin}
+          type="hollow-light"
+        />
+      {/if}
       <ButtonComponent
-        text="Open Dev Site"
-        href={devSiteUrl.startsWith('http') ? devSiteUrl : `https://${devSiteUrl}`}
-        type="hollow"
-        target="_blank"
-        rel="nofollow noopener"
+        element="button"
+        text="Login"
+        onClick={showCustomerLogin}
+        type="secondary"
+      />
+    {/if}
+    {#if isAuthenticated || isAdminAuthenticated}
+      <ButtonComponent
+        text="Logout"
+        onClick={logout}
+        type="cancel"
       />
     {/if}
   </div>
@@ -973,15 +1039,17 @@
     onCreateCustomer={handleAdminCreateCustomer}
     onDeleteCustomer={handleAdminDeleteCustomer}
   />
+{:else if !isAdminRoute && !customerRoute && viewMode === 'landing'}
+  <Landing />
 {:else if !isAuthenticated}
   <Login
-    bind:customerId
     bind:usernameInput
     bind:passwordInput
     bind:passwordError
     bind:isLoading
     onSubmit={handlePasswordSubmit}
     onForgotPassword={() => showToast('You cannot reset your password here. Please reach out and we will provide you with your password.', 'info')}
+    onAdminLogin={!isAdminRoute && !customerRoute && viewMode === 'customerLogin' ? showAdminLogin : undefined}
   />
 {:else}
   <Board
@@ -990,9 +1058,10 @@
     devSiteUrl={devSiteUrl}
     uatFolderUrl={uatFolderUrl}
     contactEmails={contactEmails}
-    customerId={customerId || usernameInput}
+    customerId={usernameInput}
     {columns}
     {isAdmin}
+    {isAdminAuthenticated}
     bind:searchQuery
     bind:filterType
     bind:filterOwner
@@ -1001,6 +1070,7 @@
     bind:disableAddTask
     onAddTask={openNewItemModal}
     onHelp={openHelpModal}
+    onToggleAdminView={toggleAdminView}
     onItemDragStart={handleDragStart}
     onItemClick={openModal}
     onToggleLock={toggleTaskLock}
@@ -1067,7 +1137,7 @@
     align-items: center;
     padding: 0 2.5rem;
     min-height: 100px;
-    background: var(--navbar-bg);
+    background: var(--primary);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
@@ -1091,5 +1161,28 @@
     width: 150px;
     height: auto;
     margin-top: 0.3333rem;
+  }
+
+  .footer-logo {
+    width: auto;
+    height: 2rem;
+    display: flex;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 1em;
+  }
+  .footer-logo-text {
+    width: auto;
+    height: 1em;
+    display: flex;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    font-size: 0.75em;
+    justify-content: flex-end;
   }
 </style>

@@ -31,10 +31,19 @@
   let newContactEmails = $state('');
   let createError = $state('');
   let deleteConfirmId = $state<string | null>(null);
+  let showPassword = $state(false);
+  let showAdminPassword = $state(false);
   
   function handleSubmit(e: Event) {
     e.preventDefault();
     onPasswordSubmit();
+  }
+
+  function toggleShowAdminPassword() {
+    showAdminPassword = !showAdminPassword;
+  }
+  function toggleShowPassword() {
+    showPassword = !showPassword;
   }
   
   function toggleCreateForm() {
@@ -66,7 +75,7 @@
     }
 
     if (!newCustomerId.trim()) {
-      createError = 'Customer ID is required';
+      createError = 'Account ID is required';
       return;
     }
     
@@ -94,9 +103,9 @@
       return;
     }
     
-    // Check if customer already exists
+    // Check if account already exists
     if (customers.some(c => c.name === `${newCustomerId.toLowerCase()}.json`)) {
-      createError = 'Customer already exists';
+      createError = 'Account already exists';
       return;
     }
     
@@ -132,7 +141,7 @@
 </script>
 
 {#if !isAuthenticated}
-  <div class="admin-container">
+  <div class="container admin-container">
     <div class="admin-box">
       <h1>Admin Access</h1>
       <p class="subtitle">Enter admin password to continue</p>
@@ -140,13 +149,22 @@
       <form onsubmit={handleSubmit}>
         <div class="form-group">
           <label for="admin-password">Password</label>
-          <input
-            id="admin-password"
-            type="password"
-            bind:value={passwordInput}
-            placeholder="Enter admin password"
-            disabled={isLoading}
-          />
+          <div class="password-input">
+            <input
+              id="admin-password"
+              type={showAdminPassword ? "text" : "password"}
+              bind:value={passwordInput}
+              placeholder="Enter admin password"
+              disabled={isLoading}
+            />
+            <button aria-label="Toggle Password Visibility" class="password-toggle" type="button" onclick={toggleShowAdminPassword}>
+              {#if showAdminPassword}
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#666' d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/></svg>
+              {:else}
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#666' d='M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'/></svg>
+              {/if}
+            </button>
+          </div>
         </div>
         
         {#if passwordError}
@@ -160,7 +178,7 @@
     </div>
   </div>
 {:else}
-  <div class="admin-container">
+  <div class="container admin-container">
     <div class="admin-box">
       <h1>Admin Mode</h1>
       <p class="subtitle">Select a customer to view their board</p>
@@ -182,7 +200,7 @@
               <button
                 class="delete-btn"
                 onclick={(e) => handleDeleteClick(customer.name.replace('.json', ''), e)}
-                title="Delete customer"
+                title="Delete account"
               >
                 🗑️
               </button>
@@ -193,13 +211,13 @@
       
       <div class="admin-actions">
         <button class="create-toggle-btn" onclick={toggleCreateForm}>
-          {showCreateForm ? 'Cancel' : '+ Create New Customer'}
+          {showCreateForm ? 'Cancel' : '+ Create New Account'}
         </button>
         
         {#if showCreateForm}
           <form class="create-form" onsubmit={handleCreateSubmit}>
             <div class="form-group">
-              <label for="new-customer-id">Customer ID</label>
+              <label for="new-customer-id">Account ID</label>
               <input
                 id="new-customer-id"
                 type="text"
@@ -215,7 +233,7 @@
                 id="new-display-name"
                 type="text"
                 bind:value={newDisplayName}
-                placeholder="Customer Display Name"
+                placeholder="Account Display Name"
                 required
               />
             </div>
@@ -236,13 +254,13 @@
                 id="new-dev-url"
                 type="text"
                 bind:value={newDevUrl}
-                placeholder="customercareers-dev.ttcportals.com"
+                placeholder="https://linkto.reviewpage.com"
                 required
               />
             </div>
             
             <div class="form-group">
-              <label for="new-uat-folder-url">UAT Folder URL (Optional)</label>
+              <label for="new-uat-folder-url">UAT Folder URL (Optional. Used for uploading assets)</label>
               <input
                 id="new-uat-folder-url"
                 type="text"
@@ -252,7 +270,7 @@
             </div>
             
             <div class="form-group">
-              <label for="new-contact-emails">Contact Emails (Optional)</label>
+              <label for="new-contact-emails">Contact Emails (Optional. Used for email alerts)</label>
               <input
                 id="new-contact-emails"
                 type="text"
@@ -263,22 +281,34 @@
             
             <div class="form-group">
               <label for="new-customer-password">Password</label>
-              <input
-                id="new-customer-password"
-                type="password"
-                bind:value={newCustomerPassword}
-                placeholder="Enter password"
-                required
-              />
+              <div class="password-input">
+                <input
+                  id="new-customer-password"
+                  type={showPassword ? "text" : "password"}
+                  bind:value={newCustomerPassword}
+                  placeholder="Enter password"
+                  required
+                />
+                <button aria-label="Toggle Password Visibility" class="password-toggle" type="button" onclick={toggleShowPassword}>
+                  {#if showPassword}
+                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#666' d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/></svg>
+                  {:else}
+                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='#666' d='M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'/></svg>
+                  {/if}
+                </button>
+              </div>
             </div>
             
             {#if createError}
               <div class="error-message">{createError}</div>
             {/if}
             
-            <button type="submit" class="create-submit-btn">
-              Create Customer
-            </button>
+            <div class="form-group">
+              <button type="submit" class="create-submit-btn">
+                Create Account
+              </button>
+            </div>
+            <button class="create-toggle-btn" onclick={toggleCreateForm}>Cancel</button>
           </form>
         {/if}
       </div>
@@ -295,7 +325,7 @@
       onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { cancelDelete(); } }}
     >
       <div class="confirm-modal" role="alertdialog" tabindex="0" onclick={(e) => e.stopPropagation()} onkeydown={(e) => e.stopPropagation()}>
-        <h2>Delete Customer</h2>
+        <h2>Delete Account</h2>
         <p>Are you sure you want to delete <strong>{deleteConfirmId}</strong>?</p>
         <p class="warning">This will permanently delete their data file.</p>
         <div class="modal-actions">
@@ -309,11 +339,9 @@
 
 <style>
   .admin-container {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-1);
     padding: 2rem;
   }
 
@@ -404,6 +432,38 @@
     margin-bottom: 1.5rem;
   }
 
+  .password-input {
+    position: relative;
+  }
+
+  .password-input input {
+    padding-right: 3rem; /* Make space for the button */
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) !important;
+    padding: 0.25rem;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .password-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: block;
+  }
+
   .form-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -458,7 +518,7 @@
   }
 
   form button:hover:not(:disabled) {
-    background: var(--primary-hover);
+    background: var(--primary-fg);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
@@ -515,7 +575,7 @@
   }
   
   .create-submit-btn:hover {
-    background: var(--primary-hover);
+    background: var(--primary-fg);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }

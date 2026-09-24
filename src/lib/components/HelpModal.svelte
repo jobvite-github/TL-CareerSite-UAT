@@ -1,5 +1,6 @@
 <script lang="ts">
   import { trapFocus } from '$lib/utils';
+  import ButtonComponent from '$lib/components/Button.svelte';
 
   let {
     show = false,
@@ -95,7 +96,12 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="close-button" onclick={onClose}>Close</button>
+        <ButtonComponent 
+            element="button"
+            text="Close"
+            type="save"
+            onClick={onClose}
+          />
       </div>
     </div>
   </div>

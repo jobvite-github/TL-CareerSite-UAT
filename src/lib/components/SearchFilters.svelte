@@ -49,7 +49,7 @@
       element="button"
       text="Help"
       title="View status guide"
-      type="hollow-primary"
+      type="hollow"
       size="small"
       onClick={onHelp}
     />
@@ -58,7 +58,7 @@
          element="button"
          text="+ Add Task"
          title='Add a new task'
-         type="primary"
+         type="secondary"
          size="small"
          disabled={disableAddTask}
          onClick={onAddTask}
