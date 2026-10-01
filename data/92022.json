@@ -1,0 +1,40 @@
+{
+  "displayName": "Archkey Solutions DEV",
+  "uatEndDate": "2026-10-08",
+  "devSiteUrl": "https://electribuilt-dev.ttcportals.com/search/jobs",
+  "passwordHash": "fc4c4ea5d18fa05a071cd5f2a0553245778a2fa91e01248563cc18966d3076c7",
+  "version": 1,
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
