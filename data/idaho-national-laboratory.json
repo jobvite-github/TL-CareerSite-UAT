@@ -1,0 +1,40 @@
+{
+  "displayName": "Idaho National Laboratory",
+  "uatEndDate": "2026-10-09",
+  "devSiteUrl": "https://inlcareers-ootb.ttcportals.com/",
+  "passwordHash": "d2c3ea677cd0ddd37f6dc310b3e6f436bad3789f5c3505968bdfc8ddd0e8c755",
+  "version": 1,
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
