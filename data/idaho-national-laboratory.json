@@ -2,10 +2,10 @@
   "displayName": "Idaho National Laboratory",
   "uatEndDate": "2026-10-09",
   "devSiteUrl": "https://inlcareers-ootb.ttcportals.com/",
-  "uatFolderUrl": "",
-  "contactEmails": "",
+  "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/I/Idaho%20National%20Labratory/Implementation/Recruitment%20Marketing/Events%20Site/UAT?d=w1989f1ea3de74b6d8ad013378d724d00&csf=1&web=1&e=2wDibS",
+  "contactEmails": "Landon.Young <Landon.Young@inl.gov>",
   "passwordHash": "5459e3d9249aa41bde56f8c8a76151675485a5aa36604caa5d1280b725bc8ee5",
-  "version": 6,
+  "version": 7,
   "columns": [
     {
       "id": "todo",
