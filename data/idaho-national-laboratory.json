@@ -5,26 +5,12 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "d2c3ea677cd0ddd37f6dc310b3e6f436bad3789f5c3505968bdfc8ddd0e8c755",
-  "version": 2,
+  "version": 3,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
-      "items": [
-        {
-          "id": 1791397528495,
-          "description": "Test",
-          "type": "Change Request",
-          "device": "All",
-          "feedback": [],
-          "section": "",
-          "owner": "CWS Dev",
-          "createdAt": "2026-10-07T18:25:28.495Z",
-          "updatedAt": "2026-10-07T18:25:28.495Z",
-          "locked": false,
-          "images": []
-        }
-      ]
+      "items": []
     },
     {
       "id": "inprogress",
