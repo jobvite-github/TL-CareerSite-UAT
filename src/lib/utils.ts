@@ -233,11 +233,37 @@ export async function saveDataToGitHub(
     }
     
     console.error('Failed to save data:', error);
-    return { 
-      success: false, 
-      error: 'Failed to save data to GitHub' 
+    return {
+      success: false,
+      error: describeSaveError(error)
     };
   }
+}
+
+// Build a user-facing message that includes the underlying GitHub status/reason
+function describeSaveError(error: any): string {
+  const status: number | undefined = error?.status;
+  const ghMessage: string = error?.response?.data?.message || error?.message || '';
+  const detail = status ? ` (${status}${ghMessage ? `: ${ghMessage}` : ''})` : '';
+
+  // No status means the request never got a response (network, proxy, CORS)
+  if (!status) {
+    return `Network error reaching GitHub. Please check your connection and try again.${ghMessage ? ` (${ghMessage})` : ''}`;
+  }
+
+  if (status === 429 || (status === 403 && /rate limit/i.test(ghMessage))) {
+    return `GitHub is rate-limiting saves. Please wait a minute and try again.${detail}`;
+  }
+
+  if (status === 413 || /too large|too big|size/i.test(ghMessage)) {
+    return `Board data is too large to save. Try removing some screenshots.${detail}`;
+  }
+
+  if (status === 401) {
+    return `GitHub authentication failed. Please contact your project manager.${detail}`;
+  }
+
+  return `Failed to save data to GitHub${detail}`;
 }
 
 export async function loadDataFromGitHubAdmin(

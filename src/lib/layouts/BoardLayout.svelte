@@ -1185,4 +1185,32 @@
     font-size: 0.75em;
     justify-content: flex-end;
   }
+  .nav-logo svg {
+    height: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      flex-wrap: wrap;
+      padding: 1rem;
+      min-height: auto;
+    }
+
+    .nav-left {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .nav-right {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .nav-logo {
+      width: 150px;
+    }
+  }
 </style>
