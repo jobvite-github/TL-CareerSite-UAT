@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/I/Idaho%20National%20Labratory/Implementation/Recruitment%20Marketing/Events%20Site/UAT?d=w1989f1ea3de74b6d8ad013378d724d00&csf=1&web=1&e=2wDibS",
   "contactEmails": "Landon.Young <Landon.Young@inl.gov>",
   "passwordHash": "5459e3d9249aa41bde56f8c8a76151675485a5aa36604caa5d1280b725bc8ee5",
-  "version": 16,
+  "version": 17,
   "columns": [
     {
       "id": "todo",
@@ -39,7 +39,7 @@
         },
         {
           "id": 1791462797103,
-          "description": "When searching for an event that is not found, the interface refers to \"jobs\" instead of \"events\": use Events...",
+          "description": "When searching for an event that is not found, the interface refers to \"jobs\" instead of \"events\": use Events\nhttps://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/I/Idaho%20National%20Labratory/Implementation/Recruitment%20Marketing/Events%20Site/UAT/Search%20Job%20Results.png?d=w0f3d112911441a1b8e49df1cdc30586&csf=1&web=1&e=I2x3GP",
           "device": "All",
           "feedback": [],
           "section": "Job Search Page",
