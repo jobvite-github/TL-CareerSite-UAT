@@ -38,19 +38,6 @@
           ]
         },
         {
-          "id": 1791462136043,
-          "description": "test",
-          "type": "Change Request",
-          "device": "All",
-          "feedback": [],
-          "section": "",
-          "owner": "CWS Dev",
-          "createdAt": "2026-10-08T12:22:16.043Z",
-          "updatedAt": "2026-10-08T12:22:16.043Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1791462152218,
           "description": "test2",
           "type": "Change Request",
