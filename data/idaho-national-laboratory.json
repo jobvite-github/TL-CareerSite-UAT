@@ -38,19 +38,6 @@
           ]
         },
         {
-          "id": 1791462160868,
-          "description": "test3",
-          "type": "Change Request",
-          "device": "All",
-          "feedback": [],
-          "section": "",
-          "owner": "CWS Dev",
-          "createdAt": "2026-10-08T12:22:40.868Z",
-          "updatedAt": "2026-10-08T12:22:40.868Z",
-          "locked": false,
-          "images": []
-        },
-        {
           "id": 1791462549941,
           "description": "When searching for an event that is not found, the interface refers to \"jobs\" instead of \"events\": use Events\nhttps://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/I/Idaho%20National%20Labratory/Implementation/Recruitment%20Marketing/Events%20Site/UAT/Search%20Job%20Results.png?d=w0f3d112911441a1b8e49df1cdc30586&csf=1&web=1&e=I2x3GP",
           "device": "All",
