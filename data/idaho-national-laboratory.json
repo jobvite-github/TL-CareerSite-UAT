@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/I/Idaho%20National%20Labratory/Implementation/Recruitment%20Marketing/Events%20Site/UAT?d=w1989f1ea3de74b6d8ad013378d724d00&csf=1&web=1&e=2wDibS",
   "contactEmails": "Landon.Young <Landon.Young@inl.gov>",
   "passwordHash": "5459e3d9249aa41bde56f8c8a76151675485a5aa36604caa5d1280b725bc8ee5",
-  "version": 9,
+  "version": 10,
   "columns": [
     {
       "id": "todo",
@@ -60,6 +60,19 @@
           "owner": "CWS Dev",
           "createdAt": "2026-10-08T12:22:32.218Z",
           "updatedAt": "2026-10-08T12:22:32.218Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1791462160868,
+          "description": "test3",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": [],
+          "section": "",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-08T12:22:40.868Z",
+          "updatedAt": "2026-10-08T12:22:40.868Z",
           "locked": false,
           "images": []
         }
