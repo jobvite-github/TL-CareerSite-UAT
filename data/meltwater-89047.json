@@ -4,8 +4,8 @@
   "devSiteUrl": "https://elevateatmeltwater-internal-dev.ttcportals.com/",
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/M/Meltwater/2026%20Full%20Build%20Internal%20Career%20Site/Meltwater%20Internal%20-%20Pro%20-%20Template%201/Meltwater%20UAT%202026%20-%20Internal%20CWS?d=waf609784557043b4bd19ef9f9043cae2&csf=1&web=1&e=VJec86",
   "contactEmails": "erin.giles@meltwater.com",
-  "passwordHash": "5601fbe67950bb8cbd39494ad0ce97ebcc7780fb8bf72bc158a663a54d0c2292",
-  "version": 1,
+  "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
+  "version": 2,
   "columns": [
     {
       "id": "todo",
