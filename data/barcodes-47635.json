@@ -1,0 +1,41 @@
+{
+  "displayName": "Levata",
+  "uatEndDate": "2026-10-30",
+  "devSiteUrl": "https://levatacareers-dev.ttcportals.com/",
+  "contactEmails": "Amanda Brandstetter <amanda.brandstetter@levata.com>; filzah.ahsun <filzah.ahsun@levata.com>",
+  "passwordHash": "2b0e2e371a661410786449ae4264e5ae1be901371f0fd70b4ea0bfd8e1b02543",
+  "version": 1,
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
