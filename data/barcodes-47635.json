@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "Amanda Brandstetter <amanda.brandstetter@levata.com>; filzah.ahsun <filzah.ahsun@levata.com>",
   "passwordHash": "2b0e2e371a661410786449ae4264e5ae1be901371f0fd70b4ea0bfd8e1b02543",
-  "version": 3,
+  "version": 4,
   "columns": [
     {
       "id": "todo",
@@ -26,7 +26,7 @@
         },
         {
           "id": 1792679367782,
-          "description": "The pages linked to the department boxes on the home screen are only partially in French and Spanish",
+          "description": "The pages linked to the department boxes on the home screen are only partially in French and Spanish. This is for all of the departments",
           "device": "All",
           "feedback": [],
           "section": "",
