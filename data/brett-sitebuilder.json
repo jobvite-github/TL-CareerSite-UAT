@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
-  "version": 2,
+  "version": 3,
   "columns": [
     {
       "id": "todo",
@@ -21,6 +21,19 @@
           "owner": "CWS Dev",
           "createdAt": "2026-10-22T13:28:20.585Z",
           "updatedAt": "2026-10-22T13:28:20.585Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1792675715487,
+          "description": "Change variable editing UI. Better styling, layout, customization options, etc.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [],
+          "section": "",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-22T13:28:35.487Z",
+          "updatedAt": "2026-10-22T13:28:35.487Z",
           "locked": false,
           "images": []
         }
