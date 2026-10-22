@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
-  "version": 5,
+  "version": 6,
   "columns": [
     {
       "id": "todo",
@@ -14,7 +14,7 @@
         {
           "id": 1792675700585,
           "description": "Set more variables and consolidate them into as few content blocks that still allows clean organization",
-          "type": "Feature",
+          "type": "Change Request",
           "device": "All",
           "feedback": [],
           "section": "",
