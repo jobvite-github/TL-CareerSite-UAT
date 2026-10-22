@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
-  "version": 15,
+  "version": 16,
   "columns": [
     {
       "id": "todo",
@@ -112,6 +112,19 @@
           "owner": "CWS Dev",
           "createdAt": "2026-10-22T13:31:53.682Z",
           "updatedAt": "2026-10-22T13:31:53.682Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1792694696001,
+          "description": "Consolidate all CWS and CWS-specific Account data and store it in one accessible place for other files to reference. This would, for example, add the ability to access the list of pages in places like a navigation as well as a dropdown input for links to career site pages.\n\nStructure possibility:\n{\n Account: {\n   ...\n   content_blocks...\n   account...\n   job_fields...\n   workflows...\n   workflow_details...\n   ...\n },\n {\n  CareerSite: {\n   pages\n   media\n   assets\n   theme...\n  }\n }\n}",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [],
+          "section": "",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-22T18:44:56.001Z",
+          "updatedAt": "2026-10-22T18:44:56.001Z",
           "locked": false,
           "images": []
         }
