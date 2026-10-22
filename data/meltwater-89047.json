@@ -1,11 +1,11 @@
 {
   "displayName": "Meltwater",
-  "uatEndDate": "2026-10-21",
+  "uatEndDate": "2026-10-26",
   "devSiteUrl": "https://elevateatmeltwater-internal-dev.ttcportals.com/",
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 15,
+  "version": 16,
   "columns": [
     {
       "id": "todo",
