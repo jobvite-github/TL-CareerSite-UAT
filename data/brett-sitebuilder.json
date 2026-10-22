@@ -2,13 +2,29 @@
   "displayName": "CWS Site Builder",
   "uatEndDate": "2026-12-31",
   "devSiteUrl": "https://jobvite-github.github.io/TL-CareerSite-UAT/brett-site_builder",
+  "uatFolderUrl": "",
+  "contactEmails": "",
   "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
-  "version": 1,
+  "version": 2,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
-      "items": []
+      "items": [
+        {
+          "id": 1792675700585,
+          "description": "Set more variables and consolidate them into as few content blocks that still allows clean organization",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [],
+          "section": "",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-22T13:28:20.585Z",
+          "updatedAt": "2026-10-22T13:28:20.585Z",
+          "locked": false,
+          "images": []
+        }
+      ]
     },
     {
       "id": "inprogress",
