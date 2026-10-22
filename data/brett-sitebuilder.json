@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
-  "version": 3,
+  "version": 4,
   "columns": [
     {
       "id": "todo",
@@ -34,6 +34,19 @@
           "owner": "CWS Dev",
           "createdAt": "2026-10-22T13:28:35.487Z",
           "updatedAt": "2026-10-22T13:28:35.487Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1792675730992,
+          "description": "Evaluate and display only necessary information for site info, theme variables (separate basic and advanced settings and categorize in accordion layout), etc.",
+          "type": "Feature",
+          "device": "All",
+          "feedback": [],
+          "section": "",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-22T13:28:50.992Z",
+          "updatedAt": "2026-10-22T13:28:50.992Z",
           "locked": false,
           "images": []
         }
