@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
-  "version": 13,
+  "version": 14,
   "columns": [
     {
       "id": "todo",
@@ -86,6 +86,19 @@
           "owner": "CWS Dev",
           "createdAt": "2026-10-22T13:30:59.903Z",
           "updatedAt": "2026-10-22T13:30:59.903Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1792675890064,
+          "description": "Buttons, grid items, and any other components that have common styling customization possibilities like border radius, width/height, background, position, etc. should have those customizations grouped and included in the menu\n- Idea: Collapsed accordion item labeled \"Advanced Styling\", with options for border radius, width/height, background, position, etc.",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": [],
+          "section": "Customization Menu",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-22T13:31:30.064Z",
+          "updatedAt": "2026-10-22T13:31:30.064Z",
           "locked": false,
           "images": []
         }
