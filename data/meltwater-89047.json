@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 30,
+  "version": 31,
   "columns": [
     {
       "id": "todo",
@@ -43,12 +43,12 @@
         },
         {
           "id": 1791937517099,
-          "description": "Candidate Portal directs to a broken link.  (TM has submitted an Engineering ticket to address the issue and will follow up). Engineering has fixed the Talemetry button in ADMIN.  However, when we click on the Candidate portal, there is a 404 error.",
+          "description": "Candidate Portal directs to a broken link.  (TM has submitted an Engineering ticket to address the issue and will follow up). Engineering has fixed the Talemetry button in ADMIN.  However, when we click on the Candidate portal, there is a 404 error.  TM unsure if this is Engineering or Web Dev?",
           "type": "Issue",
           "device": "All",
           "feedback": [],
           "section": "",
-          "owner": "PM",
+          "owner": "CWS Dev",
           "createdAt": "2026-10-14T00:25:17.095Z",
           "updatedAt": "2026-10-14T00:25:17.095Z",
           "locked": true,
