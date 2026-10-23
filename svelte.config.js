@@ -9,6 +9,10 @@ const config = {
 		}),
 		paths: {
 			base: `/${process.env.VITE_GITHUB_REPO}`
+		},
+		// Poll for new deploys so open tabs can detect they are running a stale build
+		version: {
+			pollInterval: 60000
 		}
 	},
 	compilerOptions: { experimental: { async: true } }

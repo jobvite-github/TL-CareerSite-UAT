@@ -6,6 +6,7 @@
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
   import { browser } from '$app/environment';
+  import { updated } from '$app/state';
   import logo from '$lib/assets/employ_logo.svg';
   
   // Components
@@ -479,6 +480,8 @@
   // Actual save logic extracted for reuse
   async function performSave() {
     try {
+      if (blockIfStale()) return;
+
       const boardData: BoardData = {
         displayName,
         uatEndDate,
@@ -648,6 +651,13 @@
     };
     remoteSha = undefined;
     showConflictModal = false;
+  }
+
+  // A tab running an older build can write data in an outdated format, so block saves until it is refreshed
+  function blockIfStale(): boolean {
+    if (!updated.current) return false;
+    showToast('A new version of this app is available. Please refresh the page before saving.', 'error');
+    return true;
   }
 
   // Toast functions
@@ -902,7 +912,7 @@
         showToast('Task deleted', 'info');
         
         // Save with skipMerge to prevent deleted task from being restored
-        if (!isSaving) {
+        if (!isSaving && !blockIfStale()) {
           isSaving = true;
           try {
             const boardData: BoardData = {
