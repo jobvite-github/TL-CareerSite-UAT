@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 16,
+  "version": 17,
   "columns": [
     {
       "id": "todo",
@@ -35,25 +35,6 @@
       "id": "retest",
       "title": "Re-Test",
       "items": [
-        {
-          "id": 1792172602076,
-          "description": "Can you please use the below google drive link for the \"employee resources\" tile? \n\nhttps://drive.google.com/drive/folders/1YyHMWQPxO76OgwYUBQGHxIL8zkkWg9vM",
-          "device": "All",
-          "feedback": [
-            {
-              "text": "Updated the Employee Resources tile with the new Google Drive link. Please re-test.",
-              "author": "cws-dev",
-              "createdAt": "2026-10-22T12:43:43.693Z"
-            }
-          ],
-          "section": "Employee Resources",
-          "createdAt": "2026-10-16T17:43:22.076Z",
-          "updatedAt": "2026-10-16T17:43:22.076Z",
-          "locked": true,
-          "images": [],
-          "owner": "Customer",
-          "type": "Change Request"
-        },
         {
           "id": 1792172641824,
           "description": "Can you please use the below google drive link for the Hiring Manager resources tile?\n\nhttps://drive.google.com/drive/folders/1wbYpNIVQRIvn5-L-8vSJ07GzQAsx6msJ",
@@ -131,7 +112,27 @@
     {
       "id": "done",
       "title": "Done",
-      "items": []
+      "items": [
+        {
+          "id": 1792172602076,
+          "description": "Can you please use the below google drive link for the \"employee resources\" tile? \n\nhttps://drive.google.com/drive/folders/1YyHMWQPxO76OgwYUBQGHxIL8zkkWg9vM",
+          "device": "All",
+          "feedback": [
+            {
+              "text": "Updated the Employee Resources tile with the new Google Drive link. Please re-test.",
+              "author": "cws-dev",
+              "createdAt": "2026-10-22T12:43:43.693Z"
+            }
+          ],
+          "section": "Employee Resources",
+          "createdAt": "2026-10-16T17:43:22.076Z",
+          "updatedAt": "2026-10-16T17:43:22.076Z",
+          "locked": true,
+          "images": [],
+          "owner": "Customer",
+          "type": "Change Request"
+        }
+      ]
     },
     {
       "id": "cancelled",
