@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 24,
+  "version": 23,
   "columns": [
     {
       "id": "todo",
@@ -13,7 +13,7 @@
       "items": [
         {
           "id": 1792766185807,
-          "description": "Please add a secondary line of text directly below the \"Sign Up for Job Alerts\" button.\nText to add: \"Want to catch new roles even faster? Join the #hot-jobs Slack channel to get notified the moment a new role is posted.\"� (screenshot attached of where we would like this under)",
+          "description": "Please add a secondary line of text directly below the “Sign Up for Job Alerts” button.\nText to add: “Want to catch new roles even faster? Join the #hot-jobs Slack channel to get notified the moment a new role is posted.” (screenshot attached of where we would like this under)",
           "type": "Change Request",
           "device": "All",
           "feedback": [],
