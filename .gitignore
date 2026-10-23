@@ -22,5 +22,8 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# VSCode
+*.code-workspace
+
 # Data files (managed via GitHub API)
 data/

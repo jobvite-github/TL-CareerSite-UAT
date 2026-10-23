@@ -1,6 +1,19 @@
 import type { Column, ColumnId, BoardData, Task, TaskChange, ConflictData } from './types';
 import { Octokit } from 'octokit';
 
+// UTF-8 safe base64 helpers (btoa/atob alone only handle Latin1)
+function toBase64(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  bytes.forEach(b => (binary += String.fromCharCode(b)));
+  return btoa(binary);
+}
+
+function fromBase64(b64: string): string {
+  const binary = atob(b64);
+  return new TextDecoder().decode(Uint8Array.from(binary, c => c.charCodeAt(0)));
+}
+
 // Focus trap action for modals
 export function trapFocus(node: HTMLElement) {
   const previouslyFocused = document.activeElement as HTMLElement;
@@ -129,12 +142,12 @@ export async function loadDataFromGitHub(
       });
       
       // Blob API returns base64 encoded content
-      const decodedString = atob(blobData.content.replace(/\n/g, ''));
+      const decodedString = fromBase64(blobData.content.replace(/\n/g, ''));
       content = JSON.parse(decodedString);
     } else {
       // Decode base64 content for smaller files
       const base64Content = fileData.content.replace(/\n/g, '');
-      const decodedString = atob(base64Content);
+      const decodedString = fromBase64(base64Content);
       content = JSON.parse(decodedString);
     }
 
@@ -209,7 +222,7 @@ export async function saveDataToGitHub(
       repo: config.repo,
       path: `data/${customerId.toLowerCase()}.json`,
       message,
-      content: btoa(JSON.stringify(dataWithVersion, null, 2)),
+      content: toBase64(JSON.stringify(dataWithVersion, null, 2)),
       branch: config.branch
     };
 
@@ -294,12 +307,12 @@ export async function loadDataFromGitHubAdmin(
       });
       
       // Blob API returns base64 encoded content
-      const decodedString = atob(blobData.content.replace(/\n/g, ''));
+      const decodedString = fromBase64(blobData.content.replace(/\n/g, ''));
       content = JSON.parse(decodedString);
     } else {
       // Decode base64 content for smaller files
       const base64Content = fileData.content.replace(/\n/g, '');
-      const decodedString = atob(base64Content);
+      const decodedString = fromBase64(base64Content);
       content = JSON.parse(decodedString);
     }
 
@@ -418,11 +431,11 @@ export async function fetchCurrentBoardData(
         file_sha: fileData.sha
       });
       
-      const decodedString = atob(blobData.content.replace(/\n/g, ''));
+      const decodedString = fromBase64(blobData.content.replace(/\n/g, ''));
       content = JSON.parse(decodedString);
     } else {
       const base64Content = fileData.content.replace(/\n/g, '');
-      const decodedString = atob(base64Content);
+      const decodedString = fromBase64(base64Content);
       content = JSON.parse(decodedString);
     }
     
