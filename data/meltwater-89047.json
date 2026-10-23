@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 28,
+  "version": 29,
   "columns": [
     {
       "id": "todo",
@@ -46,6 +46,11 @@
     {
       "id": "inprogress",
       "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
       "items": [
         {
           "id": 1791937517099,
@@ -61,11 +66,6 @@
           "images": []
         }
       ]
-    },
-    {
-      "id": "retest",
-      "title": "Re-Test",
-      "items": []
     },
     {
       "id": "feedback",
