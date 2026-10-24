@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 44,
+  "version": 45,
   "columns": [
     {
       "id": "todo",
@@ -29,7 +29,7 @@
           "section": "GROWTH at Meltwater Tile",
           "createdAt": "2026-10-23T17:17:29.504Z",
           "updatedAt": "2026-10-23T17:17:29.504Z",
-          "locked": true,
+          "locked": false,
           "images": []
         },
         {
