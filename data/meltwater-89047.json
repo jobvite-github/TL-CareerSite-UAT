@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 33,
+  "version": 34,
   "columns": [
     {
       "id": "todo",
@@ -20,16 +20,6 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
-    },
-    {
-      "id": "feedback",
-      "title": "Feedback Needed",
-      "items": []
-    },
-    {
-      "id": "done",
-      "title": "Done",
       "items": [
         {
           "id": 1792172602076,
@@ -49,7 +39,18 @@
           "images": [],
           "owner": "Customer",
           "type": "Change Request"
-        },
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": [
         {
           "id": 1792172641824,
           "description": "Can you please use the below google drive link for the Hiring Manager resources tile?\n\nhttps://drive.google.com/drive/folders/1wbYpNIVQRIvn5-L-8vSJ07GzQAsx6msJ",
