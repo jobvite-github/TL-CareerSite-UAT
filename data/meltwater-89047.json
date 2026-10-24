@@ -5,23 +5,12 @@
   "uatFolderUrl": "",
   "contactEmails": "erin.giles@meltwater.com",
   "passwordHash": "8fef6c13d459d70628da74dae2253634e647ed929424863c15bb86ffd52e933b",
-  "version": 42,
+  "version": 43,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
       "items": [
-        {
-          "id": 1792775849504,
-          "description": "Our Talent Management Team just launched their GROWTH page today. Can we please add the link to the Growth at Meltwater tile now that it is live? https://mlife.meltwater.com/site/1ed3cc8d-6771-4d75-b016-255446102453/landing-page/dashboard",
-          "device": "All",
-          "feedback": [],
-          "section": "GROWTH at Meltwater Tile",
-          "createdAt": "2026-10-23T17:17:29.504Z",
-          "updatedAt": "2026-10-23T17:17:29.504Z",
-          "locked": true,
-          "images": []
-        },
         {
           "id": 1791937517099,
           "description": "Candidate Portal directs to a broken link.  (TM has submitted an Engineering ticket to address the issue and will follow up). Engineering has fixed the Talemetry button in ADMIN.  However, when we click on the Candidate portal, there is a 404 error.  TM unsure if this is Engineering or Web Dev?",
@@ -66,7 +55,19 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
+      "items": [
+        {
+          "id": 1792775849504,
+          "description": "Our Talent Management Team just launched their GROWTH page today. Can we please add the link to the Growth at Meltwater tile now that it is live? https://mlife.meltwater.com/site/1ed3cc8d-6771-4d75-b016-255446102453/landing-page/dashboard",
+          "device": "All",
+          "feedback": [],
+          "section": "GROWTH at Meltwater Tile",
+          "createdAt": "2026-10-23T17:17:29.504Z",
+          "updatedAt": "2026-10-23T17:17:29.504Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "feedback",
