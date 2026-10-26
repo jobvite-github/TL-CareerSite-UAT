@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/A/ArchKey%20Solutions/Implementation/Recruitment%20Marketing/Career%20Site%20and%20ChatBot/Electribilt/ElectriBuild%20Basic%20Career%20Site%20Template/ElectriBuilt%20UAT?d=w7412d99f8f5f4171866089d5f5180df8&csf=1&web=1&e=LR46V7",
   "contactEmails": "",
   "passwordHash": "fc4c4ea5d18fa05a071cd5f2a0553245778a2fa91e01248563cc18966d3076c7",
-  "version": 11,
+  "version": 12,
   "columns": [
     {
       "id": "todo",
@@ -58,6 +58,17 @@
           "section": "Specific job page",
           "createdAt": "2026-10-26T01:40:22.599Z",
           "updatedAt": "2026-10-26T01:40:22.599Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1792979235003,
+          "description": "Career Portal Header Title links to ArchKey Solutions rather than EB logo",
+          "device": "All",
+          "feedback": [],
+          "section": "Header",
+          "createdAt": "2026-10-26T01:47:15.003Z",
+          "updatedAt": "2026-10-26T01:47:15.003Z",
           "locked": false,
           "images": []
         }
