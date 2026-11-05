@@ -5,25 +5,12 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/A/ArchKey%20Solutions/Implementation/Recruitment%20Marketing/Career%20Site%20and%20ChatBot/Electribilt/ElectriBuild%20Basic%20Career%20Site%20Template/ElectriBuilt%20UAT?d=w7412d99f8f5f4171866089d5f5180df8&csf=1&web=1&e=LR46V7",
   "contactEmails": "",
   "passwordHash": "fc4c4ea5d18fa05a071cd5f2a0553245778a2fa91e01248563cc18966d3076c7",
-  "version": 15,
+  "version": 16,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
       "items": [
-        {
-          "id": 1791998652689,
-          "description": "When clicking the About us In the top and bottom menu, it should launch https://www.electribuilt.com/about-us   Currently it launches a jobvite about us template page.",
-          "type": "Issue",
-          "device": "All",
-          "feedback": [],
-          "section": "header/menu",
-          "owner": "CWS Dev",
-          "createdAt": "2026-10-14T17:24:12.688Z",
-          "updatedAt": "2026-10-14T17:24:12.688Z",
-          "locked": false,
-          "images": []
-        },
         {
           "id": 1792978689714,
           "description": "When searching for something that doesn't exist - \"talent partner\" unrelated job \"Senior Manager Operations Manager\" appears",
@@ -89,7 +76,21 @@
     {
       "id": "retest",
       "title": "Re-Test",
-      "items": []
+      "items": [
+        {
+          "id": 1791998652689,
+          "description": "When clicking the About us In the top and bottom menu, it should launch https://www.electribuilt.com/about-us   Currently it launches a jobvite about us template page.",
+          "type": "Issue",
+          "device": "All",
+          "feedback": [],
+          "section": "header/menu",
+          "owner": "CWS Dev",
+          "createdAt": "2026-10-14T17:24:12.688Z",
+          "updatedAt": "2026-10-14T17:24:12.688Z",
+          "locked": true,
+          "images": []
+        }
+      ]
     },
     {
       "id": "feedback",
