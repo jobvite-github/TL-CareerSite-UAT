@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/I/inReach%20Health%20(Rural%20Partners%20in%20Health)/Implementation/External%20Career%20Site/00%20UAT%20Folder?d=w77b5dd11e045439f8c645b62893f2084&csf=1&web=1&e=63ubhW",
   "contactEmails": "",
   "passwordHash": "7496e7ed2779ddfe8fa76a5686cef3387a32f559850faa9d599c769c903f7199",
-  "version": 2,
+  "version": 3,
   "columns": [
     {
       "id": "todo",
@@ -21,6 +21,19 @@
           "owner": "CWS Dev",
           "createdAt": "2026-11-12T19:44:37.948Z",
           "updatedAt": "2026-11-12T19:44:37.948Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1794513127289,
+          "description": "Do not display city in the job search page or job details page when the position is for a Physician category.",
+          "type": "Change Request",
+          "device": "All",
+          "feedback": [],
+          "section": "Job Search page & job Details page.",
+          "owner": "CWS Dev",
+          "createdAt": "2026-11-12T19:52:07.289Z",
+          "updatedAt": "2026-11-12T19:52:07.289Z",
           "locked": false,
           "images": []
         }
