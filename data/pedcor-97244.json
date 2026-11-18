@@ -1,0 +1,40 @@
+{
+  "displayName": "Pedcor Management",
+  "uatEndDate": "2026-11-30",
+  "devSiteUrl": "www.test.com",
+  "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
+  "version": 1,
+  "columns": [
+    {
+      "id": "todo",
+      "title": "To Do",
+      "items": []
+    },
+    {
+      "id": "inprogress",
+      "title": "In Progress",
+      "items": []
+    },
+    {
+      "id": "retest",
+      "title": "Re-Test",
+      "items": []
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback Needed",
+      "items": []
+    },
+    {
+      "id": "done",
+      "title": "Done",
+      "items": []
+    },
+    {
+      "id": "cancelled",
+      "title": "Cancelled",
+      "items": []
+    }
+  ],
+  "disableAddTask": false
+}
