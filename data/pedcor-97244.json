@@ -1,11 +1,11 @@
 {
   "displayName": "Pedcor Management",
   "uatEndDate": "2026-11-30",
-  "devSiteUrl": "www.test.com",
-  "uatFolderUrl": "https://dev-vn-pedcor.ttcportals.com/search/jobs",
+  "devSiteUrl": "https://dev-vn-pedcor.ttcportals.com/search/jobs",
+  "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/_layouts/15/guestaccess.aspx?share=IgCOMGxWzUghR5sIpFxTnF81AQOEGlCBK2eIy8dlKTfBJvc&e=T36lLH",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 3,
+  "version": 4,
   "columns": [
     {
       "id": "todo",
