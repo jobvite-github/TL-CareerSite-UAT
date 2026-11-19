@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://dev-vn-pedcor.ttcportals.com/search/jobs",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 2,
+  "version": 3,
   "columns": [
     {
       "id": "todo",
