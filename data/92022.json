@@ -5,7 +5,7 @@
   "uatFolderUrl": "https://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/A/ArchKey%20Solutions/Implementation/Recruitment%20Marketing/Career%20Site%20and%20ChatBot/Electribilt/ElectriBuild%20Basic%20Career%20Site%20Template/ElectriBuilt%20UAT?d=w7412d99f8f5f4171866089d5f5180df8&csf=1&web=1&e=LR46V7",
   "contactEmails": "",
   "passwordHash": "fc4c4ea5d18fa05a071cd5f2a0553245778a2fa91e01248563cc18966d3076c7",
-  "version": 35,
+  "version": 36,
   "columns": [
     {
       "id": "todo",
@@ -39,19 +39,6 @@
           "images": [],
           "owner": "Customer",
           "type": "Change Request"
-        },
-        {
-          "id": 1794585462951,
-          "description": "Please update the thank you for joining our talent network screen to use the verbiage in the requirements doc.  It contains lorem ipsum currently.  \n\nhttps://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/A/ArchKey%20Solutions/Implementation/Recruitment%20Marketing/Career%20Site%20and%20ChatBot/Electribilt/ElectriBuild%20Basic%20Career%20Site%20Template/05%20Thank%20You%20for%20Joining%20Our%20Talent%20Network/Basic_05%20Thank%20You%20for%20Joining%",
-          "type": "Issue",
-          "device": "All",
-          "feedback": [],
-          "section": "",
-          "owner": "CWS Dev",
-          "createdAt": "2026-11-13T15:57:42.951Z",
-          "updatedAt": "2026-11-13T15:57:42.951Z",
-          "locked": true,
-          "images": []
         }
       ]
     },
@@ -184,6 +171,19 @@
           "images": [],
           "owner": "PM",
           "type": "Change Request"
+        },
+        {
+          "id": 1794585462951,
+          "description": "Please update the thank you for joining our talent network screen to use the verbiage in the requirements doc.  It contains lorem ipsum currently.  \n\nhttps://employinc.sharepoint.com/sites/ImplementationsServicesSharepoint/Shared%20Documents/Customers/A/ArchKey%20Solutions/Implementation/Recruitment%20Marketing/Career%20Site%20and%20ChatBot/Electribilt/ElectriBuild%20Basic%20Career%20Site%20Template/05%20Thank%20You%20for%20Joining%20Our%20Talent%20Network/Basic_05%20Thank%20You%20for%20Joining%",
+          "type": "Issue",
+          "device": "All",
+          "feedback": [],
+          "section": "",
+          "owner": "CWS Dev",
+          "createdAt": "2026-11-13T15:57:42.951Z",
+          "updatedAt": "2026-11-13T15:57:42.951Z",
+          "locked": true,
+          "images": []
         }
       ]
     },
