@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 9,
+  "version": 10,
   "columns": [
     {
       "id": "todo",
@@ -65,6 +65,17 @@
           "section": "Section / Page: Job Listings and Visibility - Check the total job count.",
           "createdAt": "2026-11-20T16:16:24.300Z",
           "updatedAt": "2026-11-20T16:16:24.300Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191519337,
+          "description": "Nowhere on the job details page does it say the site or exempt status (full-time/part-time) of the position.",
+          "device": "All",
+          "feedback": [],
+          "section": "Job Details Page- Custom Fields from the requirements documents",
+          "createdAt": "2026-11-20T16:18:39.337Z",
+          "updatedAt": "2026-11-20T16:18:39.337Z",
           "locked": false,
           "images": []
         }
