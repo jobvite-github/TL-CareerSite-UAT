@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 10,
+  "version": 11,
   "columns": [
     {
       "id": "todo",
@@ -76,6 +76,17 @@
           "section": "Job Details Page- Custom Fields from the requirements documents",
           "createdAt": "2026-11-20T16:18:39.337Z",
           "updatedAt": "2026-11-20T16:18:39.337Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191577628,
+          "description": "Description: Click the Apply button. Expected: The application opens for the correct job. Actual: One of the 2 \"\"Apply Now\"\" buttons work.  The one at the bottom of the screen does not work.",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Job Details Page - Click the Apply button.",
+          "createdAt": "2026-11-20T16:19:37.628Z",
+          "updatedAt": "2026-11-20T16:19:37.628Z",
           "locked": false,
           "images": []
         }
