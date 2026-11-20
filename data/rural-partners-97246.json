@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "7496e7ed2779ddfe8fa76a5686cef3387a32f559850faa9d599c769c903f7199",
-  "version": 11,
+  "version": 12,
   "columns": [
     {
       "id": "todo",
@@ -20,13 +20,20 @@
               "text": "LinkedIn: https://www.linkedin.com/company/inreach-healthcare\n\nInstagram: https://www.instagram.com/inreachhealthcare/",
               "author": "customer",
               "createdAt": "2026-11-19T22:55:40.146Z"
+            },
+            {
+              "text": "Added LinkedIn and Instagram icons to the footer next to Facebook, using the links provided.",
+              "author": "cws-dev",
+              "createdAt": "2026-11-20T08:05:00.780Z"
             }
           ],
           "section": "Footer",
           "createdAt": "2026-11-19T22:55:40.146Z",
           "updatedAt": "2026-11-19T22:55:40.146Z",
           "locked": false,
-          "images": []
+          "images": [],
+          "owner": "CWS Dev",
+          "type": "Change Request"
         },
         {
           "id": 1795128992160,
