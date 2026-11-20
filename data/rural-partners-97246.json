@@ -5,36 +5,12 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "7496e7ed2779ddfe8fa76a5686cef3387a32f559850faa9d599c769c903f7199",
-  "version": 12,
+  "version": 13,
   "columns": [
     {
       "id": "todo",
       "title": "To Do",
       "items": [
-        {
-          "id": 1795128940146,
-          "description": "Please add Linkedin and instagram to footer",
-          "device": "All",
-          "feedback": [
-            {
-              "text": "LinkedIn: https://www.linkedin.com/company/inreach-healthcare\n\nInstagram: https://www.instagram.com/inreachhealthcare/",
-              "author": "customer",
-              "createdAt": "2026-11-19T22:55:40.146Z"
-            },
-            {
-              "text": "Added LinkedIn and Instagram icons to the footer next to Facebook, using the links provided.",
-              "author": "cws-dev",
-              "createdAt": "2026-11-20T08:05:00.780Z"
-            }
-          ],
-          "section": "Footer",
-          "createdAt": "2026-11-19T22:55:40.146Z",
-          "updatedAt": "2026-11-19T22:55:40.146Z",
-          "locked": false,
-          "images": [],
-          "owner": "CWS Dev",
-          "type": "Change Request"
-        },
         {
           "id": 1795128992160,
           "description": "Please change all logos to inReach Health instead of inReach Surgical",
@@ -96,6 +72,30 @@
           "updatedAt": "2026-11-12T19:52:07.289Z",
           "locked": true,
           "images": []
+        },
+        {
+          "id": 1795128940146,
+          "description": "Please add Linkedin and instagram to footer",
+          "device": "All",
+          "feedback": [
+            {
+              "text": "LinkedIn: https://www.linkedin.com/company/inreach-healthcare\n\nInstagram: https://www.instagram.com/inreachhealthcare/",
+              "author": "customer",
+              "createdAt": "2026-11-19T22:55:40.146Z"
+            },
+            {
+              "text": "Added LinkedIn and Instagram icons to the footer next to Facebook, using the links provided.",
+              "author": "cws-dev",
+              "createdAt": "2026-11-20T08:05:00.780Z"
+            }
+          ],
+          "section": "Footer",
+          "createdAt": "2026-11-19T22:55:40.146Z",
+          "updatedAt": "2026-11-19T22:55:40.146Z",
+          "locked": true,
+          "images": [],
+          "owner": "CWS Dev",
+          "type": "Change Request"
         }
       ]
     },
