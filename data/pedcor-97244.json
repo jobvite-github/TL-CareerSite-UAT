@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 11,
+  "version": 12,
   "columns": [
     {
       "id": "todo",
@@ -87,6 +87,17 @@
           "section": "Section / Page: Job Details Page - Click the Apply button.",
           "createdAt": "2026-11-20T16:19:37.628Z",
           "updatedAt": "2026-11-20T16:19:37.628Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191655522,
+          "description": "Description: Wait 30 minutes after submitting, then check the ATS. Expected: The application appears in the ATS and all questions have the expected responses. Actual: We waited until the next day at least 12 hours and the application is still not showing in the ATS.",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Application Process - Wait 30 minutes after submitting, then check the ATS.",
+          "createdAt": "2026-11-20T16:20:55.522Z",
+          "updatedAt": "2026-11-20T16:20:55.522Z",
           "locked": false,
           "images": []
         }
