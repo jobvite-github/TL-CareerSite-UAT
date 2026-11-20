@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 6,
+  "version": 7,
   "columns": [
     {
       "id": "todo",
@@ -32,6 +32,17 @@
           "section": "Section / Page: Text and Content - Review the job detail fields on a job.",
           "createdAt": "2026-11-20T16:13:00.665Z",
           "updatedAt": "2026-11-20T16:13:00.665Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191261063,
+          "description": "Description: Compare the filters to the requirements document. Expected: All filters listed in the requirements documents are present. Actual: We would like to be able to filter by site name.\nFeedback / Notes: [Name, date]",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Job Search - Compare the filters to the requirements document.",
+          "createdAt": "2026-11-20T16:14:21.063Z",
+          "updatedAt": "2026-11-20T16:14:21.063Z",
           "locked": false,
           "images": []
         }
