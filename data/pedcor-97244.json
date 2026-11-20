@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 8,
+  "version": 9,
   "columns": [
     {
       "id": "todo",
@@ -54,6 +54,17 @@
           "section": "Section / Page: Job Search - Use pagination, load more, or sort.",
           "createdAt": "2026-11-20T16:15:04.596Z",
           "updatedAt": "2026-11-20T16:15:04.596Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191384300,
+          "description": "Description: Check the total job count. Expected: The job counts matches what is expected. Actual: We have 16 Open External jobs in JobVite, but only 15 jobs coming through on the Career Site.  Maybe there is supposed to be a \"\"load more\"\" but we do not see one on the Career Site to be able to check it.",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Job Listings and Visibility - Check the total job count.",
+          "createdAt": "2026-11-20T16:16:24.300Z",
+          "updatedAt": "2026-11-20T16:16:24.300Z",
           "locked": false,
           "images": []
         }
