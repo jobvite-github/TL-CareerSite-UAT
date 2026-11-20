@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 14,
+  "version": 15,
   "columns": [
     {
       "id": "todo",
@@ -120,6 +120,17 @@
           "section": "Section / Page: Accounts and Alerts - Log in.",
           "createdAt": "2026-11-20T16:23:02.644Z",
           "updatedAt": "2026-11-20T16:23:02.644Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191859079,
+          "description": "Description: Log out. Expected: Logout works. Actual: Unable to test because we were unable to login to the Candidate Portal.  We were able to log into the Career Site.",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Accounts and Alerts - Log out.",
+          "createdAt": "2026-11-20T16:24:19.079Z",
+          "updatedAt": "2026-11-20T16:24:19.079Z",
           "locked": false,
           "images": []
         }
