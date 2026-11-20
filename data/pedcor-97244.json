@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 13,
+  "version": 14,
   "columns": [
     {
       "id": "todo",
@@ -109,6 +109,17 @@
           "section": "Section / Page: Application Process - Wait another 30 minutes (1 hour total after submitting), then check the CRM.",
           "createdAt": "2026-11-20T16:21:47.971Z",
           "updatedAt": "2026-11-20T16:21:47.971Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191782644,
+          "description": "Description: Log in. Expected: Login works. Actual: Unable to get to the candidate portal but can see the general Career Site.  Again, it asks us to verify email but we neither of us received one.",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Accounts and Alerts - Log in.",
+          "createdAt": "2026-11-20T16:23:02.644Z",
+          "updatedAt": "2026-11-20T16:23:02.644Z",
           "locked": false,
           "images": []
         }
