@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 15,
+  "version": 16,
   "columns": [
     {
       "id": "todo",
@@ -131,6 +131,17 @@
           "section": "Section / Page: Accounts and Alerts - Log out.",
           "createdAt": "2026-11-20T16:24:19.079Z",
           "updatedAt": "2026-11-20T16:24:19.079Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795195450698,
+          "description": "Is there a way to have a filter preset that when a person clicks on one of the company logos at the top that only those company positions appear?",
+          "device": "All",
+          "feedback": [],
+          "section": "Header- The 4 company logos",
+          "createdAt": "2026-11-20T17:24:10.698Z",
+          "updatedAt": "2026-11-20T17:24:10.698Z",
           "locked": false,
           "images": []
         }
