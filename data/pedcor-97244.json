@@ -5,7 +5,7 @@
   "uatFolderUrl": "",
   "contactEmails": "",
   "passwordHash": "c7de8b897f823cf53f76730530160f9eea39f0df0019f455e6a51999d7a6c032",
-  "version": 7,
+  "version": 8,
   "columns": [
     {
       "id": "todo",
@@ -43,6 +43,17 @@
           "section": "Section / Page: Job Search - Compare the filters to the requirements document.",
           "createdAt": "2026-11-20T16:14:21.063Z",
           "updatedAt": "2026-11-20T16:14:21.063Z",
+          "locked": false,
+          "images": []
+        },
+        {
+          "id": 1795191304596,
+          "description": "Description: Use pagination, load more, or sort. Expected: The next set of jobs loads and the sort order is correct. Actual: There is no \"\"Load More\"\" and we still have some jobs missing.\nFeedback / Notes: [Name, date]",
+          "device": "All",
+          "feedback": [],
+          "section": "Section / Page: Job Search - Use pagination, load more, or sort.",
+          "createdAt": "2026-11-20T16:15:04.596Z",
+          "updatedAt": "2026-11-20T16:15:04.596Z",
           "locked": false,
           "images": []
         }
